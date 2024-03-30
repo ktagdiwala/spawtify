@@ -13,5 +13,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Spawtify"
+rootProject.name = "spawtify"
 include ':app'
