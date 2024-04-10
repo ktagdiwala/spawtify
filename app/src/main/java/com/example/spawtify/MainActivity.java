@@ -1,6 +1,7 @@
 package com.example.spawtify;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.room.Room;
 
@@ -49,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
         checkForUser();
         addUserToPreferences(userId);
         loginUser(userId);
+        invalidateOptionsMenu();
     }
 
     @Override
@@ -59,15 +61,21 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-//        switch (item.getItemId()){
-//            case R.id.userMenuLogout:
-//                logoutUser();
-//                return true;
-//            default:
-//                return super.onOptionsItemSelected(item);
-//        }
-        return super.onOptionsItemSelected(item);
+    public boolean onPrepareOptionsMenu(Menu menu){
+        MenuItem item = menu.findItem(R.id.logoutMenuItem);
+        item.setVisible(true);
+        if (user == null){
+            checkForUser();
+        }
+        item.setTitle(user.getUsername());
+        item.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(@NonNull MenuItem item) {
+                logoutUser();
+                return false;
+            }
+        });
+        return true;
     }
 
     private void wireUpDisplay(){
@@ -87,14 +95,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-        if (user != null){
-            MenuItem item = menu.findItem(R.id.buttonLogout);
-            item.setTitle(user.getUsername());
-        }
-        return super.onPrepareOptionsMenu(menu);
-    }
 
     private void logoutUser(){
         AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
