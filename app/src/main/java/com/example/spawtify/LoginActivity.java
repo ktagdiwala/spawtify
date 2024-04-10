@@ -19,7 +19,6 @@ public class LoginActivity extends AppCompatActivity {
 
     private EditText username;
     private EditText password;
-    private Button button;
 
     private UserDAO userDAO;
     private User user;
@@ -45,7 +44,7 @@ public class LoginActivity extends AppCompatActivity {
     private void wireUpDisplay(){
         username = findViewById(R.id.editTextLoginUsername);
         password = findViewById(R.id.editTextLoginPassword);
-        button = findViewById(R.id.buttonLogin);
+        Button button = findViewById(R.id.buttonLogin);
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override

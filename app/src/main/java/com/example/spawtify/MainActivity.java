@@ -33,9 +33,6 @@ public class MainActivity extends AppCompatActivity {
     private int userId = -1;
     private SharedPreferences preferences = null;
 
-    //  SCREEN/PAGE FIELDS
-    private Button logoutButton;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,7 +69,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void wireUpDisplay(){
-        logoutButton = findViewById(R.id.buttonLogout);
+        //  SCREEN/PAGE FIELDS
+        Button logoutButton = findViewById(R.id.buttonLogout);
 
         logoutButton.setOnClickListener(v -> logoutUser());
     }
@@ -80,7 +78,6 @@ public class MainActivity extends AppCompatActivity {
     private void loginUser(int userId){
         user = userDao.getUserByUserId(userId);
         invalidateOptionsMenu();
-
     }
 
 
