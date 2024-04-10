@@ -9,6 +9,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import com.example.spawtify.Database.SpawtifyDatabase;
 import com.example.spawtify.Database.UserDAO;
@@ -22,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String USER_ID_KEY = "com.example.spawtify.userIdKey";
     private static final String PREFERENCES_KEY = "com.example.spawtify.preferencesKey";
     private UserDAO userDao;
+    private User user;
     private List<User> users;
     private int userId = -1;
     private SharedPreferences preferences = null;
@@ -34,6 +37,22 @@ public class MainActivity extends AppCompatActivity {
         getDatabase();
         checkForUser();
         addUserToPreferences(userId);
+        loginUser(userId);
+    }
+
+    private void loginUser(int userId){
+        user = userDao.getUserByUserId(userId);
+        invalidateOptionsMenu();
+
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        if (user != null){
+            MenuItem item = menu.findItem(R.id.userMenuLogout);
+            item.setTitle(user.getUsername());
+        }
+        return super.onPrepareOptionsMenu(menu);
     }
 
     private void logoutUser(){
