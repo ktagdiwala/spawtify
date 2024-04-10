@@ -3,7 +3,9 @@ package com.example.spawtify;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.room.Room;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -22,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
     private UserDAO userDao;
     private List<User> users;
     private int userId = -1;
+    private SharedPreferences preferences = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,8 +32,31 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         getDatabase();
-
         checkForUser();
+        addUserToPreference();
+    }
+
+    private void logoutUser(){
+        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
+
+        alertBuilder.setMessage(R.string.logout);
+
+        alertBuilder.setPositiveButton(getString(R.string.yes),
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        clearUserFromIntent();
+                        clearUserFromPref();
+                    }
+                }
+    }
+
+    private void clearUserFromPref(){
+
+    }
+
+    private void clearUserFromIntent(){
+        getIntent().putExtra(USER_ID_KEY, -1);
     }
 
     public void getDatabase(){
@@ -49,7 +75,11 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
-        SharedPreferences preferences = this.getSharedPreferences(PREFERENCES_KEY, Context.MODE_PRIVATE);
+        if (preference == null){
+            getPrefs();
+        }
+//        SharedPreferences preferences = this.getSharedPreferences
+//                                                        (PREFERENCES_KEY, Context.MODE_PRIVATE);
 
         userId = preferences.getInt(USER_ID_KEY, -1);
 
