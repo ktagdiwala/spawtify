@@ -2,4 +2,7 @@
     <string name="app_name">Spawtify</string>
     <string name="landing_page">Landing Page</string>
     <string name="browse_songs">Browse Songs</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="login">LOGIN</string>
 </resources>
