@@ -67,9 +67,21 @@ public class MainActivity extends AppCompatActivity {
                         clearUserFromIntent();
                         clearUserFromPref();
                         userId = -1;
-
+                        checkForUser();
                     }
-                }
+                });
+
+        alertBuilder.setNegativeButton(getString(R.string.no, new DialogInterface() {
+            @Override
+            public void cancel() {
+            }
+
+            @Override
+            public void dismiss() {
+            }
+        }));
+
+        alertBuilder.create().show();
     }
 
     private void addUserToPreferences(int userId){
@@ -97,8 +109,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void getPrefs(){
-        SharedPreferences preferences = this.getSharedPreferences
-                                                        (PREFERENCES_KEY, Context.MODE_PRIVATE);
+        preferences = this.getSharedPreferences(PREFERENCES_KEY, Context.MODE_PRIVATE);
     }
 
     private void checkForUser() {
@@ -123,9 +134,10 @@ public class MainActivity extends AppCompatActivity {
 
         //  Create default user if user list is empty
         List<User> users = userDao.getAllUsers();
-        if (users.size() <= 0){
+        if (users.isEmpty()){
             User defaultUser = new User("cat123", "cat123");
-            userDao.insert(defaultUser);
+            User altUser = new User("123cat", "123cat");
+            userDao.insert(defaultUser, altUser);
         }
 
         //  Enter login screen
