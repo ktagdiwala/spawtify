@@ -3,13 +3,15 @@ package com.example.spawtify.Database.entities;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-/** Song
- * Individual song objects that the user can view or interact with
+import com.example.spawtify.Database.SpawtifyDatabase;
+
+/** Song:
+ * A song object that the user can view or interact with
  * @author Krishna Tagdiwala
  * @since 04-09-2024
  */
 
-@Entity(tableName = "Songlist")
+@Entity(tableName = SpawtifyDatabase.SONGLIST)
 public class Song {
 
     //sets songID as primary key
@@ -22,6 +24,7 @@ public class Song {
     private String songGenre;
 
     private boolean isExplicit;
+    //TODO: Create type converter for boolean to int
 
     public Song(String songTitle, String songArtist, String songAlbum, String songGenre, boolean isExplicit) {
         this.songTitle = songTitle;
