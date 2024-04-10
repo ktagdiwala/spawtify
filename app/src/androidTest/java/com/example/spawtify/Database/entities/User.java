@@ -5,42 +5,58 @@ import androidx.room.PrimaryKey;
 
 import com.example.spawtify.Database.SpawtifyDatabase;
 
-//@Entity(tableName = SpawtifyDatabase.User_Table)
+import java.util.Objects;
+
+@Entity(tableName = SpawtifyDatabase.USER_TABLE)
 public class User {
 
-//    @PrimaryKey(autoGenerate = true)
-    private int mUserId;
+    @PrimaryKey(autoGenerate = true)
+    private int userId;
 
-    private String mUsername;
-    private String mPassword;
+    private String username;
+    private String password;
+    private boolean isAdmin;
 
-    public User(int mUserId, String mUsername, String mPassword) {
-        this.mUserId = mUserId;
-        this.mUsername = mUsername;
-        this.mPassword = mPassword;
+    public User(String username, String password) {
+        this.username = username;
+        this.password = password;
+        isAdmin = false;
     }
 
-    public int getmUserId() {
-        return mUserId;
+    public int getUserId() {
+        return userId;
     }
 
-    public void setmUserId(int mUserId) {
-        this.mUserId = mUserId;
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
-    public String getmUsername() {
-        return mUsername;
+    public String getUsername() {
+        return username;
     }
 
-    public void setmUsername(String mUsername) {
-        this.mUsername = mUsername;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
-    public String getmPassword() {
-        return mPassword;
+    public String getPassword() {
+        return password;
     }
 
-    public void setmPassword(String mPassword) {
-        this.mPassword = mPassword;
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return userId == user.userId && isAdmin == user.isAdmin && Objects.equals(username, user.username) && Objects.equals(password, user.password);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(userId, username, password, isAdmin);
     }
 }
