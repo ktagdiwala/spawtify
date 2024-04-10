@@ -1,7 +1,6 @@
 package com.example.spawtify;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.room.Room;
 
@@ -16,7 +15,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
 import com.example.spawtify.Database.SpawtifyDatabase;
 import com.example.spawtify.Database.UserDAO;
@@ -37,8 +35,6 @@ public class MainActivity extends AppCompatActivity {
 
     //  SCREEN/PAGE FIELDS
     private Button logoutButton;
-    Menu optionsMenu;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,12 +64,9 @@ public class MainActivity extends AppCompatActivity {
             checkForUser();
         }
         item.setTitle(user.getUsername());
-        item.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(@NonNull MenuItem item) {
-                logoutUser();
-                return false;
-            }
+        item.setOnMenuItemClickListener(item1 -> {
+            logoutUser();
+            return false;
         });
         return true;
     }
@@ -81,12 +74,7 @@ public class MainActivity extends AppCompatActivity {
     private void wireUpDisplay(){
         logoutButton = findViewById(R.id.buttonLogout);
 
-        logoutButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                logoutUser();
-            }
-        });
+        logoutButton.setOnClickListener(v -> logoutUser());
     }
 
     private void loginUser(int userId){
@@ -102,21 +90,15 @@ public class MainActivity extends AppCompatActivity {
         alertBuilder.setMessage(R.string.logout);
 
         alertBuilder.setPositiveButton(getString(R.string.yes),
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        clearUserFromIntent();
-                        clearUserFromPref();
-                        userId = -1;
-                        checkForUser();
-                    }
+                (dialog, which) -> {
+                    clearUserFromIntent();
+                    clearUserFromPref();
+                    userId = -1;
+                    checkForUser();
                 });
 
-        alertBuilder.setNegativeButton(getString(R.string.no), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
+        alertBuilder.setNegativeButton(getString(R.string.no), (dialog, which) -> {
 
-            }
         });
 
         alertBuilder.create().show();
