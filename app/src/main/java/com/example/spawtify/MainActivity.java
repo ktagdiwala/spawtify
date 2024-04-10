@@ -1,11 +1,14 @@
 package com.example.spawtify;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.room.Room;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
+import com.example.spawtify.Database.SpawtifyDatabase;
 import com.example.spawtify.Database.UserDAO;
 import com.example.spawtify.Database.entities.User;
 
@@ -15,6 +18,7 @@ public class MainActivity extends AppCompatActivity {
 
     //  USER FIELDS
     private static final String USER_ID_KEY = "com.example.spawtify.userIdKey";
+    private static final String PREFERENCES_KEY = "com.example.spawtify.preferencesKey";
     private UserDAO userDao;
     private List<User> users;
     private int userId = -1;
@@ -23,6 +27,47 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        getDatabase();
+
+        checkForUser();
+    }
+
+    public void getDatabase(){
+        userDao = Room.databaseBuilder(this, SpawtifyDatabase.class, SpawtifyDatabase.DB_NAME)
+                .allowMainThreadQueries()
+                .build()
+                .getUserDAO();
+    }
+
+    private void checkForUser() {
+        userId = getIntent().getIntExtra(USER_ID_KEY, -1);
+
+        //  If userId is not equal to -1, then someone has logged in and stored their USER_ID_KEY
+        //  to the current intent
+        if (userId != -1){
+            return;
+        }
+
+        SharedPreferences preferences = this.getSharedPreferences(PREFERENCES_KEY, Context.MODE_PRIVATE);
+
+        userId = preferences.getInt(USER_ID_KEY, -1);
+
+        //  if userId is not equal to -1, then SharedPreferences shows someone is logged in
+        if (userId != -1){
+            return;
+        }
+
+        //  Create default user if user list is empty
+        List<User> users = userDao.getAllUsers();
+        if (users.size() <= 0){
+            User defaultUser = new User("cat123", "cat123");
+            userDao.insert(defaultUser);
+        }
+
+        //  Enter login screen
+        Intent intent = LoginActivity.intentFactory(this);
+        startActivity(intent);
     }
 
     public static Intent intentFactory(Context context, int userId){
