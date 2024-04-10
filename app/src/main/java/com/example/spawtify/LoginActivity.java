@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.room.Room;
@@ -21,6 +22,9 @@ public class LoginActivity extends AppCompatActivity {
     private Button button;
 
     private UserDAO userDAO;
+    private User user;
+    private String usernameString;
+    private String passwordString;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,9 +50,39 @@ public class LoginActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                getValuesFromDisplay();
+                if (checkForUserInDatabase()){
+                    if (!validatePassword()){
+                        Toast.makeText
+                                        (LoginActivity.this,
+                                        "Invalid password",
+                                        Toast.LENGTH_SHORT).show();
+                    }else{
+                        Intent intent = MainActivity.intentFactory
+                                            (getApplicationContext(),user.getUserId());
+                        startActivity(intent);
+                    }
+                };
             }
         });
+    }
+
+    private boolean validatePassword(){
+        return user.getPassword().equals(passwordString);
+    }
+
+    private void getValuesFromDisplay(){
+        usernameString = username.getText().toString();
+        passwordString = password.getText().toString();
+    }
+
+    private boolean checkForUserInDatabase(){
+        user = userDAO.getUserByUsername(usernameString);
+        if (user == null){
+            Toast.makeText(this, "No user " + user + " found", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        return true;
     }
 
     public static Intent intentFactory(Context context){
