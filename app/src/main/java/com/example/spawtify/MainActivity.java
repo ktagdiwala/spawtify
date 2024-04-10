@@ -1,5 +1,6 @@
 package com.example.spawtify;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.room.Room;
 
@@ -10,7 +11,11 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.Toast;
 
 import com.example.spawtify.Database.SpawtifyDatabase;
 import com.example.spawtify.Database.UserDAO;
@@ -29,15 +34,51 @@ public class MainActivity extends AppCompatActivity {
     private int userId = -1;
     private SharedPreferences preferences = null;
 
+    //  SCREEN/PAGE FIELDS
+    private Button logoutButton;
+    Menu optionsMenu;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        wireUpDisplay();
         getDatabase();
         checkForUser();
         addUserToPreferences(userId);
         loginUser(userId);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.user_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+//        switch (item.getItemId()){
+//            case R.id.userMenuLogout:
+//                logoutUser();
+//                return true;
+//            default:
+//                return super.onOptionsItemSelected(item);
+//        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void wireUpDisplay(){
+        logoutButton = findViewById(R.id.buttonLogout);
+
+        logoutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                logoutUser();
+            }
+        });
     }
 
     private void loginUser(int userId){
@@ -49,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         if (user != null){
-            MenuItem item = menu.findItem(R.id.userMenuLogout);
+            MenuItem item = menu.findItem(R.id.buttonLogout);
             item.setTitle(user.getUsername());
         }
         return super.onPrepareOptionsMenu(menu);
@@ -71,15 +112,12 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
 
-        alertBuilder.setNegativeButton(getString(R.string.no, new DialogInterface() {
+        alertBuilder.setNegativeButton(getString(R.string.no), new DialogInterface.OnClickListener() {
             @Override
-            public void cancel() {
-            }
+            public void onClick(DialogInterface dialog, int which) {
 
-            @Override
-            public void dismiss() {
             }
-        }));
+        });
 
         alertBuilder.create().show();
     }
@@ -91,6 +129,7 @@ public class MainActivity extends AppCompatActivity {
 
         SharedPreferences.Editor editor = preferences.edit();
         editor.putInt(USER_ID_KEY, userId);
+        editor.apply();
     }
 
     private void clearUserFromPref(){
