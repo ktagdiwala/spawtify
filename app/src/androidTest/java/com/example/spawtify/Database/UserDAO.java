@@ -10,6 +10,11 @@ import com.example.spawtify.Database.entities.User;
 
 import java.util.List;
 
+/** UserDAO
+ * DAO object associated with a user
+ * @author Krishna Tagdiwala
+ * @since 04-09-2024
+ */
 
 @Dao
 public interface UserDAO {
