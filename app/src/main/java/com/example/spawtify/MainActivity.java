@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
 
         getDatabase();
         checkForUser();
-        addUserToPreference();
+        addUserToPreferences(userId);
     }
 
     private void logoutUser(){
@@ -47,12 +47,23 @@ public class MainActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int which) {
                         clearUserFromIntent();
                         clearUserFromPref();
+                        userId = -1;
+
                     }
                 }
     }
 
-    private void clearUserFromPref(){
+    private void addUserToPreferences(int userId){
+        if (preferences == null){
+            getPrefs();
+        }
 
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putInt(USER_ID_KEY, userId);
+    }
+
+    private void clearUserFromPref(){
+        addUserToPreferences(-1);
     }
 
     private void clearUserFromIntent(){
@@ -66,6 +77,11 @@ public class MainActivity extends AppCompatActivity {
                 .getUserDAO();
     }
 
+    private void getPrefs(){
+        SharedPreferences preferences = this.getSharedPreferences
+                                                        (PREFERENCES_KEY, Context.MODE_PRIVATE);
+    }
+
     private void checkForUser() {
         userId = getIntent().getIntExtra(USER_ID_KEY, -1);
 
@@ -75,11 +91,9 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
-        if (preference == null){
+        if (preferences == null){
             getPrefs();
         }
-//        SharedPreferences preferences = this.getSharedPreferences
-//                                                        (PREFERENCES_KEY, Context.MODE_PRIVATE);
 
         userId = preferences.getInt(USER_ID_KEY, -1);
 
