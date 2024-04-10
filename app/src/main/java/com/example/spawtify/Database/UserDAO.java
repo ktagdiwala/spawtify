@@ -24,4 +24,10 @@ public interface UserDAO {
 
     @Query("SELECT * FROM " + SpawtifyDatabase.USER_TABLE + " ORDER BY username")
     List<User> getAllUsers();
+
+    @Query("SELECT * FROM " + SpawtifyDatabase.USER_TABLE + " WHERE username = :username")
+    User getUserByUsername(String username);
+
+    @Query("SELECT * FROM " + SpawtifyDatabase.USER_TABLE + " WHERE userId = :userId")
+    User getUserByUserId(int userId);
 }
