@@ -1,6 +1,11 @@
-package com.example.spawtify;
+package com.example.spawtify.Database.entities;
 
-//  @Entity(tableName = AppDatabaseName.User_Table)
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+import com.example.spawtify.Database.SpawtifyDatabase;
+
+//@Entity(tableName = SpawtifyDatabase.User_Table)
 public class User {
 
 //    @PrimaryKey(autoGenerate = true)
