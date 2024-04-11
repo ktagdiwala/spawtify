@@ -7,6 +7,12 @@ import com.example.spawtify.Database.SpawtifyDatabase;
 
 import java.util.Objects;
 
+/** User
+ * User objects that store the information associated with each application user
+ * @author James Mondragon
+ * @since 04-09-2024
+ */
+
 @Entity(tableName = SpawtifyDatabase.USER_TABLE)
 public class User {
 
