@@ -35,7 +35,8 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void getDatabase() {
-        userDAO = Room.databaseBuilder(this, SpawtifyDatabase.class, SpawtifyDatabase.DB_NAME)
+        userDAO = Room.databaseBuilder
+                        (this, SpawtifyDatabase.class, SpawtifyDatabase.DB_NAME)
                 .allowMainThreadQueries()
                 .build()
                 .getUserDAO();
