@@ -22,7 +22,7 @@ import java.util.concurrent.Executors;
  * @since 04-09-2024
  */
 
-@Database(entities = {User.class, Song.class}, version = 3, exportSchema = false)
+@Database(entities = {User.class, Song.class}, version = 1, exportSchema = false)
 public abstract class SpawtifyDatabase extends RoomDatabase {
 
     public static final String DB_NAME = "Spawtify_Database";
@@ -81,10 +81,13 @@ public abstract class SpawtifyDatabase extends RoomDatabase {
             databaseWriteExecutor.execute(() -> {
                 UserDAO userDAO = INSTANCE.getUserDAO();
                 userDAO.deleteAll();
+
+                //  Create admin
                 User admin = new User("admin", "admin");
                 admin.setAdmin(true);
                 userDAO.insert(admin);
 
+                //  Create test user
                 User testUser = new User("testuser", "testuser");
                 userDAO.insert(testUser);
             });
