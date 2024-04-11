@@ -20,8 +20,11 @@ public interface SongDAO {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(Song song);
 
-    @Query("SELECT * FROM " + SpawtifyDatabase.SONGLIST)
-    ArrayList<Song> getAllRecords();
+//    @Query("SELECT * FROM " + SpawtifyDatabase.SONGLIST)
+//    ArrayList<Song> getAllRecords();
+
+//    @Query("SELECT * FROM " + SpawtifyDatabase.SONGLIST)
+//    ArrayList<Song> getAllRecords();
 
 
 }

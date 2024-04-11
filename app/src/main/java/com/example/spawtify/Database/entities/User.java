@@ -29,6 +29,14 @@ public class User {
         isAdmin = false;
     }
 
+    public boolean isAdmin() {
+        return isAdmin;
+    }
+
+    public void setAdmin(boolean admin) {
+        isAdmin = admin;
+    }
+
     public int getUserId() {
         return userId;
     }

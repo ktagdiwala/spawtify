@@ -1,6 +1,8 @@
 package com.example.spawtify.Database;
 
 import android.app.Application;
+
+import com.example.spawtify.Database.entities.Song;
 import android.util.Log;
 
 import com.example.spawtify.Database.entities.Song;
@@ -29,7 +31,7 @@ public class SpawtifyRepository {
     public SpawtifyRepository(Application application){
         SpawtifyDatabase db = SpawtifyDatabase.getDatabase(application);
         this.songDAO = db.getSongDAO();
-        this.allSongs = this.songDAO.getAllRecords();
+//        this.allSongs = this.songDAO.getAllRecords();
     }
 
     /** getAllSongs:
@@ -45,7 +47,9 @@ public class SpawtifyRepository {
                 new Callable<ArrayList<Song>>() {
                     @Override
                     public ArrayList<Song> call() throws Exception {
-                        return songDAO.getAllRecords();
+//                        return songDAO.getAllRecords();
+                        return allSongs;
+//                        return songDAO.getAllRecords();
                     }
                 }
         );
