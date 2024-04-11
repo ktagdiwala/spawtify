@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.room.Room;
 
 import com.example.spawtify.Database.SpawtifyDatabase;
+import com.example.spawtify.Database.SpawtifyRepository;
 import com.example.spawtify.Database.UserDAO;
 import com.example.spawtify.Database.entities.User;
 
@@ -25,11 +26,14 @@ public class LoginActivity extends AppCompatActivity {
     private String usernameString;
     private String passwordString;
 
+    private SpawtifyRepository spawtifyRepository;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         getDatabase();
+//        spawtifyRepository = SpawtifyRepository.getRepository(getApplication());
         wireUpDisplay();
 
     }
