@@ -1,6 +1,7 @@
 package com.example.spawtify.Database;
 
 import android.content.Context;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.room.Database;
@@ -10,6 +11,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import com.example.spawtify.Database.entities.Song;
 import com.example.spawtify.Database.entities.User;
+import com.example.spawtify.MainActivity;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -20,14 +22,14 @@ import java.util.concurrent.Executors;
  * @since 04-09-2024
  */
 
-@Database(entities = {User.class, Song.class}, version = 2, exportSchema = false)
+@Database(entities = {User.class, Song.class}, version = 1, exportSchema = false)
 public abstract class SpawtifyDatabase extends RoomDatabase {
 
     public static final String DB_NAME = "Spawtify_Database";
     //Database of users
     public static final String USER_TABLE = "User_Table";
     //Database of songs
-    public static final String SONGLIST = "Songlist";
+    public static final String SONGLIST = "SongList";
 
     //Instance only ever exists in RAM -- helps prevent conflicts and allows database to work well
     private static volatile SpawtifyDatabase INSTANCE;
@@ -70,10 +72,25 @@ public abstract class SpawtifyDatabase extends RoomDatabase {
         @Override
         public void onCreate(@NonNull SupportSQLiteDatabase db){
             super.onCreate(db);
-//            Log.i(MainActivity.TAG, "DATABASE CREATED");
+            Log.i(MainActivity.TAG, "DATABASE CREATED");
+
             //Used as a way to insert default records into the database
             //Is a lambda (anonymous function)
-            //TODO: add databaseWriteExecutor.execute(() -> {...}
+
+            //  Creates predefined users, 1 admin and 1 regular user
+            databaseWriteExecutor.execute(() -> {
+                UserDAO userDAO = INSTANCE.getUserDAO();
+                userDAO.deleteAll();
+
+                //  Create admin
+                User admin = new User("admin", "admin");
+                admin.setAdmin(true);
+                userDAO.insert(admin);
+
+                //  Create test user
+                User testUser = new User("testuser", "testuser");
+                userDAO.insert(testUser);
+            });
         }
     };
 

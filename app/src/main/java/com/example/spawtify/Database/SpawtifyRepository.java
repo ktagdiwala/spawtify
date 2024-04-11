@@ -1,14 +1,14 @@
 package com.example.spawtify.Database;
 
 import android.app.Application;
-
-import com.example.spawtify.Database.entities.Song;
 import android.util.Log;
 
 import com.example.spawtify.Database.entities.Song;
+import com.example.spawtify.Database.entities.User;
 import com.example.spawtify.MainActivity;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
@@ -21,35 +21,58 @@ import java.util.concurrent.Future;
 
 public class SpawtifyRepository {
 
-    private SongDAO songDAO;
-    private ArrayList<Song> allSongs;
+    private final SongDAO songDAO;
+    private final UserDAO userDAO;
+    private List<Song> allSongs;
+    private List<User> allUsers;
+
+    private static SpawtifyRepository repository;
 
     /** Overloaded Constructor SpawtifyRepository:
      * Overrides the default constructor
      * @param application is the application passed in
      */
-    public SpawtifyRepository(Application application){
+    private SpawtifyRepository(Application application){
         SpawtifyDatabase db = SpawtifyDatabase.getDatabase(application);
         this.songDAO = db.getSongDAO();
-//        this.allSongs = this.songDAO.getAllRecords();
+        this.userDAO = db.getUserDAO();
+
+        this.allUsers = this.userDAO.getAllUsers();
+        this.allSongs = this.songDAO.getAllRecords();
     }
 
-    /** getAllSongs:
-     * retrieves the list of Songs from the database of songs
-     * @return an ArrayList of all songs in the song database
-     */
-    public ArrayList<Song> getAllSongs(){
+    public static SpawtifyRepository getRepository(Application application){
+        if (repository != null){
+            return repository;
+        }
+        Future<SpawtifyRepository> future;
+        future = SpawtifyDatabase.databaseWriteExecutor.submit(
+                new Callable<SpawtifyRepository>() {
+                    @Override
+                    public SpawtifyRepository call() throws Exception {
+                        return new SpawtifyRepository(application);
+                    }
+                }
+        );
+        try{
+            return future.get();
+        }catch (InterruptedException | ExecutionException e){
+            Log.d(MainActivity.TAG, "Problem getting Spawtify Repository, thread error");
+        }
+        return null;
+    }
+
+    public List<User> getAllUsers(){
         /* States that this will be fulfilled sometime in the future
          * Allows a thread to perform its operation
          * When it comes back, we can process it
          */
-        Future<ArrayList<Song>> future = SpawtifyDatabase.databaseWriteExecutor.submit(
-                new Callable<ArrayList<Song>>() {
+        Future<List<User>> future;
+        future = SpawtifyDatabase.databaseWriteExecutor.submit(
+                new Callable<List<User>>() {
                     @Override
-                    public ArrayList<Song> call() throws Exception {
-//                        return songDAO.getAllRecords();
-                        return allSongs;
-//                        return songDAO.getAllRecords();
+                    public List<User> call() throws Exception {
+                        return userDAO.getAllUsers();
                     }
                 }
         );
@@ -57,7 +80,33 @@ public class SpawtifyRepository {
             return future.get();
         }catch (InterruptedException | ExecutionException e){
             e.printStackTrace();
-//            Log.i(MainActivity.TAG, "Problem when getting all Songs in the repository");
+            Log.i(MainActivity.TAG, "Problem when getting all Songs in the repository");
+        }
+        return null;
+    }
+
+    /** getAllSongs:
+     * retrieves the list of Songs from the database of songs
+     * @return an ArrayList of all songs in the song database
+     */
+    public List<Song> getAllSongs(){
+        /* States that this will be fulfilled sometime in the future
+         * Allows a thread to perform its operation
+         * When it comes back, we can process it
+         */
+        Future<List<Song>> future = SpawtifyDatabase.databaseWriteExecutor.submit(
+                new Callable<List<Song>>() {
+                    @Override
+                    public List<Song> call() throws Exception {
+                        return songDAO.getAllRecords();
+                    }
+                }
+        );
+        try {
+            return future.get();
+        }catch (InterruptedException | ExecutionException e){
+            e.printStackTrace();
+            Log.i(MainActivity.TAG, "Problem when getting all Songs in the repository");
         }
         return null;
     }
@@ -66,6 +115,13 @@ public class SpawtifyRepository {
         SpawtifyDatabase.databaseWriteExecutor.execute(()->
         {
             songDAO.insert(song);
+        });
+    }
+
+    public void insertUser(User... users){
+        SpawtifyDatabase.databaseWriteExecutor.execute(()->
+        {
+            userDAO.insert(users);
         });
     }
 }

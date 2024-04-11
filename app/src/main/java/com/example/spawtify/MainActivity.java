@@ -17,6 +17,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.example.spawtify.Database.SpawtifyDatabase;
+import com.example.spawtify.Database.SpawtifyRepository;
 import com.example.spawtify.Database.UserDAO;
 import com.example.spawtify.Database.entities.User;
 
@@ -24,8 +25,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-//    public static final String TAG = "Spawtify";
-
+    public static final String TAG = "K_J_Spawtify";
 
     //  USER FIELDS
     private static final String USER_ID_KEY = "com.example.spawtify.userIdKey";
@@ -36,13 +36,16 @@ public class MainActivity extends AppCompatActivity {
     private int userId = -1;
     private SharedPreferences preferences = null;
 
+    private SpawtifyRepository spawtifyRepository;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        wireUpDisplay();
+        spawtifyRepository = SpawtifyRepository.getRepository(getApplication());
         getDatabase();
+        wireUpDisplay();
         checkForUser();
         addUserToPreferences(userId);
         loginUser(userId);

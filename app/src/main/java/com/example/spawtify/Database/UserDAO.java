@@ -8,6 +8,7 @@ import androidx.room.Query;
 
 import com.example.spawtify.Database.entities.User;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /** UserDAO:
@@ -35,4 +36,7 @@ public interface UserDAO {
 
     @Query("SELECT * FROM " + SpawtifyDatabase.USER_TABLE + " WHERE userId = :userId")
     User getUserByUserId(int userId);
+
+    @Query("DELETE FROM " + SpawtifyDatabase.USER_TABLE)
+    void deleteAll();
 }
