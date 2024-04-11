@@ -22,7 +22,7 @@ import java.util.concurrent.Executors;
  * @since 04-09-2024
  */
 
-@Database(entities = {User.class, Song.class}, version = 2, exportSchema = false)
+@Database(entities = {User.class, Song.class}, version = 3, exportSchema = false)
 public abstract class SpawtifyDatabase extends RoomDatabase {
 
     public static final String DB_NAME = "Spawtify_Database";
