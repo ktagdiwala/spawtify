@@ -46,22 +46,19 @@ public class LoginActivity extends AppCompatActivity {
         password = findViewById(R.id.editTextLoginPassword);
         Button button = findViewById(R.id.buttonLogin);
 
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getValuesFromDisplay();
-                if (checkForUserInDatabase()){
-                    if (!validatePassword()){
-                        Toast.makeText
-                                        (LoginActivity.this,
-                                        "Invalid password",
-                                        Toast.LENGTH_SHORT).show();
-                    }else{
-                        Intent intent = MainActivity.intentFactory
-                                            (getApplicationContext(),user.getUserId());
-                        startActivity(intent);
-                    }
-                };
+        button.setOnClickListener(v -> {
+            getValuesFromDisplay();
+            if (checkForUserInDatabase()){
+                if (!validatePassword()){
+                    Toast.makeText
+                                    (LoginActivity.this,
+                                    "Invalid password",
+                                    Toast.LENGTH_SHORT).show();
+                }else{
+                    Intent intent = MainActivity.intentFactory
+                                        (getApplicationContext(),user.getUserId());
+                    startActivity(intent);
+                }
             }
         });
     }
