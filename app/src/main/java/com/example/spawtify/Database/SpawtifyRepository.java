@@ -27,7 +27,7 @@ public class SpawtifyRepository {
     public SpawtifyRepository(Application application){
         SpawtifyDatabase db = SpawtifyDatabase.getDatabase(application);
         this.songDAO = db.getSongDAO();
-        this.allSongs = this.songDAO.getAllRecords();
+//        this.allSongs = this.songDAO.getAllRecords();
     }
 
     /** getAllSongs:
@@ -43,7 +43,8 @@ public class SpawtifyRepository {
                 new Callable<ArrayList<Song>>() {
                     @Override
                     public ArrayList<Song> call() throws Exception {
-                        return songDAO.getAllRecords();
+//                        return songDAO.getAllRecords();
+                        return allSongs;
                     }
                 }
         );
