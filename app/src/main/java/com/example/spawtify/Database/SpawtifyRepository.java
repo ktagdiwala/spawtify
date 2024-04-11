@@ -1,9 +1,11 @@
 package com.example.spawtify.Database;
 
 import android.app.Application;
+import android.util.Log;
 
 import com.example.spawtify.Database.entities.Song;
 import com.example.spawtify.Database.entities.User;
+import com.example.spawtify.MainActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,22 +22,44 @@ import java.util.concurrent.Future;
 public class SpawtifyRepository {
 
     private final SongDAO songDAO;
-    private List<Song> allSongs;
-
     private final UserDAO userDAO;
+    private List<Song> allSongs;
     private List<User> allUsers;
+
+    private static SpawtifyRepository repository;
 
     /** Overloaded Constructor SpawtifyRepository:
      * Overrides the default constructor
      * @param application is the application passed in
      */
-    public SpawtifyRepository(Application application){
+    private SpawtifyRepository(Application application){
         SpawtifyDatabase db = SpawtifyDatabase.getDatabase(application);
         this.songDAO = db.getSongDAO();
         this.userDAO = db.getUserDAO();
 
         this.allUsers = this.userDAO.getAllUsers();
         this.allSongs = this.songDAO.getAllRecords();
+    }
+
+    public static SpawtifyRepository getRepository(Application application){
+        if (repository != null){
+            return repository;
+        }
+        Future<SpawtifyRepository> future;
+        future = SpawtifyDatabase.databaseWriteExecutor.submit(
+                new Callable<SpawtifyRepository>() {
+                    @Override
+                    public SpawtifyRepository call() throws Exception {
+                        return new SpawtifyRepository(application);
+                    }
+                }
+        );
+        try{
+            return future.get();
+        }catch (InterruptedException | ExecutionException e){
+            Log.d(MainActivity.TAG, "Problem getting Spawtify Repository, thread error");
+        }
+        return null;
     }
 
     public List<User> getAllUsers(){
@@ -56,7 +80,7 @@ public class SpawtifyRepository {
             return future.get();
         }catch (InterruptedException | ExecutionException e){
             e.printStackTrace();
-//            Log.i(MainActivity.TAG, "Problem when getting all Songs in the repository");
+            Log.i(MainActivity.TAG, "Problem when getting all Songs in the repository");
         }
         return null;
     }
@@ -82,7 +106,7 @@ public class SpawtifyRepository {
             return future.get();
         }catch (InterruptedException | ExecutionException e){
             e.printStackTrace();
-//            Log.i(MainActivity.TAG, "Problem when getting all Songs in the repository");
+            Log.i(MainActivity.TAG, "Problem when getting all Songs in the repository");
         }
         return null;
     }
