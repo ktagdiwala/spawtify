@@ -50,8 +50,6 @@ public class MainActivity extends AppCompatActivity {
         addUserToPreferences(userId);
         loginUser(userId);
         invalidateOptionsMenu();
-
-
     }
 
     @Override
