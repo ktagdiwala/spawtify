@@ -23,5 +23,8 @@ public interface SongDAO {
 //    @Query("SELECT * FROM " + SpawtifyDatabase.SONGLIST)
 //    ArrayList<Song> getAllRecords();
 
+//    @Query("SELECT * FROM " + SpawtifyDatabase.SONGLIST)
+//    ArrayList<Song> getAllRecords();
+
 
 }

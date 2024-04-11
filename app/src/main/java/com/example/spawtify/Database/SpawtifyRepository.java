@@ -3,6 +3,10 @@ package com.example.spawtify.Database;
 import android.app.Application;
 
 import com.example.spawtify.Database.entities.Song;
+import android.util.Log;
+
+import com.example.spawtify.Database.entities.Song;
+import com.example.spawtify.MainActivity;
 
 import java.util.ArrayList;
 import java.util.concurrent.Callable;
@@ -45,6 +49,7 @@ public class SpawtifyRepository {
                     public ArrayList<Song> call() throws Exception {
 //                        return songDAO.getAllRecords();
                         return allSongs;
+//                        return songDAO.getAllRecords();
                     }
                 }
         );

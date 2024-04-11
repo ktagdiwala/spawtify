@@ -24,6 +24,9 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
+//    public static final String TAG = "Spawtify";
+
+
     //  USER FIELDS
     private static final String USER_ID_KEY = "com.example.spawtify.userIdKey";
     private static final String PREFERENCES_KEY = "com.example.spawtify.preferencesKey";
