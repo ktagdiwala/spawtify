@@ -19,11 +19,11 @@ import java.util.concurrent.Future;
 
 public class SpawtifyRepository {
 
-    private SongDAO songDAO;
+    private final SongDAO songDAO;
     private ArrayList<Song> allSongs;
 
-    private UserDAO userDAO;
-    private ArrayList<User> allUsers;
+    private final UserDAO userDAO;
+    private List<User> allUsers;
 
     /** Overloaded Constructor SpawtifyRepository:
      * Overrides the default constructor
@@ -32,22 +32,22 @@ public class SpawtifyRepository {
     public SpawtifyRepository(Application application){
         SpawtifyDatabase db = SpawtifyDatabase.getDatabase(application);
         this.songDAO = db.getSongDAO();
+        this.userDAO = db.getUserDAO();
 //        this.allSongs = this.songDAO.getAllRecords();
         //  TODO: uncomment this out later
     }
 
-    public ArrayList<User> getAllUsers(){
+    public List<User> getAllUsers(){
         /* States that this will be fulfilled sometime in the future
          * Allows a thread to perform its operation
          * When it comes back, we can process it
          */
-        Future<ArrayList<User>> future;
+        Future<List<User>> future;
         future = SpawtifyDatabase.databaseWriteExecutor.submit(
-                new Callable<ArrayList<User>>() {
+                new Callable<List<User>>() {
                     @Override
-                    public ArrayList<User> call() throws Exception {
-//                        return userDAO.getAllUsers();
-                        return allUsers;
+                    public List<User> call() throws Exception {
+                        return userDAO.getAllUsers();
                         //  TODO: uncomment original return
                     }
                 }
@@ -93,6 +93,13 @@ public class SpawtifyRepository {
         SpawtifyDatabase.databaseWriteExecutor.execute(()->
         {
             songDAO.insert(song);
+        });
+    }
+
+    public void insertUser(User... users){
+        SpawtifyDatabase.databaseWriteExecutor.execute(()->
+        {
+            userDAO.insert(users);
         });
     }
 }
