@@ -37,4 +37,7 @@ public interface UserDAO {
 
     @Query("SELECT * FROM " + SpawtifyDatabase.USER_TABLE + " WHERE userId = :userId")
     User getUserByUserId(int userId);
+
+    @Query("DELETE FROM " + SpawtifyDatabase.USER_TABLE)
+    void deleteAll();
 }
