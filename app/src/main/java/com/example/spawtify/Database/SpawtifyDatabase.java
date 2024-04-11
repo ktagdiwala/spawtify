@@ -23,7 +23,7 @@ import java.util.concurrent.Executors;
 @Database(entities = {User.class, Song.class}, version = 2, exportSchema = false)
 public abstract class SpawtifyDatabase extends RoomDatabase {
 
-    private static final String DB_NAME = "Spawtify_Database";
+    public static final String DB_NAME = "Spawtify_Database";
     //Database of users
     public static final String USER_TABLE = "User_Table";
     //Database of songs
