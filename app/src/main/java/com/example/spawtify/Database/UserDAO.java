@@ -8,6 +8,7 @@ import androidx.room.Query;
 
 import com.example.spawtify.Database.entities.User;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /** UserDAO:
@@ -29,6 +30,7 @@ public interface UserDAO {
 
     @Query("SELECT * FROM " + SpawtifyDatabase.USER_TABLE + " ORDER BY username")
     List<User> getAllUsers();
+    //  TODO: Figure out whether this is supposed to be a list or arrayList
 
     @Query("SELECT * FROM " + SpawtifyDatabase.USER_TABLE + " WHERE username = :username")
     User getUserByUsername(String username);
