@@ -20,7 +20,7 @@ import java.util.concurrent.Future;
 public class SpawtifyRepository {
 
     private final SongDAO songDAO;
-    private ArrayList<Song> allSongs;
+    private List<Song> allSongs;
 
     private final UserDAO userDAO;
     private List<User> allUsers;
@@ -33,8 +33,9 @@ public class SpawtifyRepository {
         SpawtifyDatabase db = SpawtifyDatabase.getDatabase(application);
         this.songDAO = db.getSongDAO();
         this.userDAO = db.getUserDAO();
-//        this.allSongs = this.songDAO.getAllRecords();
-        //  TODO: uncomment this out later
+
+        this.allUsers = this.userDAO.getAllUsers();
+        this.allSongs = this.songDAO.getAllRecords();
     }
 
     public List<User> getAllUsers(){
@@ -48,7 +49,6 @@ public class SpawtifyRepository {
                     @Override
                     public List<User> call() throws Exception {
                         return userDAO.getAllUsers();
-                        //  TODO: uncomment original return
                     }
                 }
         );
@@ -65,18 +65,16 @@ public class SpawtifyRepository {
      * retrieves the list of Songs from the database of songs
      * @return an ArrayList of all songs in the song database
      */
-    public ArrayList<Song> getAllSongs(){
+    public List<Song> getAllSongs(){
         /* States that this will be fulfilled sometime in the future
          * Allows a thread to perform its operation
          * When it comes back, we can process it
          */
-        Future<ArrayList<Song>> future = SpawtifyDatabase.databaseWriteExecutor.submit(
-                new Callable<ArrayList<Song>>() {
+        Future<List<Song>> future = SpawtifyDatabase.databaseWriteExecutor.submit(
+                new Callable<List<Song>>() {
                     @Override
-                    public ArrayList<Song> call() throws Exception {
-//                        return songDAO.getAllRecords();
-                        //  TODO: uncomment this out later
-                        return allSongs;
+                    public List<Song> call() throws Exception {
+                        return songDAO.getAllRecords();
                     }
                 }
         );
