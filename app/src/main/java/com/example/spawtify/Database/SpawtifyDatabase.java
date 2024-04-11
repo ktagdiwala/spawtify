@@ -27,7 +27,7 @@ public abstract class SpawtifyDatabase extends RoomDatabase {
     //Database of users
     public static final String USER_TABLE = "User_Table";
     //Database of songs
-    public static final String SONGLIST = "Songlist";
+    public static final String SONGLIST = "SongList";
 
     //Instance only ever exists in RAM -- helps prevent conflicts and allows database to work well
     private static volatile SpawtifyDatabase INSTANCE;
@@ -73,7 +73,18 @@ public abstract class SpawtifyDatabase extends RoomDatabase {
 //            Log.i(MainActivity.TAG, "DATABASE CREATED");
             //Used as a way to insert default records into the database
             //Is a lambda (anonymous function)
-            //TODO: add databaseWriteExecutor.execute(() -> {...}
+
+            //  Creates predefined users, 1 admin and 1 regular user
+            databaseWriteExecutor.execute(() -> {
+                UserDAO userDAO = INSTANCE.getUserDAO();
+                userDAO.deleteAll();
+                User admin = new User("admin", "admin");
+                admin.setAdmin(true);
+                userDAO.insert(admin);
+
+                User testUser = new User("testuser", "testuser");
+                userDAO.insert(testUser);
+            });
         }
     };
 
