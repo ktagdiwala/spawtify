@@ -8,6 +8,7 @@ import androidx.room.Query;
 import com.example.spawtify.Database.entities.Song;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /** SongDAO:
  * DAO object associated with a song
@@ -20,8 +21,6 @@ public interface SongDAO {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(Song song);
 
-//    @Query("SELECT * FROM " + SpawtifyDatabase.SONGLIST)
-//    ArrayList<Song> getAllRecords();
-
-
+    @Query("SELECT * FROM " + SpawtifyDatabase.SONGLIST)
+    List<Song> getAllRecords();
 }
