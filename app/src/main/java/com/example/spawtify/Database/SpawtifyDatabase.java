@@ -1,6 +1,7 @@
 package com.example.spawtify.Database;
 
 import android.content.Context;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.room.Database;
@@ -10,6 +11,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import com.example.spawtify.Database.entities.Song;
 import com.example.spawtify.Database.entities.User;
+import com.example.spawtify.MainActivity;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -70,7 +72,8 @@ public abstract class SpawtifyDatabase extends RoomDatabase {
         @Override
         public void onCreate(@NonNull SupportSQLiteDatabase db){
             super.onCreate(db);
-//            Log.i(MainActivity.TAG, "DATABASE CREATED");
+            Log.i(MainActivity.TAG, "DATABASE CREATED");
+
             //Used as a way to insert default records into the database
             //Is a lambda (anonymous function)
 
