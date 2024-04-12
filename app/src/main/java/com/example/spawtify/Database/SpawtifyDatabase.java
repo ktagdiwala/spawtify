@@ -83,13 +83,13 @@ public abstract class SpawtifyDatabase extends RoomDatabase {
                 userDAO.deleteAll();
 
                 //  Create admin
-                User admin = new User("admin", "admin");
-                admin.setAdmin(true);
-                userDAO.insert(admin);
+                User admin2 = new User("admin2", "admin2");
+                admin2.setAdmin(true);
+                userDAO.insert(admin2);
 
                 //  Create test user
-                User testUser = new User("testuser", "testuser");
-                userDAO.insert(testUser);
+                User testuser1 = new User("testuser1", "testuser1");
+                userDAO.insert(testuser1);
             });
         }
     };
