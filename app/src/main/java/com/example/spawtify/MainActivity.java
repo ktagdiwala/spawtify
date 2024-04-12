@@ -20,10 +20,17 @@ import com.example.spawtify.Database.SpawtifyDatabase;
 import com.example.spawtify.Database.SpawtifyRepository;
 import com.example.spawtify.Database.UserDAO;
 import com.example.spawtify.Database.entities.User;
+import com.example.spawtify.databinding.ActivityMainBinding;
 
 import java.util.List;
 
+/**
+ *
+ */
 public class MainActivity extends AppCompatActivity {
+
+    //allows us to read information from the display
+    ActivityMainBinding binding;
 
     public static final String TAG = "K_J_Spawtify";
 
@@ -41,7 +48,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        //turns UI elements (inflates them) into objects to manipulate in java files
+        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
         spawtifyRepository = SpawtifyRepository.getRepository(getApplication());
         getDatabase();
@@ -50,8 +59,21 @@ public class MainActivity extends AppCompatActivity {
         addUserToPreferences(userId);
         loginUser(userId);
         invalidateOptionsMenu();
+
+        //Determines admin button visibility
+        if(user.isAdmin()){
+            binding.AdminButton.setVisibility(View.VISIBLE);
+        }else{
+            binding.AdminButton.setVisibility(View.INVISIBLE);
+        }
     }
 
+    /** onCreateOptionsMenu:
+     *
+     * @param menu The options menu in which you place your items.
+     *
+     * @return
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -59,6 +81,13 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
+    /** onPrepareOptionsMenu:
+     *
+     * @param menu The options menu as last shown or first initialized by
+     *             onCreateOptionsMenu().
+     *
+     * @return
+     */
     @Override
     public boolean onPrepareOptionsMenu(Menu menu){
         MenuItem item = menu.findItem(R.id.logoutMenuItem);
@@ -74,23 +103,32 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
+    /** wireUpDisplay:
+     * Connects the buttons on the screen to their corresponding views
+     */
     private void wireUpDisplay(){
         //  SCREEN/PAGE FIELDS
-        Button logoutButton = findViewById(R.id.buttonLogout);
 
-        logoutButton.setOnClickListener(v -> logoutUser());
+        binding.buttonLogout.setOnClickListener(v -> logoutUser());
+
     }
 
+    /** loginUser:
+     *
+     * @param userId
+     */
     private void loginUser(int userId){
         user = userDao.getUserByUserId(userId);
         invalidateOptionsMenu();
     }
 
-
+    /** logoutUser:
+     *
+     */
     private void logoutUser(){
         AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
 
-        alertBuilder.setMessage(R.string.logout);
+        alertBuilder.setMessage(binding.buttonLogout.getText().toString() + "?");
 
         alertBuilder.setPositiveButton(getString(R.string.yes),
                 (dialog, which) -> {
@@ -107,6 +145,10 @@ public class MainActivity extends AppCompatActivity {
         alertBuilder.create().show();
     }
 
+    /** addUserToPreferences:
+     *
+     * @param userId
+     */
     private void addUserToPreferences(int userId){
         if (preferences == null){
             getPrefs();
@@ -125,6 +167,9 @@ public class MainActivity extends AppCompatActivity {
         getIntent().putExtra(USER_ID_KEY, -1);
     }
 
+    /** getDatabase:
+     *
+     */
     public void getDatabase(){
         userDao = Room.databaseBuilder(this, SpawtifyDatabase.class, SpawtifyDatabase.DB_NAME)
                 .allowMainThreadQueries()
@@ -132,10 +177,16 @@ public class MainActivity extends AppCompatActivity {
                 .getUserDAO();
     }
 
+    /** getPrefs:
+     *
+     */
     private void getPrefs(){
         preferences = this.getSharedPreferences(PREFERENCES_KEY, Context.MODE_PRIVATE);
     }
 
+    /** checkForUser:
+     * checks if a user is logged in and displays the login page or landing page accordingly
+     */
     private void checkForUser() {
         userId = getIntent().getIntExtra(USER_ID_KEY, -1);
 
@@ -169,6 +220,12 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    /** intentFactory:
+     *
+     * @param context
+     * @param userId
+     * @return
+     */
     public static Intent intentFactory(Context context, int userId){
         Intent intent = new Intent(context, MainActivity.class);
         intent.putExtra(USER_ID_KEY, userId);
