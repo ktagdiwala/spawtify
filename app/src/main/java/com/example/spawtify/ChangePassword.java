@@ -134,21 +134,18 @@ public class ChangePassword extends AppCompatActivity {
         //  If user entered old password does not match user's actual old password, then return
         //  false
         if (!oldPassword.equals(user.getPassword())){
-            Toast.makeText
-                    (this, "Old password is incorrect", Toast.LENGTH_SHORT).show();
+            toaster("Old password is incorrect");
             return false;
         }
         //  If new password entered by user is less than 3 characters long, then return false
         if (newPassword.length() < 3){
-            Toast.makeText
-                    (this, "Password length too short", Toast.LENGTH_SHORT).show();
+            toaster("Password length too short, must be at least 3 characters");
             return false;
         }
         //  If confirmed password entered by user does not equal new password entered by user, then
         //  return false
         if (!confirmedPassword.equals(newPassword)){
-            Toast.makeText
-                    (this, "New passwords do not match", Toast.LENGTH_SHORT).show();
+            toaster("New passwords do not match");
             return false;
         }
         //  All 3 checks have been conducted, passwords meet requirements, return true
@@ -165,5 +162,13 @@ public class ChangePassword extends AppCompatActivity {
         Intent intent = new Intent(context, ChangePassword.class);
         intent.putExtra(USER_ID_KEY, userId);
         return intent;
+    }
+
+    /** toaster
+     * takes some bread (a message) and makes toast
+     * @param message the message displayed in the Toast
+     */
+    private void toaster(String message){
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 }

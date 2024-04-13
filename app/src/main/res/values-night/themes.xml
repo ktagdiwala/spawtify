@@ -2,7 +2,7 @@
     <!-- Base application theme. -->
     <style name="Base.Theme.Spawtify" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <!-- Customize your dark theme here. -->
-        <item name="colorPrimary">@color/purple</item>
+        <item name="colorPrimary">@color/green</item>
 <!--        <item name="android:statusBarColor">?attr/colorPrimary</item>-->
         <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
     </style>

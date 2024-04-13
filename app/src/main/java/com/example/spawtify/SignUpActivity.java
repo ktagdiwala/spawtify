@@ -77,6 +77,7 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     /** checkRequirements:
+     * Checks if username is already in use
      * Checks if username is longer than 3 characters
      * Checks if password is longer than 3 characters
      * Checks if password and confirm password match
@@ -84,16 +85,20 @@ public class SignUpActivity extends AppCompatActivity {
      * @return True if username and password meet requirements | False if either fail requirements
      */
     private boolean checkRequirements(){
+        if (userDAO.getUserByUsername(usernameString) != null){
+            toaster("Username already in use");
+            return false;
+        }
         if (usernameString.length() < 3){
-            Toast.makeText(this, "Username too short", Toast.LENGTH_SHORT).show();
+            toaster("Username too short, must be at least 3 characters");
             return false;
         }
         if (passwordString.length() < 3){
-            Toast.makeText(this, "Password too short", Toast.LENGTH_SHORT).show();
+            toaster("Password too short, must be at least 3 characters");
             return false;
         }
         if (!passwordString.equals(confirmPasswordString)){
-            Toast.makeText(this, "Passwords do not match", Toast.LENGTH_SHORT).show();
+            toaster("Passwords do not match");
             return false;
         }
         return true;
@@ -119,7 +124,7 @@ public class SignUpActivity extends AppCompatActivity {
                 .getUserDAO();
     }
 
-    /**
+    /** intentFactory:
      *
      * @param applicationContext    current state of application
      * @return  intent to be used in startActivity method called in login activity
@@ -128,4 +133,13 @@ public class SignUpActivity extends AppCompatActivity {
         Intent intent = new Intent(applicationContext, SignUpActivity.class);
         return intent;
     }
+
+    /** toaster
+     * takes some bread (a message) and makes toast
+     * @param message the message displayed in the Toast
+     */
+    private void toaster(String message){
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
+
 }

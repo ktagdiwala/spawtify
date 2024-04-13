@@ -7,6 +7,17 @@
     android:layout_height="match_parent"
     tools:context=".LoginActivity">
 
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@mipmap/ic_launcher_foreground"
+        android:contentDescription="@string/spawtify_logo"/>
+
     <EditText
         android:id="@+id/editTextLoginUsername"
         android:layout_width="wrap_content"
@@ -16,19 +27,21 @@
         android:inputType="textPersonName"
         android:hint="@string/username"
         android:textAlignment="center"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
     <EditText
         android:id="@+id/editTextLoginPassword"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="20dp"
         android:ems="10"
         android:hint="@string/password"
         android:textAlignment="center"
         android:inputType="textPassword"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextLoginUsername" />
@@ -40,6 +53,7 @@
         android:layout_marginTop="24dp"
         android:text="@string/login"
         android:textSize="30sp"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextLoginPassword" />
@@ -48,12 +62,11 @@
         android:id="@+id/buttonSignUp"
         android:layout_width="200dp"
         android:layout_height="100dp"
-        android:layout_marginTop="200dp"
+        android:layout_marginTop="20dp"
         android:text="@string/signup"
         android:textSize="30sp"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.500"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/buttonLogin" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>
