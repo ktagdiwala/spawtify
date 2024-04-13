@@ -180,8 +180,16 @@ public class MainActivity extends AppCompatActivity {
     private void wireUpDisplay(){
         //  SCREEN/PAGE FIELDS
 
+        //  Sets up logout button -> calls logoutUser method when pressed
         binding.buttonLogout.setOnClickListener(v -> logoutUser());
 
+        //  Sets up change password button -> calls changePassword method when pressed
+        binding.ChangePasswordButton.setOnClickListener(v -> changePassword());
+    }
+
+    private void changePassword(){
+        Intent intent = ChangePassword.intentFactory(this,userId);
+        startActivity(intent);
     }
 
     /** loginUser:
@@ -228,7 +236,7 @@ public class MainActivity extends AppCompatActivity {
     /** addUserToPreferences:
      * User ID is added to preferences. This adds the current user to preference data
      *
-     * @param userId
+     * @param userId    user ID is sent in to set preferences
      */
     private void addUserToPreferences(int userId){
         //  If preferences = null, set up preference data by calling getPrefs
