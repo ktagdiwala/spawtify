@@ -185,6 +185,13 @@ public class MainActivity extends AppCompatActivity {
 
         //  Sets up change password button -> calls changePassword method when pressed
         binding.ChangePasswordButton.setOnClickListener(v -> changePassword());
+
+        binding.AdminButton.setOnClickListener(v -> adminPerks());
+    }
+
+    private void adminPerks(){
+        Intent intent = AdminPerks.intentFactory(this);
+        startActivity(intent);
     }
 
     private void changePassword(){
