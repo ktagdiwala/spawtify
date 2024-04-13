@@ -17,4 +17,18 @@
     <string name="old_password">Old Password</string>
     <string name="new_password">New Password</string>
     <string name="update_password">Update Password</string>
+    <string name="new_song">New Song</string>
+    <string name="delete_song">Delete Song</string>
+    <string name="edit_song">Edit Song</string>
+    <string name="manage_users">Manage Users</string>
+    <string name="admin_perks">ADMIN PERKS</string>
+    <string name="new_edit_song">New/Edit Song</string>
+    <string name="title">Title</string>
+    <string name="artist">Artist</string>
+    <string name="album">Album</string>
+    <string name="genre">Genre</string>
+    <string name="not_explicit">Not Explicit</string>
+    <string name="add_song">Add Song</string>
+    <string name="explicit">Explicit</string>
+    <string name="save_changes">Save Changes</string>
 </resources>
