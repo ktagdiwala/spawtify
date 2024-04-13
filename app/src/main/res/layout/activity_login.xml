@@ -62,7 +62,7 @@
         android:id="@+id/buttonSignUp"
         android:layout_width="200dp"
         android:layout_height="100dp"
-        android:layout_marginTop="200dp"
+        android:layout_marginTop="20dp"
         android:text="@string/signup"
         android:textSize="30sp"
         app:layout_constraintHorizontal_bias="0.500"
