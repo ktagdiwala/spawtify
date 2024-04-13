@@ -13,4 +13,8 @@
     <string name="secret_admin_stuff">Secret Admin Stuff</string>
     <string name="signup">SIGN UP</string>
     <string name="confirm_password">Confirm Password</string>
+    <string name="username_displayed_here">username_displayed_here</string>
+    <string name="old_password">Old Password</string>
+    <string name="new_password">New Password</string>
+    <string name="update_password">Update Password</string>
 </resources>
