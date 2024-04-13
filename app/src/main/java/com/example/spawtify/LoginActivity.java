@@ -15,25 +15,26 @@ import com.example.spawtify.Database.SpawtifyDatabase;
 import com.example.spawtify.Database.SpawtifyRepository;
 import com.example.spawtify.Database.UserDAO;
 import com.example.spawtify.Database.entities.User;
+import com.example.spawtify.databinding.ActivityLoginBinding;
 
 public class LoginActivity extends AppCompatActivity {
-
-    private EditText username;
-    private EditText password;
-
     private UserDAO userDAO;
     private User user;
     private String usernameString;
     private String passwordString;
+
+    ActivityLoginBinding binding;
 
     private SpawtifyRepository spawtifyRepository;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        binding = ActivityLoginBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+
+        spawtifyRepository = SpawtifyRepository.getRepository(getApplication());
         getDatabase();
-//        spawtifyRepository = SpawtifyRepository.getRepository(getApplication());
         wireUpDisplay();
 
     }
@@ -47,11 +48,10 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void wireUpDisplay(){
-        username = findViewById(R.id.editTextLoginUsername);
-        password = findViewById(R.id.editTextLoginPassword);
-        Button button = findViewById(R.id.buttonLogin);
+        Button loginButton = binding.buttonLogin;
+        Button signUpButton = binding.buttonSignUp;
 
-        button.setOnClickListener(v -> {
+        loginButton.setOnClickListener(v -> {
             getValuesFromDisplay();
             if (checkForUserInDatabase()){
                 if (!validatePassword()){
@@ -66,6 +66,12 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         });
+
+        signUpButton.setOnClickListener(v -> {
+            Intent intent = SignUpActivity.intentFactory
+                                (getApplicationContext());
+            startActivity(intent);
+        });
     }
 
     private boolean validatePassword(){
@@ -73,8 +79,8 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void getValuesFromDisplay(){
-        usernameString = username.getText().toString();
-        passwordString = password.getText().toString();
+        usernameString = binding.editTextLoginUsername.getText().toString();
+        passwordString = binding.editTextLoginPassword.getText().toString();
     }
 
     private boolean checkForUserInDatabase(){
