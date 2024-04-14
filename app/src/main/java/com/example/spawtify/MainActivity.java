@@ -178,6 +178,12 @@ public class MainActivity extends AppCompatActivity {
      * Connects the buttons on the screen to their corresponding views
      */
     private void wireUpDisplay(){
+        // Sets up Browse Songs button
+        binding.BrowseSongsButton.setOnClickListener(v -> {
+            Intent intent = BrowseSongsActivity.intentFactory(getApplicationContext());
+            startActivity(intent);
+        });
+
         //  SCREEN/PAGE FIELDS
 
         //  Sets up logout button -> calls logoutUser method when pressed
