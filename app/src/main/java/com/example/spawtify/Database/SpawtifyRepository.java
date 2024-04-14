@@ -3,6 +3,8 @@ package com.example.spawtify.Database;
 import android.app.Application;
 import android.util.Log;
 
+import androidx.lifecycle.LiveData;
+
 import com.example.spawtify.Database.entities.Song;
 import com.example.spawtify.Database.entities.User;
 import com.example.spawtify.MainActivity;
@@ -87,8 +89,17 @@ public class SpawtifyRepository {
 
     /** getAllSongs:
      * retrieves the list of Songs from the database of songs
+     * @return an a LiveData object containing the list of all songs in the song database
+     */
+    public LiveData<List<Song>> getAllSongsLD(){
+        return songDAO.getAllRecordsLD();
+    }
+
+    /** getAllSongs:
+     * retrieves the list of Songs from the database of songs
      * @return an ArrayList of all songs in the song database
      */
+    @Deprecated
     public List<Song> getAllSongs(){
         /* States that this will be fulfilled sometime in the future
          * Allows a thread to perform its operation
