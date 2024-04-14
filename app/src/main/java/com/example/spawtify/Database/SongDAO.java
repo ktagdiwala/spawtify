@@ -1,5 +1,6 @@
 package com.example.spawtify.Database;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
@@ -23,4 +24,7 @@ public interface SongDAO {
 
     @Query("SELECT * FROM " + SpawtifyDatabase.SONGLIST)
     List<Song> getAllRecords();
+
+    @Query("SELECT * FROM " + SpawtifyDatabase.SONGLIST)
+    LiveData<List<Song>> getAllRecordsLD();
 }
