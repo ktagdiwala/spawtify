@@ -6,10 +6,13 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.spawtify.Database.SpawtifyRepository;
 import com.example.spawtify.databinding.ActivityBrowseSongsBinding;
+import com.example.spawtify.viewHolders.SongViewModel;
 import com.example.spawtify.viewHolders.SonglistAdapter;
 
 /** BrowseSongsActivity:
@@ -20,7 +23,10 @@ import com.example.spawtify.viewHolders.SonglistAdapter;
  */
 public class BrowseSongsActivity extends AppCompatActivity {
 
-    ActivityBrowseSongsBinding binding;
+    private ActivityBrowseSongsBinding binding;
+    private SpawtifyRepository repository;
+    private SongViewModel songViewModel;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,10 +34,20 @@ public class BrowseSongsActivity extends AppCompatActivity {
         binding = ActivityBrowseSongsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        //Reference to the the songViewModel
+        songViewModel = new ViewModelProvider(this).get(SongViewModel.class);
+
+        //Adds recycler view
         RecyclerView recyclerView = binding.SongDisplayRecyclerView;
         final SonglistAdapter adapter = new SonglistAdapter(new SonglistAdapter.SongDiff());
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        repository = SpawtifyRepository.getRepository(getApplication());
+
+        //adding an observer
+        songViewModel.getAllSongs().observe(this, songs -> {
+            adapter.submitList(songs);
+        });
     }
 
 
