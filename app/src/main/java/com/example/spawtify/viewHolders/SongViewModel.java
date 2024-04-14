@@ -11,7 +11,7 @@ import com.example.spawtify.Database.entities.Song;
 import java.util.List;
 
 /** SongViewModel:
- * TODO: add description
+ * Responsible for preparing and managing the data for songlist recycler view
  * @author Krishna Tagdiwala
  * @since 04-13-2024
  */
@@ -25,7 +25,7 @@ public class SongViewModel extends AndroidViewModel {
     //Contains the list of the songs
     private final LiveData<List<Song>> allSongsById;
 
-    /** SongViewModel constructor
+    /** SongViewModel constructor:
      * Overrides the default constructor to take in a parameter application
      * @param application is the application being passed in
      */
