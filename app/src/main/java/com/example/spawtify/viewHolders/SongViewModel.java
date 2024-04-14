@@ -21,9 +21,6 @@ public class SongViewModel extends AndroidViewModel {
     //Gets an instance of our repository
     private final SpawtifyRepository repository;
 
-    //Creates a LiveData object (an observable data holder class)
-    //Contains the list of the songs
-    private final LiveData<List<Song>> allSongsById;
 
     /** SongViewModel constructor:
      * Overrides the default constructor to take in a parameter application
@@ -36,11 +33,17 @@ public class SongViewModel extends AndroidViewModel {
         //Initializes the instance of repository
         repository = SpawtifyRepository.getRepository(application);
 
-        //Returns a LiveData object containing the list of songs
-        allSongsById = repository.getAllSongsLD();
     }
 
-    public LiveData<List<Song>> getAllSongsById() {
-        return allSongsById;
+    /** getAllSongs
+     * @return a LiveData object (an observable data holder class)
+     * which contains the list of songs
+     */
+    public LiveData<List<Song>> getAllSongs() {
+        return repository.getAllSongsLD();
+    }
+
+    public void insert(Song song){
+        repository.insertSong(song);
     }
 }
