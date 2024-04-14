@@ -22,7 +22,7 @@ import java.util.concurrent.Executors;
  * @since 04-09-2024
  */
 
-@Database(entities = {User.class, Song.class}, version = 1, exportSchema = false)
+@Database(entities = {User.class, Song.class}, version = 2, exportSchema = false)
 public abstract class SpawtifyDatabase extends RoomDatabase {
 
     public static final String DB_NAME = "Spawtify_Database";
@@ -77,19 +77,61 @@ public abstract class SpawtifyDatabase extends RoomDatabase {
             //Used as a way to insert default records into the database
             //Is a lambda (anonymous function)
 
-            //  Creates predefined users, 1 admin and 1 regular user
+            // Creates predefined users, 1 admin and 1 regular user
+            // Creates predefined songs
             databaseWriteExecutor.execute(() -> {
                 UserDAO userDAO = INSTANCE.getUserDAO();
                 userDAO.deleteAll();
+                SongDAO songDAO = INSTANCE.getSongDAO();
 
-                //  Create admin
+                // Create admin
                 User admin2 = new User("admin2", "admin2");
                 admin2.setAdmin(true);
                 userDAO.insert(admin2);
 
-                //  Create test user
+                // Create test user
                 User testuser1 = new User("testuser1", "testuser1");
                 userDAO.insert(testuser1);
+
+                // Create songs
+                 songDAO.insert(new Song("Shinunoga E-Wa", "Fujii Kaze",
+                        "HELP EVER HURT NEVER", "Jpop", false));
+                 songDAO.insert(new Song("YASASHISA", "Fujii Kaze",
+                         "HELP EVER HURT NEVER", "Jpop", false));
+                 songDAO.insert(new Song("Mo-Eh-Wa", "Fujii Kaze",
+                        "HELP EVER HURT NEVER", "Jpop", false));
+
+                 songDAO.insert(new Song("Mind Is A Prison", "Alec Benjamin",
+                        "These Two Windows", "Pop", false));
+                 songDAO.insert(new Song("Jesus In LA", "Alec Benjamin",
+                        "These Two Windows", "Pop", false));
+                 songDAO.insert(new Song("Must Have Been The Wind", "Alec Benjamin",
+                        "These Two Windows", "Pop", false));
+                 songDAO.insert(new Song("Just Like You", "Alec Benjamin",
+                        "These Two Windows", "Pop", false));
+
+                 songDAO.insert(new Song ("Tum Se Hi", "Pritam",
+                        "Jab We Met", "Bollywood", false));
+                 songDAO.insert(new Song ("Ye Ishq Hai", "Pritam",
+                        "Jab We Met", "Bollywood", false));
+                 songDAO.insert(new Song ("Nagada Nagada", "Pritam",
+                        "Jab We Met", "Bollywood", false));
+                 songDAO.insert(new Song ("Mauja Hi Mauja", "Pritam",
+                            "Jab We Met", "Bollywood", false));
+
+                 songDAO.insert(new Song ("Racing Into The Night", "YOASOBI",
+                         "single", "Jpop", false));
+                 songDAO.insert(new Song ("Sakura", "Cotton Vibe",
+                        "single", "lofi", false));
+                 songDAO.insert(new Song ("Rose", "D.O.",
+                        "Empathy", "Kpop", false));
+                 songDAO.insert(new Song ("I'm Gonna Love You", "D.O.",
+                        "Empathy", "Kpop", false));
+
+
+
+
+
             });
         }
     };

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <!-- Linear layout: items are listed one after another-->
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/recyclerItemTextView"
+        android:text="SONG"
+        android:layout_margin="8dp"
+        android:padding="4dp"
+        android:textSize="18sp"
+        android:backgroundTint="@color/cardview_dark_background"
+
+        />
+
+</LinearLayout>
