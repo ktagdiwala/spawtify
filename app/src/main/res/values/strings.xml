@@ -18,4 +18,6 @@
     <string name="old_password">Old Password</string>
     <string name="new_password">New Password</string>
     <string name="update_password">Update Password</string>
+    <string name="song_list">Song List</string>
+    <string name="filter">Filter</string>
 </resources>
