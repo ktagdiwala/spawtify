@@ -5,6 +5,7 @@ import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
+import androidx.room.Update;
 
 import com.example.spawtify.Database.entities.Song;
 
@@ -22,6 +23,9 @@ public interface SongDAO {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(Song song);
 
+    @Update(onConflict = OnConflictStrategy.REPLACE)
+    void update(Song song);
+
     @Query("SELECT * FROM " + SpawtifyDatabase.SONGLIST)
     LiveData<List<Song>> getAllRecordsLD();
 
@@ -30,4 +34,7 @@ public interface SongDAO {
 
     @Query("DELETE FROM " + SpawtifyDatabase.SONGLIST)
     void deleteAll();
+
+    @Query("DELETE FROM " + SpawtifyDatabase.SONGLIST + " WHERE songId = :songId")
+    void deleteSongById(int songId);
 }

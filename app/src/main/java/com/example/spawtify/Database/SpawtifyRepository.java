@@ -131,4 +131,16 @@ public class SpawtifyRepository {
             userDAO.insert(users);
         });
     }
+
+    public void removeSongById(int songId) {
+        SpawtifyDatabase.databaseWriteExecutor.execute(()->{
+            songDAO.deleteSongById(songId);
+        });
+    }
+
+    public void updateSong(Song song){
+        SpawtifyDatabase.databaseWriteExecutor.execute(()->{
+            songDAO.update(song);
+        });
+    }
 }

@@ -23,15 +23,24 @@ public class AdminPerks extends AppCompatActivity {
     private void wireUpDisplay(){
         binding.NewSongButton.setOnClickListener(v -> newSong());
         binding.EditSongButton.setOnClickListener(v -> editSong());
+        binding.DeleteSongButton.setOnClickListener(v -> deleteSong());
+    }
+
+    private void deleteSong() {
+        int deleteSongValue = 1;
+        Intent intent = BrowseSongs.intentFactory(this, deleteSongValue);
+        startActivity(intent);
     }
 
     private void newSong(){
-        Intent intent = SongAddOrEdit.intentFactory(this, 1);
+        int newSongValue = 1;
+        Intent intent = SongAddOrEdit.intentFactory(this, newSongValue);
         startActivity(intent);
     }
 
     private void editSong(){
-        Intent intent = SongAddOrEdit.intentFactory(this, 0);
+        int editSongValue = 0;
+        Intent intent = BrowseSongs.intentFactory(this, editSongValue);
         startActivity(intent);
     }
 

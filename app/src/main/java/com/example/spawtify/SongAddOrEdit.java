@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.room.Room;
 import com.example.spawtify.Database.SongDAO;
 import com.example.spawtify.Database.SpawtifyDatabase;
+import com.example.spawtify.Database.SpawtifyRepository;
 import com.example.spawtify.Database.entities.Song;
 import com.example.spawtify.databinding.ActivitySongAddOrEditBinding;
 
@@ -15,13 +16,17 @@ public class SongAddOrEdit extends AppCompatActivity {
     ActivitySongAddOrEditBinding binding;
 
     private static final String ADD_OR_EDIT = "com.example.spawtify.addOrEdit";
+    private static final String SONG_ID = "com.example.spawtify.SONG_ID";
+    private final int addSong = 1;
+    private final int editSong = 0;
     private int addOrEdit;
+    private Song selectedSongToEdit;
     private String title;
     private String artist;
     private String album;
     private String genre;
     private boolean explicit;
-    SongDAO songDao;
+    SpawtifyRepository spawtifyRepository;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,25 +34,29 @@ public class SongAddOrEdit extends AppCompatActivity {
         binding = ActivitySongAddOrEditBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        getDatabase();
+        spawtifyRepository = SpawtifyRepository.getRepository(getApplication());
 
         //  Stores passed in integer to addOrEdit, determines whether new song page is displayed
         //  or edit song page
         addOrEdit = getIntent().getIntExtra(ADD_OR_EDIT, 0);
 
-        //  Sets up display for user
+        if (addOrEdit == editSong){
+            setUpEditSongView();
+        }
+        if (addOrEdit == addSong){
+            setUpNewSongView();
+        }
+
+        //  Sets up button actions
         wireUpDisplay();
     }
 
-    private void getDatabase(){
-        songDao = Room.databaseBuilder
-                        (this, SpawtifyDatabase.class, SpawtifyDatabase.DB_NAME)
-                .allowMainThreadQueries()
-                .build()
-                .getSongDAO();
+    private void setUpNewSongView(){
+        binding.NewSongOrEditSongTitle.setText(R.string.new_song);
+        binding.AddOrChangeButton.setText(R.string.add_song);
     }
 
-    private void wireUpDisplay(){
+    private void setUpEditSongView(){
         //  Sets up switch, displays explicit when checked, not explicit when not checked
         binding.explicitSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isChecked){
@@ -57,20 +66,18 @@ public class SongAddOrEdit extends AppCompatActivity {
                 binding.explicitSwitch.setText(R.string.not_explicit);
             }
         });
-
         //  If addOrEdit != 1, set title and button up for Edit Song
-        int add = 1;
-        if(addOrEdit != add){
+        if(addOrEdit == editSong){
             binding.NewSongOrEditSongTitle.setText(R.string.edit_song);
             binding.AddOrChangeButton.setText(R.string.save_changes);
         }
 
         // If addOrEdit == 1, set title and button up for New Song
-        if (addOrEdit == add){
-            binding.NewSongOrEditSongTitle.setText(R.string.new_song);
-            binding.AddOrChangeButton.setText(R.string.add_song);
+        if (addOrEdit == addSong){
         }
+    }
 
+    private void wireUpDisplay(){
         binding.AddOrChangeButton.setOnClickListener(v -> {
             //  Retrieve values from display, store in local variables
             getValuesFromDisplay();
@@ -78,7 +85,12 @@ public class SongAddOrEdit extends AppCompatActivity {
             //  Create local song object with local variables
             Song song = new Song(title, artist, album, genre, explicit);
 
-            songDao.insert(song);
+            if (addOrEdit == addSong){
+                spawtifyRepository.insertSong(song);
+            }
+            if (addOrEdit == editSong){
+                spawtifyRepository.updateSong(song);
+            }
 
             Intent intent = AdminPerks.intentFactory(getApplicationContext());
             startActivity(intent);
@@ -100,6 +112,14 @@ public class SongAddOrEdit extends AppCompatActivity {
     public static Intent intentFactory(Context context, int addOrEdit){
         Intent intent = new Intent(context, SongAddOrEdit.class);
         intent.putExtra(ADD_OR_EDIT, addOrEdit);
+        return intent;
+    }
+
+    public static Intent intentFactory
+            (Context context, int addOrEdit, int songId){
+        Intent intent = new Intent(context, SongAddOrEdit.class);
+        intent.putExtra(ADD_OR_EDIT, addOrEdit);
+        intent.putExtra(SONG_ID, songId);
         return intent;
     }
 }
