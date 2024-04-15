@@ -32,4 +32,7 @@
     <string name="add_song">Add Song</string>
     <string name="explicit">Explicit</string>
     <string name="save_changes">Save Changes</string>
+    <string name="song_details_go_here">Song Details Go Here</string>
+    <string name="artist_details_go_here">Artist Details Go Here</string>
+    <string name="album_details_go_here">Album Details Go Here</string>
 </resources>

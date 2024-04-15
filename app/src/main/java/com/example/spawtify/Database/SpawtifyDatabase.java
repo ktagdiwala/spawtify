@@ -79,6 +79,7 @@ public abstract class SpawtifyDatabase extends RoomDatabase {
 
             //  Creates predefined users, 1 admin and 1 regular user
             databaseWriteExecutor.execute(() -> {
+                //  Create instance of UserDAO so we can insert users
                 UserDAO userDAO = INSTANCE.getUserDAO();
                 userDAO.deleteAll();
 
@@ -90,6 +91,48 @@ public abstract class SpawtifyDatabase extends RoomDatabase {
                 //  Create test user
                 User testuser1 = new User("testuser1", "testuser1");
                 userDAO.insert(testuser1);
+
+                //  Create instance of SongDao so we can insert songs
+                SongDAO songDAO = INSTANCE.getSongDAO();
+                songDAO.deleteAll();
+
+                //  Add default songs
+                //  Funny Thing
+                songDAO.insert(new Song("Funny Thing", "Thundercat",
+                        "It Is What It Is", "Pop", false));
+                //  Paint The Town Red
+                songDAO.insert(new Song("Paint The Town Red", "Doja Cat",
+                        "Paint The Town Red", "Pop", true));
+                //  Say So
+                songDAO.insert(new Song("Say So", "Doja Cat",
+                        "Hot Pink", "Pop", true));
+                //  Juicy
+                songDAO.insert(new Song("Juicy", "Doja Cat",
+                        "Hot Pink", "Pop", true));
+                //  Kiss Me More (feat. SZA)
+                songDAO.insert(new Song("Kiss Me More (feat. SZA)", "Doja Cat",
+                        "Kiss Me More (feat. SZA)", "Pop", true));
+                //  Mirror Maru
+                songDAO.insert(new Song("Mirror Maru", "Cashmere Cat",
+                        "Mirror Maru - EP", "Pop", false));
+                //  Sunset
+                songDAO.insert(new Song("Sunset", "Altair Blake",
+                        "Let You Go", "Pop", false));
+                //  Virus - Odd Mob Remix
+                songDAO.insert(new Song("Virus - Odd Mob Remix", "GEN.KLOUD",
+                        "AUTONOMY (REMIXES)", "Pop", false));
+                //  SWIM
+                songDAO.insert(new Song("SWIM", "Mild Minds",
+                        "Mood", "Pop", false));
+                //  LEVITATING
+                songDAO.insert(new Song("LEVITATING", "veggi",
+                        "LEVITATING", "Pop", false));
+                //  summer on the inside
+                songDAO.insert(new Song("summer on the inside", "warner case",
+                        "summer on the inside", "Pop", false));
+                //  Restless Bones
+                songDAO.insert(new Song("Restless Bones", "Disco Lines",
+                        "Restless Bones", "Pop", false));
             });
         }
     };

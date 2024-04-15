@@ -187,6 +187,13 @@ public class MainActivity extends AppCompatActivity {
         binding.ChangePasswordButton.setOnClickListener(v -> changePassword());
 
         binding.AdminButton.setOnClickListener(v -> adminPerks());
+
+        binding.BrowseSongsButton.setOnClickListener(v -> browseSongs());
+    }
+
+    private void browseSongs(){
+        Intent intent = BrowseSongs.intentFactory(this);
+        startActivity(intent);
     }
 
     private void adminPerks(){
