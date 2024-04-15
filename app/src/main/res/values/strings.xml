@@ -20,4 +20,7 @@
     <string name="update_password">Update Password</string>
     <string name="song_list">Song List</string>
     <string name="filter">Filter</string>
+    <string name="new_playlist">New Playlist</string>
+    <string name="delete_playlist">Delete Playlist</string>
+    <string name="description">Description</string>
 </resources>
