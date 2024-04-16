@@ -13,6 +13,7 @@ import com.example.spawtify.Database.SpawtifyRepository;
 import com.example.spawtify.Database.entities.Song;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class BrowseSongs extends AppCompatActivity implements SongRecyclerViewInterface{
     //  Used for storing int extras to place into viewValue
@@ -72,19 +73,31 @@ public class BrowseSongs extends AppCompatActivity implements SongRecyclerViewIn
         Song_RecyclerViewAdapter adapter = new Song_RecyclerViewAdapter
                 (this, songModels);
 
+        //  Create activityTitle holder, will change if we came from edit song or delete song
+        String activityTitle = "Browse Songs";
+
+
         //  Set up adapter with onclick listener since we came from editSong
         if (viewValue == editSong){
             adapter = new Song_RecyclerViewAdapter
                     (this, songModels, this);
+            //  Changes activityTitle to "Edit Song"
+            activityTitle = "Edit Song";
         }
         //  Set up adapter with onclick listener since we came from delete song
         if (viewValue == deleteSong){
             adapter = new Song_RecyclerViewAdapter
                     (this, songModels, this);
+            //  Changes activityTitle to "Delete Song"
+            activityTitle = "Delete Song";
         }
+
+        //  Display title of current activity in action bar
+        Objects.requireNonNull(getSupportActionBar()).setTitle(activityTitle);
 
         //  Sets adapter (with/without onClickListener) for songsRecyclerView
         recyclerView.setAdapter(adapter);
+
     }
 
     /** setUpSongModels:

@@ -23,6 +23,7 @@ import com.example.spawtify.Database.entities.User;
 import com.example.spawtify.databinding.ActivityMainBinding;
 
 import java.util.List;
+import java.util.Objects;
 
 /** MainActivity:
  *  Landing Page for users when logged in.
@@ -178,6 +179,9 @@ public class MainActivity extends AppCompatActivity {
      * Connects the buttons on the screen to their corresponding views
      */
     private void wireUpDisplay(){
+        //  Display title of current activity
+        Objects.requireNonNull(getSupportActionBar()).setTitle("Landing Page");
+
         //  SCREEN/PAGE FIELDS
 
         //  Sets up logout button -> calls logoutUser method when pressed
