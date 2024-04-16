@@ -17,16 +17,22 @@ public class ArtistAdapter  extends RecyclerView.Adapter<ArtistAdapter.MyViewHol
     Context context;
     List<String>artistList;
 
-    public ArtistAdapter(Context context, List<String> artistList){
+    private final ArtistRecyclerViewInterface recyclerViewInterface;
+
+    public ArtistAdapter
+            (Context context,
+             List<String> artistList,
+             ArtistRecyclerViewInterface recyclerViewInterface){
         this.context = context;
         this.artistList = artistList;
+        this.recyclerViewInterface = recyclerViewInterface;
     }
     @NonNull
     @Override
     public ArtistAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(R.layout.artist_recycler_view_row, parent, false);
-        return new ArtistAdapter.MyViewHolder(view);
+        return new ArtistAdapter.MyViewHolder(view, recyclerViewInterface);
     }
 
     @Override
@@ -41,10 +47,23 @@ public class ArtistAdapter  extends RecyclerView.Adapter<ArtistAdapter.MyViewHol
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
         TextView artist;
-        public MyViewHolder(@NonNull View itemView) {
+        public MyViewHolder(@NonNull View itemView, ArtistRecyclerViewInterface recyclerViewInterface) {
             super(itemView);
 
-            artist = itemView.findViewById(R.id.SongArtist);
+            artist = itemView.findViewById(R.id.individualArtist);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (recyclerViewInterface != null){
+                        int position = getAdapterPosition();
+
+                        if (position != RecyclerView.NO_POSITION){
+                            recyclerViewInterface.onItemClick(position);
+                        }
+                    }
+                }
+            });
         }
     }
 }
