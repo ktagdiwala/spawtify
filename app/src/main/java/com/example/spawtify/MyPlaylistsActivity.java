@@ -22,7 +22,7 @@ public class MyPlaylistsActivity extends AppCompatActivity {
     private User user;
 
     // Stores current userId
-    private int userId;
+    int userId;
 
     //Creates SpawtifyRepository object initialized in OnCreate
     private SpawtifyRepository spawtifyRepository;
@@ -40,6 +40,12 @@ public class MyPlaylistsActivity extends AppCompatActivity {
 //        String setTitleString =  user.getUsername() + "'s Playlists";
 //        binding.MyPlaylistsTextview.setText(setTitleString);
         binding.MyPlaylistsDescriptionTextview.setText(R.string.click_on_a_playlist_to_view_contained_songs);
+
+        //Sets up New Playlist button
+        binding.NewPlaylistButton.setOnClickListener(v -> {
+            Intent intent = CreatePlaylistActivity.intentFactory(getApplicationContext());
+            startActivity(intent);
+        });
     }
 
     public static Intent intentFactory(Context context, int userId) {
