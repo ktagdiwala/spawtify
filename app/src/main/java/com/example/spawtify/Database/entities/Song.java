@@ -1,5 +1,6 @@
 package com.example.spawtify.Database.entities;
 
+import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
@@ -80,5 +81,14 @@ public class Song {
 
     public void setExplicit(boolean explicit) {
         isExplicit = explicit;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return songTitle + " by " + songArtist + "\n" +
+                "Album: " + songAlbum + "\n" +
+                "Genre: " + songGenre + "\n" +
+                "Explicit = " + isExplicit;
     }
 }
