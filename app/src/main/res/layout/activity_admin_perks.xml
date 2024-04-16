@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AdminPerks">
+
+    <Button
+        android:id="@+id/NewSongButton"
+        android:layout_width="250dp"
+        android:layout_height="75dp"
+        android:layout_marginTop="24dp"
+        android:text="@string/new_song"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+    <Button
+        android:id="@+id/DeleteSongButton"
+        android:layout_width="250dp"
+        android:layout_height="75dp"
+        android:layout_marginTop="24dp"
+        android:text="@string/delete_song"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/NewSongButton" />
+
+    <Button
+        android:id="@+id/EditSongButton"
+        android:layout_width="250dp"
+        android:layout_height="75dp"
+        android:layout_marginTop="24dp"
+        android:text="@string/edit_song"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/DeleteSongButton" />
+
+    <Button
+        android:id="@+id/ManageUsersButton"
+        android:layout_width="250dp"
+        android:layout_height="75dp"
+        android:layout_marginTop="24dp"
+        android:text="@string/manage_users"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/EditSongButton" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="@string/admin_perks"
+        android:textSize="42sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>

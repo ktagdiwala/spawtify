@@ -25,7 +25,7 @@ public class SpawtifyRepository {
 
     private final SongDAO songDAO;
     private final UserDAO userDAO;
-    private List<Song> allSongs;
+    private LiveData<List<Song>> allSongs;
     private List<User> allUsers;
 
     private static SpawtifyRepository repository;
@@ -40,7 +40,7 @@ public class SpawtifyRepository {
         this.userDAO = db.getUserDAO();
 
         this.allUsers = this.userDAO.getAllUsers();
-        this.allSongs = this.songDAO.getAllRecords();
+        this.allSongs = this.songDAO.getAllRecordsLD();
     }
 
     public static SpawtifyRepository getRepository(Application application){
@@ -87,13 +87,14 @@ public class SpawtifyRepository {
         return null;
     }
 
-    /** getAllSongs:
-     * retrieves the list of Songs from the database of songs
-     * @return an a LiveData object containing the list of all songs in the song database
-     */
-    public LiveData<List<Song>> getAllSongsLD(){
-        return songDAO.getAllRecordsLD();
-    }
+    // @Deprecated
+    // /** getAllSongs:
+    //  * retrieves the list of Songs from the database of songs
+    //  * @return an a LiveData object containing the list of all songs in the song database
+    //  */
+    // public LiveData<List<Song>> getAllSongsLD(){
+    //     return songDAO.getAllRecordsLD();
+    // }
 
     /** getAllSongs:
      * retrieves the list of Songs from the database of songs
@@ -134,5 +135,41 @@ public class SpawtifyRepository {
         {
             userDAO.insert(users);
         });
+    }
+
+    public void removeSongById(int songId) {
+        SpawtifyDatabase.databaseWriteExecutor.execute(()->{
+            songDAO.deleteSongById(songId);
+        });
+    }
+
+    public void updateSong(Song song){
+        SpawtifyDatabase.databaseWriteExecutor.execute(()->{
+            songDAO.update(song);
+        });
+    }
+
+    /** getSongById:
+     * Retrieves song object from database with matching id
+     *
+     * @param songId song ID is passed in for use by SongDAO
+     * @return Song object returned by SongDAO method getSongById
+     */
+    public Song getSongById(int songId) {
+        Future<Song> future = SpawtifyDatabase.databaseWriteExecutor.submit(
+                new Callable<Song>() {
+                    @Override
+                    public Song call() throws Exception {
+                        return songDAO.getSongById(songId);
+                    }
+                }
+        );
+        try {
+            return future.get();
+        }catch (InterruptedException | ExecutionException e){
+            e.printStackTrace();
+            Log.i(MainActivity.TAG, "Problem when getting all Songs in the repository");
+        }
+        return null;
     }
 }

@@ -5,9 +5,11 @@ import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
+import androidx.room.Update;
 
 import com.example.spawtify.Database.entities.Song;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /** SongDAO:
@@ -21,9 +23,21 @@ public interface SongDAO {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(Song song);
 
-    @Query("SELECT * FROM " + SpawtifyDatabase.SONGLIST + " ORDER BY songTitle")
+    @Update(onConflict = OnConflictStrategy.REPLACE)
+    void update(Song song);
+
+    @Query("SELECT * FROM " + SpawtifyDatabase.SONGLIST)
+    LiveData<List<Song>> getAllRecordsLD();
+
+    @Query("SELECT * FROM " + SpawtifyDatabase.SONGLIST)
     List<Song> getAllRecords();
 
-    @Query("SELECT * FROM " + SpawtifyDatabase.SONGLIST + " ORDER BY songTitle")
-    LiveData<List<Song>> getAllRecordsLD();
+    @Query("DELETE FROM " + SpawtifyDatabase.SONGLIST)
+    void deleteAll();
+
+    @Query("DELETE FROM " + SpawtifyDatabase.SONGLIST + " WHERE songId = :songId")
+    void deleteSongById(int songId);
+
+    @Query("SELECT * FROM " + SpawtifyDatabase.SONGLIST + " WHERE songId = :songId")
+    Song getSongById(int songId);
 }
