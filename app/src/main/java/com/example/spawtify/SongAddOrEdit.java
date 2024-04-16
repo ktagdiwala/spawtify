@@ -205,6 +205,8 @@ public class SongAddOrEdit extends AppCompatActivity {
      * title, artist, album, genre, explicit
      */
     private void getValuesFromDisplay(){
+        //  TODO: Add checks to make sure none of the fields are empty!
+
         title = binding.EnterTitle.getText().toString();
         artist = binding.EnterArtist.getText().toString();
         album = binding.EnterAlbum.getText().toString();
