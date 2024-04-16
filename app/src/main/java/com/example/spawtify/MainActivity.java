@@ -23,6 +23,7 @@ import com.example.spawtify.Database.entities.User;
 import com.example.spawtify.databinding.ActivityMainBinding;
 
 import java.util.List;
+import java.util.Objects;
 
 /** MainActivity:
  *  Landing Page for users when logged in.
@@ -178,11 +179,8 @@ public class MainActivity extends AppCompatActivity {
      * Connects the buttons on the screen to their corresponding views
      */
     private void wireUpDisplay(){
-        // Sets up Browse Songs button
-        binding.BrowseSongsButton.setOnClickListener(v -> {
-            Intent intent = BrowseSongsActivity.intentFactory(getApplicationContext());
-            startActivity(intent);
-        });
+        //  Display title of current activity
+        Objects.requireNonNull(getSupportActionBar()).setTitle("Landing Page");
 
         // Sets up My Playlists button
         binding.MyPlaylistsButton.setOnClickListener(v ->{
@@ -197,6 +195,20 @@ public class MainActivity extends AppCompatActivity {
 
         //  Sets up change password button -> calls changePassword method when pressed
         binding.ChangePasswordButton.setOnClickListener(v -> changePassword());
+
+        binding.AdminButton.setOnClickListener(v -> adminPerks());
+
+        binding.BrowseSongsButton.setOnClickListener(v -> browseSongs());
+    }
+
+    private void browseSongs(){
+        Intent intent = BrowseSongs.intentFactory(this);
+        startActivity(intent);
+    }
+
+    private void adminPerks(){
+        Intent intent = AdminPerks.intentFactory(this);
+        startActivity(intent);
     }
 
     private void changePassword(){
