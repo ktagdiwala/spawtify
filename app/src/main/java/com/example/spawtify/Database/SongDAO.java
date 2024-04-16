@@ -40,4 +40,10 @@ public interface SongDAO {
 
     @Query("SELECT * FROM " + SpawtifyDatabase.SONGLIST + " WHERE songId = :songId")
     Song getSongById(int songId);
+
+    @Query("SELECT * FROM " + SpawtifyDatabase.SONGLIST + " WHERE songArtist = :songArtist")
+    List<Song> getSongsByArtist(String songArtist);
+
+    @Query("SELECT DISTINCT songArtist FROM SONGLIST")
+    List<String> getAllArtists();
 }
