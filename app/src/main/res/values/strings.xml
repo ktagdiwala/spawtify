@@ -44,4 +44,5 @@
     <string name="by_album">By Album</string>
     <string name="by_genre">By Genre</string>
     <string name="explicit_or_non_explicit">Explicit or Non-Explicit</string>
+    <string name="remove_filters">Remove Filters</string>
 </resources>
