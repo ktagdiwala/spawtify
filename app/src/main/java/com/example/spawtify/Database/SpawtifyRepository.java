@@ -143,4 +143,28 @@ public class SpawtifyRepository {
             songDAO.update(song);
         });
     }
+
+    /** getSongById:
+     * Retrieves song object from database with matching id
+     *
+     * @param songId song ID is passed in for use by SongDAO
+     * @return Song object returned by SongDAO method getSongById
+     */
+    public Song getSongById(int songId) {
+        Future<Song> future = SpawtifyDatabase.databaseWriteExecutor.submit(
+                new Callable<Song>() {
+                    @Override
+                    public Song call() throws Exception {
+                        return songDAO.getSongById(songId);
+                    }
+                }
+        );
+        try {
+            return future.get();
+        }catch (InterruptedException | ExecutionException e){
+            e.printStackTrace();
+            Log.i(MainActivity.TAG, "Problem when getting all Songs in the repository");
+        }
+        return null;
+    }
 }
