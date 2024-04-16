@@ -77,7 +77,8 @@ public abstract class SpawtifyDatabase extends RoomDatabase {
             //Used as a way to insert default records into the database
             //Is a lambda (anonymous function)
 
-            //  Creates predefined users, 1 admin and 1 regular user
+            // Creates predefined users, 1 admin and 1 regular user
+            // Creates predefined songs
             databaseWriteExecutor.execute(() -> {
                 //  Create instance of UserDAO so we can insert users
                 UserDAO userDAO = INSTANCE.getUserDAO();
@@ -133,6 +134,46 @@ public abstract class SpawtifyDatabase extends RoomDatabase {
                 //  Restless Bones
                 songDAO.insert(new Song("Restless Bones", "Disco Lines",
                         "Restless Bones", "Pop", false));
+
+                // Create songs
+                 songDAO.insert(new Song("Shinunoga E-Wa", "Fujii Kaze",
+                        "HELP EVER HURT NEVER", "Jpop", false));
+                 songDAO.insert(new Song("YASASHISA", "Fujii Kaze",
+                         "HELP EVER HURT NEVER", "Jpop", false));
+                 songDAO.insert(new Song("Mo-Eh-Wa", "Fujii Kaze",
+                        "HELP EVER HURT NEVER", "Jpop", false));
+
+                 songDAO.insert(new Song("Mind Is A Prison", "Alec Benjamin",
+                        "These Two Windows", "Pop", false));
+                 songDAO.insert(new Song("Jesus In LA", "Alec Benjamin",
+                        "These Two Windows", "Pop", false));
+                 songDAO.insert(new Song("Must Have Been The Wind", "Alec Benjamin",
+                        "These Two Windows", "Pop", false));
+                 songDAO.insert(new Song("Just Like You", "Alec Benjamin",
+                        "These Two Windows", "Pop", false));
+
+                 songDAO.insert(new Song ("Tum Se Hi", "Pritam",
+                        "Jab We Met", "Bollywood", false));
+                 songDAO.insert(new Song ("Ye Ishq Hai", "Pritam",
+                        "Jab We Met", "Bollywood", false));
+                 songDAO.insert(new Song ("Nagada Nagada", "Pritam",
+                        "Jab We Met", "Bollywood", false));
+                 songDAO.insert(new Song ("Mauja Hi Mauja", "Pritam",
+                            "Jab We Met", "Bollywood", false));
+
+                 songDAO.insert(new Song ("Racing Into The Night", "YOASOBI",
+                         "single", "Jpop", false));
+                 songDAO.insert(new Song ("Sakura", "Cotton Vibe",
+                        "single", "lofi", false));
+                 songDAO.insert(new Song ("Rose", "D.O.",
+                        "Empathy", "Kpop", false));
+                 songDAO.insert(new Song ("I'm Gonna Love You", "D.O.",
+                        "Empathy", "Kpop", false));
+
+
+
+
+
             });
         }
     };
@@ -141,6 +182,4 @@ public abstract class SpawtifyDatabase extends RoomDatabase {
     public abstract SongDAO getSongDAO();
 
     public abstract UserDAO getUserDAO();
-
-
 }
