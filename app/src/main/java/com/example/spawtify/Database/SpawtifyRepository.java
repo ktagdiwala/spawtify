@@ -87,14 +87,14 @@ public class SpawtifyRepository {
         return null;
     }
 
-    @Deprecated
-    /** getAllSongs:
-     * retrieves the list of Songs from the database of songs
-     * @return an a LiveData object containing the list of all songs in the song database
-     */
-    public LiveData<List<Song>> getAllSongsLD(){
-        return songDAO.getAllRecordsLD();
-    }
+    // @Deprecated
+    // /** getAllSongs:
+    //  * retrieves the list of Songs from the database of songs
+    //  * @return an a LiveData object containing the list of all songs in the song database
+    //  */
+    // public LiveData<List<Song>> getAllSongsLD(){
+    //     return songDAO.getAllRecordsLD();
+    // }
 
     /** getAllSongs:
      * retrieves the list of Songs from the database of songs
