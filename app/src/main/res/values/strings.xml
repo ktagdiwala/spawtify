@@ -36,4 +36,5 @@
     <string name="artist_details_go_here">Artist Details Go Here</string>
     <string name="album_details_go_here">Album Details Go Here</string>
     <string name="genre_goes_here">Genre Goes Here</string>
+    <string name="explicit_goes_here">Explicit Goes Here</string>
 </resources>
