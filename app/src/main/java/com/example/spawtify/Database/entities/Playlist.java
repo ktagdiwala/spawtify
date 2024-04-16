@@ -20,25 +20,35 @@ import java.util.Objects;
 @Entity(tableName = SpawtifyDatabase.PLAYLIST_TABLE)
 public class Playlist {
 
+    // the playlist id (primary key)
     @PrimaryKey(autoGenerate = true)
     private int id;
 
     private String playlistTitle;
     private String playlistDescription;
+    // The list of songs in the playlist, stored as a string
     private String songlistString;
 
+    // the ID of the user currently logged in
     private int userId;
 
     @Ignore
     private ArrayList<Song> songArrayList;
-    //TODO: Figure out how to create an arraylist without DB complaining
+    // TODO: Figure out how to create an arraylist without DB complaining
 
+    /** Playlist constructor
+     * Overrides default constructor to take in parameters
+     * @param playlistTitle the String title passed in
+     * @param playlistDescription the String description passed in
+     * @param userId the ID of the user currently logged in
+     */
     public Playlist(String playlistTitle, String playlistDescription, int userId) {
         this.playlistTitle = playlistTitle;
         this.playlistDescription = playlistDescription;
         this.userId = userId;
+        this.songlistString = "Empty";
 
-        this.songArrayList = new ArrayList<>();
+//        this.songArrayList = new ArrayList<>();
     }
 
     @Override
