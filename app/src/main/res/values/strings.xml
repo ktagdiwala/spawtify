@@ -44,4 +44,5 @@
     <string name="delete_playlist">Delete Playlist</string>
     <string name="description">Description</string>
     <string name="click_on_a_playlist_to_view_contained_songs">Click on a playlist to view contained songs</string>
+    <string name="create">Create</string>
 </resources>
