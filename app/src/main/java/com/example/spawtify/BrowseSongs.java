@@ -11,6 +11,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.spawtify.Database.SpawtifyRepository;
 import com.example.spawtify.Database.entities.Song;
+import com.example.spawtify.databinding.ActivityBrowseSongsBinding;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -21,6 +23,8 @@ public class BrowseSongs extends AppCompatActivity implements SongRecyclerViewIn
     //  0 = edit song
     //  1 = delete song
     private static final String VIEW_VALUE = "com.example.spawtify.VIEW_VALUE";
+
+    ActivityBrowseSongsBinding binding;
 
     //  These values will be used in if statements to determine what activity user
     //  came from
@@ -33,6 +37,8 @@ public class BrowseSongs extends AppCompatActivity implements SongRecyclerViewIn
     //  to display our songs
     List<SongModel> songModels = new ArrayList<>();
 
+    List<SongModel> filteredSongModels = new ArrayList<>();
+
     //  Object of SpawtifyRepository so we can interact with the database
     SpawtifyRepository spawtifyRepository;
 
@@ -42,7 +48,8 @@ public class BrowseSongs extends AppCompatActivity implements SongRecyclerViewIn
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_browse_songs);
+        binding = ActivityBrowseSongsBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
         RecyclerView recyclerView = findViewById(R.id.songsRecyclerView);
 
@@ -58,6 +65,18 @@ public class BrowseSongs extends AppCompatActivity implements SongRecyclerViewIn
 
         //  Sets up recyclerView with a linear layout
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        //  Sets up Filter Button with onClickListener
+        wireUpDisplay();
+    }
+
+    private void wireUpDisplay(){
+        binding.filterButton.setOnClickListener(v -> filterView());
+    }
+
+    private void filterView(){
+        Intent intent = FilterSongs.intentFactory(this);
+        startActivity(intent);
     }
 
     /** Sets up the adapter based on the activity we came from
@@ -135,6 +154,10 @@ public class BrowseSongs extends AppCompatActivity implements SongRecyclerViewIn
             songModels.add(i,new SongModel
                                 (songId, title, artist, album, genre, explicit));
         }
+    }
+
+    private void setUpFilteredSongModels(){
+        //  TODO: SET UP THIS METHOD FOR FILTER
     }
 
     /** For making toast, yum
