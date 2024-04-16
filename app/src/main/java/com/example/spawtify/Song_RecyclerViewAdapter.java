@@ -49,6 +49,13 @@ public class Song_RecyclerViewAdapter
         holder.tvArtist.setText(songModels.get(position).getSongArtist());
         holder.tvAlbum.setText(songModels.get(position).getSongAlbum());
         holder.tvGenre.setText(songModels.get(position).getSongGenre());
+        if (songModels.get(position).isExplicit){
+            //  Explicit text set to "Explicit"
+            holder.tvExplicit.setText(R.string.explicit);
+            return;
+        }
+        //  Explicit text set to show nothing if not explicit
+        holder.tvExplicit.setText("");
     }
 
     @Override
@@ -59,7 +66,7 @@ public class Song_RecyclerViewAdapter
 
     public static class MyViewHolder extends RecyclerView.ViewHolder{
         //  Grabs the views from our songs_recycler_view_row layout file
-        TextView tvTitle, tvArtist, tvAlbum, tvGenre;
+        TextView tvTitle, tvArtist, tvAlbum, tvGenre, tvExplicit;
         public MyViewHolder(@NonNull View itemView, SongRecyclerViewInterface recyclerViewInterface) {
             super(itemView);
 
@@ -67,6 +74,7 @@ public class Song_RecyclerViewAdapter
             tvArtist = itemView.findViewById(R.id.SongArtist);
             tvAlbum = itemView.findViewById(R.id.SongAlbum);
             tvGenre = itemView.findViewById(R.id.SongGenre);
+            tvExplicit = itemView.findViewById(R.id.SongExplicit);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
