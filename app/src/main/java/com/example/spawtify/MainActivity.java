@@ -184,6 +184,12 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
+        // Sets up My Playlists button
+        binding.MyPlaylistsButton.setOnClickListener(v ->{
+            Intent intent = MyPlaylistsActivity.intentFactory(getApplicationContext(), userId);
+            startActivity(intent);
+        });
+
         //  SCREEN/PAGE FIELDS
 
         //  Sets up logout button -> calls logoutUser method when pressed
