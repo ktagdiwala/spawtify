@@ -38,4 +38,6 @@
     <string name="genre_goes_here">Genre Goes Here</string>
     <string name="explicit_goes_here">Explicit Goes Here</string>
     <string name="logged_in">Logged in</string>
+    <string name="song_list">Song List</string>
+    <string name="filter">Filter</string>
 </resources>
