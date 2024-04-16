@@ -16,6 +16,9 @@
 <!--            android:name=".BrowseSongsActivity"-->
 <!--            android:exported="false" />-->
         <activity
+            android:name=".CreatePlaylistActivity"
+            android:exported="false" />
+        <activity
             android:name=".MyPlaylistsActivity"
             android:exported="false" />
         <activity
