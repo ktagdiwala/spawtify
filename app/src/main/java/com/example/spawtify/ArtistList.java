@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class ArtistList extends AppCompatActivity {
+public class ArtistList extends AppCompatActivity implements ArtistRecyclerViewInterface{
 
     //  Holds our distinct artists retrieved from database
     List<String> artists = new ArrayList<>();
@@ -35,7 +35,11 @@ public class ArtistList extends AppCompatActivity {
 
         setUpArtistList();
 
-        ArtistAdapter adapter = new ArtistAdapter(this, artists);
+        ArtistAdapter adapter = new ArtistAdapter
+                (this,
+                        artists,
+                        this);
+
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
@@ -47,5 +51,13 @@ public class ArtistList extends AppCompatActivity {
     public static Intent intentFactory(Context context){
         Intent intent = new Intent(context, ArtistList.class);
         return intent;
+    }
+
+    @Override
+    public void onItemClick(int position) {
+        String artist = artists.get(position);
+        int artistFilter = 3;
+        Intent intent = BrowseSongs.intentFactory(this, artistFilter, artist);
+        startActivity(intent);
     }
 }
