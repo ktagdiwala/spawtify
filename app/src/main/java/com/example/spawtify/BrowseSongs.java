@@ -3,6 +3,7 @@ package com.example.spawtify;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -94,6 +95,12 @@ public class BrowseSongs extends AppCompatActivity implements SongRecyclerViewIn
         //  Sets up recyclerView with a linear layout
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
+        if (filterValue == noFilters){
+            binding.removeFilters.setVisibility(View.INVISIBLE);
+        }
+        if (filterValue > noFilters){
+            binding.removeFilters.setVisibility(View.VISIBLE);
+        }
     }
 
     private void setUpDefaultValues(){
@@ -216,6 +223,7 @@ public class BrowseSongs extends AppCompatActivity implements SongRecyclerViewIn
         viewValue = mainActivity;
         setUpSongModels();
         adapter.notifyDataSetChanged();
+        binding.removeFilters.setVisibility(View.INVISIBLE);
     }
 
     /** For making toast, yum
