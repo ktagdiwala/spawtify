@@ -6,9 +6,6 @@ import android.os.Bundle;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.room.Room;
-import com.example.spawtify.Database.SongDAO;
-import com.example.spawtify.Database.SpawtifyDatabase;
 import com.example.spawtify.Database.SpawtifyRepository;
 import com.example.spawtify.Database.entities.Song;
 import com.example.spawtify.databinding.ActivitySongAddOrEditBinding;
@@ -127,6 +124,7 @@ public class SongAddOrEdit extends AppCompatActivity {
                 toaster("You've added " + title);
                 //  Return user to Admin Perks Activity
                 startActivity(intent);
+                return;
             }
             //  Not sure if this still displays, maybe sent to admin perks before this
             //  has a chance to show up
