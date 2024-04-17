@@ -30,14 +30,14 @@ import org.junit.runner.RunWith;
 
 @LargeTest
 @RunWith(AndroidJUnit4.class)
-public class testUser1LoginTest {
+public class UserLoginTest {
 
     @Rule
     public ActivityScenarioRule<MainActivity> mActivityScenarioRule =
             new ActivityScenarioRule<>(MainActivity.class);
 
     @Test
-    public void testUser1LoginTest() {
+    public void testingUserLogin() {
         //  Enters "testuser1" into editTextLoginUsername EditText
         ViewInteraction appCompatEditText = onView(
                 allOf(withId(R.id.editTextLoginUsername),
