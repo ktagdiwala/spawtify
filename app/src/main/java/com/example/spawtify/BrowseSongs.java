@@ -211,12 +211,11 @@ public class BrowseSongs extends AppCompatActivity implements SongRecyclerViewIn
     }
 
     private void removeFilter(){
-        //  TODO: SET UP THIS METHOD FOR REMOVING FILTERS
+        //  Setting up these values so we get all songs when setUpSongModels is called
         filterValue = noFilters;
         viewValue = mainActivity;
         setUpSongModels();
         adapter.notifyDataSetChanged();
-        toaster("You pressed remove filter");
     }
 
     /** For making toast, yum
