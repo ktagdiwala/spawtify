@@ -323,4 +323,22 @@ public class SpawtifyRepository {
         }
         return null;
     }
+
+    public User getUserByUsername(String username) {
+        Future<User> future = SpawtifyDatabase.databaseWriteExecutor.submit(
+                new Callable<User>() {
+                    @Override
+                    public User call() throws Exception {
+                        return userDAO.getUserByUsername(username);
+                    }
+                }
+        );
+        try {
+            return future.get();
+        }catch (InterruptedException | ExecutionException e){
+            e.printStackTrace();
+            Log.i(MainActivity.TAG, "Problem when getting all Songs in the repository");
+        }
+        return null;
+    }
 }
