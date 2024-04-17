@@ -1,4 +1,4 @@
-package com.example.spawtify;
+package com.example.spawtify.viewHolders;
 
 /** PlaylistModel
  * Model class for the playlist list items

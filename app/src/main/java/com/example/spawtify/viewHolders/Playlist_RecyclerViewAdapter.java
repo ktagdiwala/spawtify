@@ -1,4 +1,4 @@
-package com.example.spawtify;
+package com.example.spawtify.viewHolders;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.spawtify.Database.entities.Playlist;
+import com.example.spawtify.R;
 
 import java.util.List;
 
