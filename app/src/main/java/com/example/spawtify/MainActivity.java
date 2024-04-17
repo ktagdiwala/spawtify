@@ -118,11 +118,14 @@ public class MainActivity extends AppCompatActivity {
         invalidateOptionsMenu();
 
         //Determines admin button visibility
-        if(user.isAdmin()){
-            binding.AdminButton.setVisibility(View.VISIBLE);
-        }else{
-            binding.AdminButton.setVisibility(View.INVISIBLE);
+        if (user != null){
+            if(user.isAdmin()){
+                binding.AdminButton.setVisibility(View.VISIBLE);
+            }else{
+                binding.AdminButton.setVisibility(View.INVISIBLE);
+            }
         }
+
     }
 
     /** onCreateOptionsMenu:
@@ -156,13 +159,15 @@ public class MainActivity extends AppCompatActivity {
         //  Allows us to utilize MenuItem methods for item: logoutMenuItem
         MenuItem item = menu.findItem(R.id.logoutMenuItem);
 
-        //  Ensures item in menu bar is visible
-        item.setVisible(true);
+        checkForUser();
 
         //  If user not initialized, check for user is called to initialize logged in user
         if (user == null){
-            checkForUser();
+            return false;
         }
+
+        //  Ensures item in menu bar is visible
+        item.setVisible(true);
 
         //  Sets item display text to the user's username
         item.setTitle(user.getUsername());
