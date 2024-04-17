@@ -9,7 +9,6 @@ import com.example.spawtify.Database.entities.Song;
 import com.example.spawtify.Database.entities.User;
 import com.example.spawtify.MainActivity;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;

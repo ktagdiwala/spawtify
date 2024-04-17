@@ -6,11 +6,9 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.spawtify.databinding.ActivityBrowseSongsBinding;
 import com.example.spawtify.databinding.ActivityFilterSongsBinding;
 
 import java.util.Objects;
-import java.util.logging.Filter;
 
 public class FilterSongs extends AppCompatActivity {
 
