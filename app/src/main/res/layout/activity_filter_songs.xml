@@ -9,8 +9,12 @@
 
     <Button
         android:id="@+id/artistFilterButton"
-        android:layout_width="wrap_content"
+        android:layout_width="350dp"
         android:layout_height="wrap_content"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:paddingStart="40dp"
+        android:paddingEnd="40dp"
         android:text="@string/by_artist"
         android:textSize="42sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -18,25 +22,31 @@
         app:layout_constraintHorizontal_bias="0.500"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.1"
-        />
+        app:layout_constraintVertical_bias="0.1" />
 
     <Button
         android:id="@+id/albumFilterButton"
-        android:layout_width="wrap_content"
+        android:layout_width="350dp"
         android:layout_height="wrap_content"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:paddingStart="40dp"
+        android:paddingEnd="40dp"
         android:layout_marginTop="24dp"
         android:text="@string/by_album"
         android:textSize="42sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/artistFilterButton"
-        />
+        app:layout_constraintTop_toBottomOf="@+id/artistFilterButton" />
 
     <Button
         android:id="@+id/genreFilterButton"
-        android:layout_width="wrap_content"
+        android:layout_width="350dp"
         android:layout_height="wrap_content"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:paddingStart="40dp"
+        android:paddingEnd="40dp"
         android:layout_marginTop="24dp"
         android:text="@string/by_genre"
         android:textSize="42sp"
@@ -46,13 +56,32 @@
 
     <Button
         android:id="@+id/explicitFilterButton"
-        android:layout_width="wrap_content"
+        android:layout_width="350dp"
         android:layout_height="wrap_content"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:paddingStart="40dp"
+        android:paddingEnd="40dp"
         android:layout_marginTop="24dp"
-        android:text="@string/explicit_or_non_explicit"
+        android:text="@string/explicit"
         android:textSize="42sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/genreFilterButton" />
+
+    <Button
+        android:id="@+id/cleanFilterButton"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:paddingStart="40dp"
+        android:paddingEnd="40dp"
+        android:layout_marginTop="24dp"
+        android:text="@string/clean"
+        android:textSize="42sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/explicitFilterButton" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
