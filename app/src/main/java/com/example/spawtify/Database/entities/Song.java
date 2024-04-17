@@ -86,9 +86,11 @@ public class Song {
     @NonNull
     @Override
     public String toString() {
-        return songTitle + " by " + songArtist + "\n" +
-                "Album: " + songAlbum + "\n" +
-                "Genre: " + songGenre + "\n" +
-                "Explicit = " + isExplicit;
+        return songId + "\t" +
+                songTitle + "\t" +
+                songArtist + "\t" +
+                songAlbum + "\t" +
+                songGenre + "\t" +
+                isExplicit + "\n";
     }
 }

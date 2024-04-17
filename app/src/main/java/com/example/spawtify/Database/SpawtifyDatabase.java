@@ -9,6 +9,7 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
+import com.example.spawtify.Database.entities.Playlist;
 import com.example.spawtify.Database.entities.Song;
 import com.example.spawtify.Database.entities.User;
 import com.example.spawtify.MainActivity;
@@ -22,7 +23,7 @@ import java.util.concurrent.Executors;
  * @since 04-09-2024
  */
 
-@Database(entities = {User.class, Song.class}, version = 1, exportSchema = false)
+@Database(entities = {User.class, Song.class, Playlist.class}, version = 4, exportSchema = false)
 public abstract class SpawtifyDatabase extends RoomDatabase {
 
     public static final String DB_NAME = "Spawtify_Database";
@@ -30,6 +31,7 @@ public abstract class SpawtifyDatabase extends RoomDatabase {
     public static final String USER_TABLE = "User_Table";
     //Database of songs
     public static final String SONGLIST = "SongList";
+    public static final String PLAYLIST_TABLE = "Playlists";
 
     //Instance only ever exists in RAM -- helps prevent conflicts and allows database to work well
     private static volatile SpawtifyDatabase INSTANCE;
@@ -82,19 +84,19 @@ public abstract class SpawtifyDatabase extends RoomDatabase {
             databaseWriteExecutor.execute(() -> {
                 UserDAO userDAO = INSTANCE.getUserDAO();
                 userDAO.deleteAll();
+                SongDAO songDAO = INSTANCE.getSongDAO();
+                songDAO.deleteAll();
+                PlaylistDAO playlistDAO = INSTANCE.getPlaylistDAO();
 
-                //  Create admin
+                // Create admin
                 User admin2 = new User("admin2", "admin2");
                 admin2.setAdmin(true);
                 userDAO.insert(admin2);
 
-                //  Create test user
+                // Create test user
                 User testuser1 = new User("testuser1", "testuser1");
                 userDAO.insert(testuser1);
 
-                //  Create instance of SongDao so we can insert songs
-                SongDAO songDAO = INSTANCE.getSongDAO();
-                songDAO.deleteAll();
 
                 //  Add default songs
                 //  Funny Thing
@@ -181,4 +183,6 @@ public abstract class SpawtifyDatabase extends RoomDatabase {
     public abstract SongDAO getSongDAO();
 
     public abstract UserDAO getUserDAO();
+
+    public abstract PlaylistDAO getPlaylistDAO();
 }
