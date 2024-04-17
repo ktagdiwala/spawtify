@@ -23,7 +23,7 @@ public class BrowseSongs extends AppCompatActivity implements SongRecyclerViewIn
     //  0 = edit song
     //  1 = delete song
     private static final String VIEW_VALUE = "com.example.spawtify.VIEW_VALUE";
-    private static final String ARTIST_FILTER = "com.example.spawtify.ARTIST_FILTER";
+    private static final String FILTER_STRING = "com.example.spawtify.FILTER_STRING";
     private static final String FILTER_VALUE = "com.example.spawtify.FILTER_VALUE";
 
     ActivityBrowseSongsBinding binding;
@@ -40,8 +40,6 @@ public class BrowseSongs extends AppCompatActivity implements SongRecyclerViewIn
     private final int albumFilter = 4;
     private final int genreFilter = 5;
     private final int explicitFilter = 6;
-
-    private String selectedArtist;
 
 
     //  List of SongModel objects called songModels
@@ -152,8 +150,12 @@ public class BrowseSongs extends AppCompatActivity implements SongRecyclerViewIn
         filterValue = getIntent().getIntExtra(FILTER_VALUE, noFilters);
 
         if (filterValue == artistFilter){
-            selectedArtist = getIntent().getStringExtra(ARTIST_FILTER);
+            String selectedArtist = getIntent().getStringExtra(FILTER_STRING);
             songList = spawtifyRepository.getSongsByArtist(selectedArtist);
+        }
+        if (filterValue == albumFilter){
+            String selectedAlbum = getIntent().getStringExtra(FILTER_STRING);
+            songList = spawtifyRepository.getSongsByAlbum(selectedAlbum);
         }
         //  Song values that will be used to store information from songs
         int songId;
@@ -216,10 +218,10 @@ public class BrowseSongs extends AppCompatActivity implements SongRecyclerViewIn
         return intent;
     }
 
-    public static Intent intentFactory(Context context, int filterValue, String artist){
+    public static Intent intentFactory(Context context, int filterValue, String filterString){
         Intent intent = new Intent(context, BrowseSongs.class);
         intent.putExtra(FILTER_VALUE, filterValue);
-        intent.putExtra(ARTIST_FILTER, artist);
+        intent.putExtra(FILTER_STRING, filterString);
         return intent;
     }
 
