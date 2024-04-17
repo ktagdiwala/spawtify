@@ -69,6 +69,7 @@ public class SpawtifyRepository {
         return null;
     }
 
+    // User-related methods
     public List<User> getAllUsers(){
         /* States that this will be fulfilled sometime in the future
          * Allows a thread to perform its operation
@@ -92,6 +93,19 @@ public class SpawtifyRepository {
         return null;
     }
 
+    public void insertUser(User... users){
+        SpawtifyDatabase.databaseWriteExecutor.execute(()->
+        {
+            userDAO.insert(users);
+        });
+    }
+
+    public void deleteUser(User user){
+        SpawtifyDatabase.databaseWriteExecutor.execute(()->{
+            userDAO.delete(user);
+        });
+    }
+
     // @Deprecated
     // /** getAllSongs:
     //  * retrieves the list of Songs from the database of songs
@@ -101,11 +115,12 @@ public class SpawtifyRepository {
     //     return songDAO.getAllRecordsLD();
     // }
 
+    // Song-related methods
     /** getAllSongs:
      * retrieves the list of Songs from the database of songs
      * @return an ArrayList of all songs in the song database
      */
-    @Deprecated
+
     public List<Song> getAllSongs(){
         /* States that this will be fulfilled sometime in the future
          * Allows a thread to perform its operation
@@ -140,30 +155,6 @@ public class SpawtifyRepository {
         });
     }
 
-    public void insertUser(User... users){
-        SpawtifyDatabase.databaseWriteExecutor.execute(()->
-        {
-            userDAO.insert(users);
-        });
-    }
-
-    public void deleteUser(User user){
-        SpawtifyDatabase.databaseWriteExecutor.execute(()->{
-            userDAO.delete(user);
-        });
-    }
-
-    public void insertPlaylist(Playlist playlist){
-        SpawtifyDatabase.databaseWriteExecutor.execute(()->{
-            playlistDAO.insert(playlist);
-        });
-    }
-
-    public void deletePlaylist(Playlist playlist){
-        SpawtifyDatabase.databaseWriteExecutor.execute(()->{
-            playlistDAO.delete(playlist);
-        });
-    }
 
     public void removeSongById(int songId) {
         SpawtifyDatabase.databaseWriteExecutor.execute(()->{
@@ -199,4 +190,98 @@ public class SpawtifyRepository {
         }
         return null;
     }
+
+    // Playlist-related methods
+    /** getAllUserPlaylists:
+     * @return an ArrayList of all playlists associated with a user
+     * from the playlist database
+     */
+    public List<Playlist> getAllUserPlaylists(int currUserId){
+        /* States that this will be fulfilled sometime in the future
+         * Allows a thread to perform its operation
+         * When it comes back, we can process it
+         */
+        Future<List<Playlist>> future = SpawtifyDatabase.databaseWriteExecutor.submit(
+                new Callable<List<Playlist>>() {
+                    @Override
+                    public List<Playlist> call() throws Exception {
+                        return playlistDAO.getAllUserPlaylists(currUserId);
+                    }
+                }
+        );
+        try {
+            return future.get();
+        }catch (InterruptedException | ExecutionException e){
+            e.printStackTrace();
+            Log.i(MainActivity.TAG, "Problem when getting all Playlists in the repository");
+        }
+        return null;
+    }
+
+    /** getAllUserPlaylistTitles:
+     * @return an ArrayList of all playlist titles associated with a user
+     * from the playlist database
+     */
+    public List<String> getAllUserPlaylistTitles(int currUserId){
+        /* States that this will be fulfilled sometime in the future
+         * Allows a thread to perform its operation
+         * When it comes back, we can process it
+         */
+        Future<List<String>> future = SpawtifyDatabase.databaseWriteExecutor.submit(
+                new Callable<List<String>>() {
+                    @Override
+                    public List<String> call() throws Exception {
+                        return playlistDAO.getAllUserPlaylistTitles(currUserId);
+                    }
+                }
+        );
+        try {
+            return future.get();
+        }catch (InterruptedException | ExecutionException e){
+            e.printStackTrace();
+            Log.i(MainActivity.TAG, "Problem when getting all Playlists in the repository");
+        }
+        return null;
+    }
+
+    /** getAllUserPlaylistTitles:
+     * @return an ArrayList of all playlist titles associated with a user
+     * from the playlist database
+     */
+    public List<String> getAllUserPlaylistDescriptions(int currUserId) {
+        /* States that this will be fulfilled sometime in the future
+         * Allows a thread to perform its operation
+         * When it comes back, we can process it
+         */
+        Future<List<String>> future = SpawtifyDatabase.databaseWriteExecutor.submit(
+                new Callable<List<String>>() {
+                    @Override
+                    public List<String> call() throws Exception {
+                        return playlistDAO.getAllUserPlaylistDescriptions(currUserId);
+                    }
+                }
+        );
+        try {
+            return future.get();
+        }catch (InterruptedException | ExecutionException e){
+            e.printStackTrace();
+            Log.i(MainActivity.TAG, "Problem when getting all Playlists in the repository");
+        }
+        return null;
+    }
+
+    public void insertPlaylist(Playlist playlist){
+        SpawtifyDatabase.databaseWriteExecutor.execute(()->{
+            playlistDAO.insert(playlist);
+        });
+    }
+
+    public void deletePlaylist(Playlist playlist){
+        SpawtifyDatabase.databaseWriteExecutor.execute(()->{
+            playlistDAO.delete(playlist);
+        });
+    }
+
+
+
 }
