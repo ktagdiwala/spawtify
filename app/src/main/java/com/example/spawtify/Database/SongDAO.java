@@ -57,4 +57,10 @@ public interface SongDAO {
 
     @Query("SELECT * FROM " + SpawtifyDatabase.SONGLIST + " WHERE songGenre = :selectedGenre")
     List<Song> getSongsByGenre(String selectedGenre);
+
+    @Query("SELECT * FROM " + SpawtifyDatabase.SONGLIST + " WHERE isExplicit = false")
+    List<Song> getCleanSongs();
+
+    @Query("SELECT * FROM " + SpawtifyDatabase.SONGLIST + " WHERE isExplicit = true")
+    List<Song> getExplicitSongs();
 }
