@@ -3,9 +3,7 @@ package com.example.spawtify;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -86,7 +84,7 @@ public class LoginActivity extends AppCompatActivity {
     private boolean checkForUserInDatabase(){
         user = userDAO.getUserByUsername(usernameString);
         if (user == null){
-            Toast.makeText(this, "No user " + user + " found", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "No user found for " + usernameString, Toast.LENGTH_SHORT).show();
             return false;
         }
         return true;

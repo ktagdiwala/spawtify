@@ -36,4 +36,7 @@ public interface PlaylistDAO {
 
     @Query("SELECT playlistDescription FROM " + SpawtifyDatabase.PLAYLIST_TABLE + " WHERE userId = :currentUserId ORDER BY playlistTitle")
     List<String> getAllUserPlaylistDescriptions(int currentUserId);
+
+    @Query("SELECT * FROM " + SpawtifyDatabase.PLAYLIST_TABLE + " WHERE userId = :userId AND playlistTitle = :title")
+    Playlist getPlaylistByTitle(String title, int userId);
 }

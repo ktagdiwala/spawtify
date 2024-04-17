@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.spawtify.Database.SpawtifyRepository;
 import com.example.spawtify.Database.entities.Playlist;
+import com.example.spawtify.Database.entities.User;
 import com.example.spawtify.databinding.ActivityCreatePlaylistBinding;
 
 
@@ -18,7 +19,9 @@ public class CreatePlaylistActivity extends AppCompatActivity {
     private static final String USER_ID_KEY = "com.example.spawtify.userIdKey";
 
     // Stores current userId
-    int loggedInUserId = -1;
+    int userId = -1;
+
+    User user;
 
     ActivityCreatePlaylistBinding binding;
 
@@ -34,9 +37,18 @@ public class CreatePlaylistActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         spawtifyRepository = SpawtifyRepository.getRepository(getApplication());
 
-        // converts the passed in string to an integer to store the userId
-//        loggedInUserId = Integer.parseInt(USER_ID_KEY);
-//
+        // Converts extra (String) to int and assigns it to userId
+        userId = getIntent().getIntExtra(USER_ID_KEY, -1);
+
+        // Checks to ensure that a valid user exists for the given userId
+        if(spawtifyRepository.getUserById(userId) == null){
+            toaster("Error passing userId, we have a problem.");
+            Intent intent = MainActivity.intentFactory(getApplicationContext(), userId);
+            startActivity(intent);
+        }
+
+        // Sets the current user object based on userId
+        user = spawtifyRepository.getUserById(userId);
         // sets up Create button
         binding.FinishCreatePlaylistButton.setOnClickListener(v -> {
             // sets the playlist title to the text input
@@ -46,10 +58,10 @@ public class CreatePlaylistActivity extends AppCompatActivity {
 
 //            // creates new playlist if requirements are met and returns to the MyPlaylistsActivity view
             if(checkRequirements(playlistTitle, playlistDescription)){
-                Playlist newPlaylist = new Playlist(playlistTitle, playlistDescription, loggedInUserId);
+                Playlist newPlaylist = new Playlist(playlistTitle, playlistDescription, userId);
                 spawtifyRepository.insertPlaylist(newPlaylist);
 //
-                Intent intent = MyPlaylistsActivity.intentFactory(getApplicationContext(), loggedInUserId);
+                Intent intent = MyPlaylistsActivity.intentFactory(getApplicationContext(), userId);
                 startActivity(intent);
             }
 //
@@ -59,6 +71,7 @@ public class CreatePlaylistActivity extends AppCompatActivity {
     /** checkRequirements:
      * Checks if title field is empty
      * Checks if description field is empty
+     * Checks if playlist title is already in use
      * @return True if title and description meet requirements
      * and false if either fails to meet the requirements
      */
@@ -71,12 +84,17 @@ public class CreatePlaylistActivity extends AppCompatActivity {
             toaster("Description field cannot be empty");
             return false;
         }
+        if(spawtifyRepository.getPlaylistByTitle(title, userId) != null){
+            toaster("Playlist name already in use");
+            return false;
+        }
         toaster("\"" + title + "\" playlist has been created.");
         return true;
     }
 
-    public static Intent intentFactory(Context context) {
+    public static Intent intentFactory(Context context, int userId) {
         Intent intent = new Intent(context, CreatePlaylistActivity.class);
+        intent.putExtra(USER_ID_KEY, userId);
         return intent;
     }
 

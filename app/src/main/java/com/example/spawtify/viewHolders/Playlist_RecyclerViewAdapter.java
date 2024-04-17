@@ -1,4 +1,4 @@
-package com.example.spawtify;
+package com.example.spawtify.viewHolders;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.spawtify.Database.entities.Playlist;
+import com.example.spawtify.R;
 
 import java.util.List;
 
@@ -21,13 +22,16 @@ import java.util.List;
  */
 
 public class Playlist_RecyclerViewAdapter extends RecyclerView.Adapter<Playlist_RecyclerViewAdapter.MyViewHolder> {
+    private final PlaylistRecyclerViewInterface playlistRVInterface;
 
     Context context;
     List<Playlist> playlists;
 
-    public Playlist_RecyclerViewAdapter(Context context, List<Playlist> playlists) {
+    public Playlist_RecyclerViewAdapter(Context context, List<Playlist> playlists,
+                                        PlaylistRecyclerViewInterface playlistRVInterface) {
         this.context = context;
         this.playlists = playlists;
+        this.playlistRVInterface = playlistRVInterface;
     }
 
     /** onCreateViewHolder
@@ -42,7 +46,7 @@ public class Playlist_RecyclerViewAdapter extends RecyclerView.Adapter<Playlist_
     public Playlist_RecyclerViewAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(R.layout.playlists_recycler_view_row, parent, false);
-        return new Playlist_RecyclerViewAdapter.MyViewHolder(view);
+        return new Playlist_RecyclerViewAdapter.MyViewHolder(view, playlistRVInterface);
     }
 
     /** onBindViewHolder
@@ -76,10 +80,23 @@ public class Playlist_RecyclerViewAdapter extends RecyclerView.Adapter<Playlist_
 
         TextView playlistTitle, playlistDescription;
 
-        public MyViewHolder(@NonNull View itemView) {
+        public MyViewHolder(@NonNull View itemView, PlaylistRecyclerViewInterface playlistRVInterface) {
             super(itemView);
             playlistTitle = itemView.findViewById(R.id.playlistTitleTextview);
             playlistDescription = itemView.findViewById(R.id.playlistDescriptionTextview);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(playlistRVInterface != null){
+                        int pos = getAdapterPosition();
+
+                        if(pos != RecyclerView.NO_POSITION) {
+                            playlistRVInterface.onItemClick(pos);
+                        }
+                    }
+                }
+            });
         }
     }
 }

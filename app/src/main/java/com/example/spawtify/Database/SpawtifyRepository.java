@@ -93,6 +93,33 @@ public class SpawtifyRepository {
         return null;
     }
 
+    /** getUserById
+     * Retrieves the user object based on the userId
+     * @param userId is the primary key of the user object
+     * @return the user object associated with the id
+     */
+    public User getUserById(int userId){
+        /* States that this will be fulfilled sometime in the future
+         * Allows a thread to perform its operation
+         * When it comes back, we can process it
+         */
+        Future<User> future = SpawtifyDatabase.databaseWriteExecutor.submit(
+                new Callable<User>() {
+                    @Override
+                    public User call() throws Exception {
+                        return userDAO.getUserByUserId(userId);
+                    }
+                }
+        );
+        try {
+            return future.get();
+        }catch (InterruptedException | ExecutionException e){
+            e.printStackTrace();
+            Log.i(MainActivity.TAG, "Problem getting user by userId from repository");
+        }
+        return null;
+    }
+
     public void insertUser(User... users){
         SpawtifyDatabase.databaseWriteExecutor.execute(()->
         {
@@ -427,12 +454,32 @@ public class SpawtifyRepository {
         });
     }
 
+
     public void deletePlaylist(Playlist playlist){
         SpawtifyDatabase.databaseWriteExecutor.execute(()->{
             playlistDAO.delete(playlist);
         });
     }
 
-
-
+    public Playlist getPlaylistByTitle(String title, int userId) {
+        /* States that this will be fulfilled sometime in the future
+         * Allows a thread to perform its operation
+         * When it comes back, we can process it
+         */
+        Future<Playlist> future = SpawtifyDatabase.databaseWriteExecutor.submit(
+                new Callable<Playlist>() {
+                    @Override
+                    public Playlist call() throws Exception {
+                        return playlistDAO.getPlaylistByTitle(title, userId);
+                    }
+                }
+        );
+        try {
+            return future.get();
+        }catch (InterruptedException | ExecutionException e){
+            e.printStackTrace();
+            Log.i(MainActivity.TAG, "Problem when getting all Playlists in the repository");
+        }
+        return null;
+    }
 }
