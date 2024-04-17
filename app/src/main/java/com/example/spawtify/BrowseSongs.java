@@ -12,12 +12,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.spawtify.Database.SpawtifyRepository;
 import com.example.spawtify.Database.entities.Song;
 import com.example.spawtify.databinding.ActivityBrowseSongsBinding;
+import com.example.spawtify.viewHolders.SongModel;
+import com.example.spawtify.viewHolders.SongRecyclerViewInterface;
+import com.example.spawtify.viewHolders.Song_RecyclerViewAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class BrowseSongs extends AppCompatActivity implements SongRecyclerViewInterface{
+public class BrowseSongs extends AppCompatActivity implements SongRecyclerViewInterface {
     //  Used for storing int extras to place into viewValue
     //  -1 = came from MainActivity
     //  0 = edit song
@@ -156,6 +159,10 @@ public class BrowseSongs extends AppCompatActivity implements SongRecyclerViewIn
         if (filterValue == albumFilter){
             String selectedAlbum = getIntent().getStringExtra(FILTER_STRING);
             songList = spawtifyRepository.getSongsByAlbum(selectedAlbum);
+        }
+        if (filterValue == genreFilter){
+            String selectedGenre = getIntent().getStringExtra(FILTER_STRING);
+            songList = spawtifyRepository.getSongsByGenre(selectedGenre);
         }
         //  Song values that will be used to store information from songs
         int songId;
