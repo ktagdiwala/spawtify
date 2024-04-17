@@ -28,6 +28,7 @@ public class BrowseSongs extends AppCompatActivity implements SongRecyclerViewIn
     private static final String VIEW_VALUE = "com.example.spawtify.VIEW_VALUE";
     private static final String FILTER_STRING = "com.example.spawtify.FILTER_STRING";
     private static final String FILTER_VALUE = "com.example.spawtify.FILTER_VALUE";
+    private static final String EXPLICIT_BOOLEAN = "com.example.spawtify.EXPLICIT_BOOLEAN";
 
     ActivityBrowseSongsBinding binding;
 
@@ -164,6 +165,13 @@ public class BrowseSongs extends AppCompatActivity implements SongRecyclerViewIn
             String selectedGenre = getIntent().getStringExtra(FILTER_STRING);
             songList = spawtifyRepository.getSongsByGenre(selectedGenre);
         }
+        if (filterValue == 6){
+            boolean explicit = getIntent().getBooleanExtra(EXPLICIT_BOOLEAN, false);
+            songList = spawtifyRepository.getCleanSongs();
+            if (explicit){
+                songList = spawtifyRepository.getExplicitSongs();
+            }
+        }
         //  Song values that will be used to store information from songs
         int songId;
         String title;
@@ -229,6 +237,13 @@ public class BrowseSongs extends AppCompatActivity implements SongRecyclerViewIn
         Intent intent = new Intent(context, BrowseSongs.class);
         intent.putExtra(FILTER_VALUE, filterValue);
         intent.putExtra(FILTER_STRING, filterString);
+        return intent;
+    }
+
+    public static Intent intentFactory(Context context, int filterValue, boolean isExplicit){
+        Intent intent = new Intent(context, BrowseSongs.class);
+        intent.putExtra(FILTER_VALUE, filterValue);
+        intent.putExtra(EXPLICIT_BOOLEAN, isExplicit);
         return intent;
     }
 
