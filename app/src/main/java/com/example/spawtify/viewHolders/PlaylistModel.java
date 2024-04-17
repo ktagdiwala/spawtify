@@ -8,14 +8,15 @@ package com.example.spawtify.viewHolders;
  */
 
 public class PlaylistModel {
-    String playlistTitle;
-    String playlistDescription;
-    String songlistString;
+    private String playlistTitle;
+    private String playlistDescription;
+    private String songlistString;
 
     public PlaylistModel(String playlistTitle, String playlistDescription) {
         this.playlistTitle = playlistTitle;
         this.playlistDescription = playlistDescription;
     }
+
 
     public String getPlaylistTitle() {
         return playlistTitle;
@@ -23,6 +24,10 @@ public class PlaylistModel {
 
     public String getPlaylistDescription() {
         return playlistDescription;
+    }
+
+    public void setSonglistString(String songlistString) {
+        this.songlistString = songlistString;
     }
 
     public String getSonglistString() {
