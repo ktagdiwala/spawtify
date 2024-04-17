@@ -8,12 +8,14 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.spawtify.Database.SpawtifyRepository;
+import com.example.spawtify.viewHolders.ArtistAdapter;
+import com.example.spawtify.viewHolders.ArtistRecyclerViewInterface;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class ArtistList extends AppCompatActivity implements ArtistRecyclerViewInterface{
+public class ArtistList extends AppCompatActivity implements ArtistRecyclerViewInterface {
 
     //  Holds our distinct artistList retrieved from database
     List<String> artistList = new ArrayList<>();

@@ -9,12 +9,14 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.spawtify.Database.SpawtifyRepository;
+import com.example.spawtify.viewHolders.AlbumAdapter;
+import com.example.spawtify.viewHolders.AlbumRecyclerViewInterface;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class AlbumList extends AppCompatActivity implements AlbumRecyclerViewInterface{
+public class AlbumList extends AppCompatActivity implements AlbumRecyclerViewInterface {
 
     List<String> albumList = new ArrayList<>();
 
