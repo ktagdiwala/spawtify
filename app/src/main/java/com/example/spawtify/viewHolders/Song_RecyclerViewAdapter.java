@@ -10,7 +10,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.spawtify.R;
-import com.example.spawtify.SongModel;
 
 import java.util.List;
 
