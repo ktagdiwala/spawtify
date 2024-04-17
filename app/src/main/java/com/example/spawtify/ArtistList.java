@@ -15,8 +15,8 @@ import java.util.Objects;
 
 public class ArtistList extends AppCompatActivity implements ArtistRecyclerViewInterface{
 
-    //  Holds our distinct artists retrieved from database
-    List<String> artists = new ArrayList<>();
+    //  Holds our distinct artistList retrieved from database
+    List<String> artistList = new ArrayList<>();
 
     //  Used to interact with database
     SpawtifyRepository spawtifyRepository;
@@ -37,7 +37,7 @@ public class ArtistList extends AppCompatActivity implements ArtistRecyclerViewI
 
         ArtistAdapter adapter = new ArtistAdapter
                 (this,
-                        artists,
+                        artistList,
                         this);
 
         recyclerView.setAdapter(adapter);
@@ -45,7 +45,7 @@ public class ArtistList extends AppCompatActivity implements ArtistRecyclerViewI
     }
 
     private void setUpArtistList() {
-        artists = spawtifyRepository.getDistinctArtists();
+        artistList = spawtifyRepository.getDistinctArtists();
     }
 
     public static Intent intentFactory(Context context){
@@ -55,7 +55,7 @@ public class ArtistList extends AppCompatActivity implements ArtistRecyclerViewI
 
     @Override
     public void onItemClick(int position) {
-        String artist = artists.get(position);
+        String artist = artistList.get(position);
         int artistFilter = 3;
         Intent intent = BrowseSongs.intentFactory(this, artistFilter, artist);
         startActivity(intent);
