@@ -25,7 +25,15 @@ public interface PlaylistDAO {
     @Delete
     void delete(Playlist playlist);
 
+    @Query("SELECT * FROM " + SpawtifyDatabase.PLAYLIST_TABLE + " WHERE userId = :currentUserId ORDER BY playlistTitle")
+    List<Playlist> getAllUserPlaylists(int currentUserId);
+
+    @Query("SELECT playlistTitle FROM " + SpawtifyDatabase.PLAYLIST_TABLE + " WHERE userId = :currentUserId ORDER BY playlistTitle")
+    List<String> getAllUserPlaylistTitles(int currentUserId);
+
     @Query("SELECT * FROM " + SpawtifyDatabase.PLAYLIST_TABLE + " ORDER BY playlistTitle")
     List<Playlist> getAllPlaylists();
 
+    @Query("SELECT playlistDescription FROM " + SpawtifyDatabase.PLAYLIST_TABLE + " WHERE userId = :currentUserId ORDER BY playlistTitle")
+    List<String> getAllUserPlaylistDescriptions(int currentUserId);
 }
