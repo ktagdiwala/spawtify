@@ -216,4 +216,40 @@ public class SpawtifyRepository {
         }
         return null;
     }
+
+    public List<String> getDistinctAlbums() {
+        Future<List<String>> future = SpawtifyDatabase.databaseWriteExecutor.submit(
+                new Callable<List<String>>() {
+                    @Override
+                    public List<String> call() throws Exception {
+                        return songDAO.getAllAlbums();
+                    }
+                }
+        );
+        try {
+            return future.get();
+        }catch (InterruptedException | ExecutionException e){
+            e.printStackTrace();
+            Log.i(MainActivity.TAG, "Problem when getting all Songs in the repository");
+        }
+        return null;
+    }
+
+    public List<Song> getSongsByAlbum(String selectedAlbum) {
+        Future<List<Song>> future = SpawtifyDatabase.databaseWriteExecutor.submit(
+                new Callable<List<Song>>() {
+                    @Override
+                    public List<Song> call() throws Exception {
+                        return songDAO.getSongsByAlbum(selectedAlbum);
+                    }
+                }
+        );
+        try {
+            return future.get();
+        }catch (InterruptedException | ExecutionException e){
+            e.printStackTrace();
+            Log.i(MainActivity.TAG, "Problem when getting all Songs in the repository");
+        }
+        return null;
+    }
 }
