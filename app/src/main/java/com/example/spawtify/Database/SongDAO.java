@@ -52,4 +52,10 @@ public interface SongDAO {
 
     @Query("SELECT * FROM " + SpawtifyDatabase.SONGLIST + " WHERE songAlbum = :songAlbum")
     List<Song> getSongsByAlbum(String songAlbum);
+
+    @Query("SELECT DISTINCT songGenre FROM SONGLIST")
+    List<String> getAllGenres();
+
+    @Query("SELECT * FROM " + SpawtifyDatabase.SONGLIST + " WHERE songGenre = :selectedGenre")
+    List<Song> getSongsByGenre(String selectedGenre);
 }
