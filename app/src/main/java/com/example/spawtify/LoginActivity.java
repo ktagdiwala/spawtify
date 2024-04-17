@@ -18,7 +18,6 @@ import com.example.spawtify.Database.entities.User;
 import com.example.spawtify.databinding.ActivityLoginBinding;
 
 public class LoginActivity extends AppCompatActivity {
-    private UserDAO userDAO;
     private User user;
     private String usernameString;
     private String passwordString;
@@ -34,17 +33,8 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         spawtifyRepository = SpawtifyRepository.getRepository(getApplication());
-        getDatabase();
         wireUpDisplay();
 
-    }
-
-    private void getDatabase() {
-        userDAO = Room.databaseBuilder
-                        (this, SpawtifyDatabase.class, SpawtifyDatabase.DB_NAME)
-                .allowMainThreadQueries()
-                .build()
-                .getUserDAO();
     }
 
     private void wireUpDisplay(){
@@ -84,9 +74,9 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private boolean checkForUserInDatabase(){
-        user = userDAO.getUserByUsername(usernameString);
+        user = spawtifyRepository.getUserByUsername(usernameString);
         if (user == null){
-            Toast.makeText(this, "No user " + user + " found", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "No user " + usernameString + " found", Toast.LENGTH_SHORT).show();
             return false;
         }
         return true;
