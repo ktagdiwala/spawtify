@@ -111,7 +111,9 @@ public class SongAddOrEdit extends AppCompatActivity {
     private void wireUpDisplay(){
         binding.AddOrChangeButton.setOnClickListener(v -> {
             //  Retrieve values from display, store in local variables
-            getValuesFromDisplay();
+            if (!getValuesFromDisplay()){
+                return;
+            }
             //  Create local song object with local variables
             Song song = new Song(title, artist, album, genre, explicit);
             //  Setting up intent to return to Admin Perks Activity
@@ -204,12 +206,22 @@ public class SongAddOrEdit extends AppCompatActivity {
      * Retrieves values from display:
      * title, artist, album, genre, explicit
      */
-    private void getValuesFromDisplay(){
+    private boolean getValuesFromDisplay(){
         title = binding.EnterTitle.getText().toString();
         artist = binding.EnterArtist.getText().toString();
         album = binding.EnterAlbum.getText().toString();
         genre = binding.EnterGenre.getText().toString();
         explicit = binding.explicitSwitch.isChecked();
+
+        if (title.isEmpty() || title.isBlank() ||
+            artist.isEmpty() || artist.isBlank() ||
+            album.isEmpty() || album.isBlank() ||
+            genre.isEmpty() || genre.isBlank())
+        {
+                toaster("One or more of your fields are empty!");
+                return false;
+        }
+        return true;
     }
 
     public static Intent intentFactory(Context context, int addOrEdit){

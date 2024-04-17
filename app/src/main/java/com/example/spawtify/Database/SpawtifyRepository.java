@@ -155,7 +155,6 @@ public class SpawtifyRepository {
         });
     }
 
-
     public void removeSongById(int songId) {
         SpawtifyDatabase.databaseWriteExecutor.execute(()->{
             songDAO.deleteSongById(songId);
@@ -179,6 +178,158 @@ public class SpawtifyRepository {
                     @Override
                     public Song call() throws Exception {
                         return songDAO.getSongById(songId);
+                    }
+                }
+        );
+        try {
+            return future.get();
+        }catch (InterruptedException | ExecutionException e){
+            e.printStackTrace();
+            Log.i(MainActivity.TAG, "Problem when getting all Songs in the repository");
+        }
+        return null;
+    }
+
+    public List<Song> getSongsByArtist(String songArtist){
+        /* States that this will be fulfilled sometime in the future
+         * Allows a thread to perform its operation
+         * When it comes back, we can process it
+         */
+        Future<List<Song>> future = SpawtifyDatabase.databaseWriteExecutor.submit(
+                new Callable<List<Song>>() {
+                    @Override
+                    public List<Song> call() throws Exception {
+                        return songDAO.getSongsByArtist(songArtist);
+                    }
+                }
+        );
+        try {
+            return future.get();
+        }catch (InterruptedException | ExecutionException e){
+            e.printStackTrace();
+            Log.i(MainActivity.TAG, "Problem when getting all Songs in the repository");
+        }
+        return null;
+    }
+
+    public List<String> getDistinctArtists(){
+        /* States that this will be fulfilled sometime in the future
+         * Allows a thread to perform its operation
+         * When it comes back, we can process it
+         */
+        Future<List<String>> future = SpawtifyDatabase.databaseWriteExecutor.submit(
+                new Callable<List<String>>() {
+                    @Override
+                    public List<String> call() throws Exception {
+                        return songDAO.getAllArtists();
+                    }
+                }
+        );
+        try {
+            return future.get();
+        }catch (InterruptedException | ExecutionException e){
+            e.printStackTrace();
+            Log.i(MainActivity.TAG, "Problem when getting all Songs in the repository");
+        }
+        return null;
+    }
+
+    public List<String> getDistinctAlbums() {
+        Future<List<String>> future = SpawtifyDatabase.databaseWriteExecutor.submit(
+                new Callable<List<String>>() {
+                    @Override
+                    public List<String> call() throws Exception {
+                        return songDAO.getAllAlbums();
+                    }
+                }
+        );
+        try {
+            return future.get();
+        }catch (InterruptedException | ExecutionException e){
+            e.printStackTrace();
+            Log.i(MainActivity.TAG, "Problem when getting all Songs in the repository");
+        }
+        return null;
+    }
+
+    public List<Song> getSongsByAlbum(String selectedAlbum) {
+        Future<List<Song>> future = SpawtifyDatabase.databaseWriteExecutor.submit(
+                new Callable<List<Song>>() {
+                    @Override
+                    public List<Song> call() throws Exception {
+                        return songDAO.getSongsByAlbum(selectedAlbum);
+                    }
+                }
+        );
+        try {
+            return future.get();
+        }catch (InterruptedException | ExecutionException e){
+            e.printStackTrace();
+            Log.i(MainActivity.TAG, "Problem when getting all Songs in the repository");
+        }
+        return null;
+    }
+
+    public List<String> getDistinctGenres() {
+        Future<List<String>> future = SpawtifyDatabase.databaseWriteExecutor.submit(
+                new Callable<List<String>>() {
+                    @Override
+                    public List<String> call() throws Exception {
+                        return songDAO.getAllGenres();
+                    }
+                }
+        );
+        try {
+            return future.get();
+        }catch (InterruptedException | ExecutionException e){
+            e.printStackTrace();
+            Log.i(MainActivity.TAG, "Problem when getting all Songs in the repository");
+        }
+        return null;
+    }
+
+    public List<Song> getSongsByGenre(String selectedGenre) {
+        Future<List<Song>> future = SpawtifyDatabase.databaseWriteExecutor.submit(
+                new Callable<List<Song>>() {
+                    @Override
+                    public List<Song> call() throws Exception {
+                        return songDAO.getSongsByGenre(selectedGenre);
+                    }
+                }
+        );
+        try {
+            return future.get();
+        }catch (InterruptedException | ExecutionException e){
+            e.printStackTrace();
+            Log.i(MainActivity.TAG, "Problem when getting all Songs in the repository");
+        }
+        return null;
+    }
+
+    public List<Song> getCleanSongs() {
+        Future<List<Song>> future = SpawtifyDatabase.databaseWriteExecutor.submit(
+                new Callable<List<Song>>() {
+                    @Override
+                    public List<Song> call() throws Exception {
+                        return songDAO.getCleanSongs();
+                    }
+                }
+        );
+        try {
+            return future.get();
+        }catch (InterruptedException | ExecutionException e){
+            e.printStackTrace();
+            Log.i(MainActivity.TAG, "Problem when getting all Songs in the repository");
+        }
+        return null;
+    }
+
+    public List<Song> getExplicitSongs() {
+        Future<List<Song>> future = SpawtifyDatabase.databaseWriteExecutor.submit(
+                new Callable<List<Song>>() {
+                    @Override
+                    public List<Song> call() throws Exception {
+                        return songDAO.getExplicitSongs();
                     }
                 }
         );

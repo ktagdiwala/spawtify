@@ -47,4 +47,9 @@
     <string name="create">Create</string>
     <string name="playlist_title">Playlist Title</string>
     <string name="playlist_description">Playlist Description</string>
+    <string name="by_artist">By Artist</string>
+    <string name="by_album">By Album</string>
+    <string name="by_genre">By Genre</string>
+    <string name="remove_filters">Remove Filters</string>
+    <string name="clean">Clean</string>
 </resources>

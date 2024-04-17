@@ -22,6 +22,18 @@
             android:name=".MyPlaylistsActivity"
             android:exported="false" />
         <activity
+            android:name=".GenreList"
+            android:exported="false" />
+        <activity
+            android:name=".AlbumList"
+            android:exported="false" />
+        <activity
+            android:name=".ArtistList"
+            android:exported="false" />
+        <activity
+            android:name=".FilterSongs"
+            android:exported="false" />
+        <activity
             android:name=".BrowseSongs"
             android:exported="false" />
         <activity
