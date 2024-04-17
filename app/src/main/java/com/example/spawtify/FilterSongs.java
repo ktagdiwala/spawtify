@@ -29,6 +29,12 @@ public class FilterSongs extends AppCompatActivity {
 
         binding.artistFilterButton.setOnClickListener(v -> artistList());
         binding.albumFilterButton.setOnClickListener(v -> albumList());
+        binding.genreFilterButton.setOnClickListener(v -> genreList());
+    }
+
+    private void genreList(){
+        Intent intent = GenreList.intentFactory(this);
+        startActivity(intent);
     }
 
     private void albumList(){
