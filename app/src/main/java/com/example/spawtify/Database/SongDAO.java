@@ -9,7 +9,6 @@ import androidx.room.Update;
 
 import com.example.spawtify.Database.entities.Song;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /** SongDAO:
@@ -40,4 +39,28 @@ public interface SongDAO {
 
     @Query("SELECT * FROM " + SpawtifyDatabase.SONGLIST + " WHERE songId = :songId")
     Song getSongById(int songId);
+
+    @Query("SELECT * FROM " + SpawtifyDatabase.SONGLIST + " WHERE songArtist = :songArtist")
+    List<Song> getSongsByArtist(String songArtist);
+
+    @Query("SELECT DISTINCT songArtist FROM SONGLIST")
+    List<String> getAllArtists();
+
+    @Query("SELECT DISTINCT songAlbum FROM SONGLIST")
+    List<String> getAllAlbums();
+
+    @Query("SELECT * FROM " + SpawtifyDatabase.SONGLIST + " WHERE songAlbum = :songAlbum")
+    List<Song> getSongsByAlbum(String songAlbum);
+
+    @Query("SELECT DISTINCT songGenre FROM SONGLIST")
+    List<String> getAllGenres();
+
+    @Query("SELECT * FROM " + SpawtifyDatabase.SONGLIST + " WHERE songGenre = :selectedGenre")
+    List<Song> getSongsByGenre(String selectedGenre);
+
+    @Query("SELECT * FROM " + SpawtifyDatabase.SONGLIST + " WHERE isExplicit = false")
+    List<Song> getCleanSongs();
+
+    @Query("SELECT * FROM " + SpawtifyDatabase.SONGLIST + " WHERE isExplicit = true")
+    List<Song> getExplicitSongs();
 }

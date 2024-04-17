@@ -3,6 +3,7 @@ package com.example.spawtify;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,16 +12,26 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.spawtify.Database.SpawtifyRepository;
 import com.example.spawtify.Database.entities.Song;
+import com.example.spawtify.databinding.ActivityBrowseSongsBinding;
+import com.example.spawtify.viewHolders.SongModel;
+import com.example.spawtify.viewHolders.SongRecyclerViewInterface;
+import com.example.spawtify.viewHolders.Song_RecyclerViewAdapter;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class BrowseSongs extends AppCompatActivity implements SongRecyclerViewInterface{
+public class BrowseSongs extends AppCompatActivity implements SongRecyclerViewInterface {
     //  Used for storing int extras to place into viewValue
     //  -1 = came from MainActivity
     //  0 = edit song
     //  1 = delete song
     private static final String VIEW_VALUE = "com.example.spawtify.VIEW_VALUE";
+    private static final String FILTER_STRING = "com.example.spawtify.FILTER_STRING";
+    private static final String FILTER_VALUE = "com.example.spawtify.FILTER_VALUE";
+    private static final String EXPLICIT_BOOLEAN = "com.example.spawtify.EXPLICIT_BOOLEAN";
+
+    ActivityBrowseSongsBinding binding;
 
     //  These values will be used in if statements to determine what activity user
     //  came from
@@ -28,10 +39,20 @@ public class BrowseSongs extends AppCompatActivity implements SongRecyclerViewIn
     private final int deleteSong = 1;
     private final int mainActivity = -1;
 
+    //  These values will be used in if statements to determine what filter will be applied
+    private final int noFilters = 2;
+    private final int artistFilter = 3;
+    private final int albumFilter = 4;
+    private final int genreFilter = 5;
+    private final int explicitFilter = 6;
+
+
     //  List of SongModel objects called songModels
     //  A SongModel contains all of the same fields as a song, used by RecyclerViewAdapter
     //  to display our songs
     List<SongModel> songModels = new ArrayList<>();
+
+    List<Song> songList = new ArrayList<>();
 
     //  Object of SpawtifyRepository so we can interact with the database
     SpawtifyRepository spawtifyRepository;
@@ -39,15 +60,30 @@ public class BrowseSongs extends AppCompatActivity implements SongRecyclerViewIn
     //  viewValue decides how to display browse songs
     private int viewValue = mainActivity;
 
+    //  filterValues decides which filter to apply to the list of songs
+    private int filterValue;
+
+    RecyclerView recyclerView;
+
+    Song_RecyclerViewAdapter adapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_browse_songs);
+        binding = ActivityBrowseSongsBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
-        RecyclerView recyclerView = findViewById(R.id.songsRecyclerView);
+        //  Retrieve value that tells us which activity we came from, which filter we are applying
+        //
+        setUpDefaultValues();
+
+        recyclerView = findViewById(R.id.songsRecyclerView);
 
         //  Create instance of SpawtifyRepository to use in setUpSongModels
         spawtifyRepository = SpawtifyRepository.getRepository(getApplication());
+
+        //  Sets up Filter Button with onClickListener
+        wireUpDisplay();
 
         //  Set up our list of song models
         setUpSongModels();
@@ -58,6 +94,28 @@ public class BrowseSongs extends AppCompatActivity implements SongRecyclerViewIn
 
         //  Sets up recyclerView with a linear layout
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        if (filterValue == noFilters){
+            binding.removeFilters.setVisibility(View.INVISIBLE);
+        }
+        if (filterValue > noFilters){
+            binding.removeFilters.setVisibility(View.VISIBLE);
+        }
+    }
+
+    private void setUpDefaultValues(){
+        viewValue = getIntent().getIntExtra(VIEW_VALUE, mainActivity);
+        filterValue = getIntent().getIntExtra(FILTER_VALUE, noFilters);
+    }
+
+    private void wireUpDisplay(){
+        binding.filterButton.setOnClickListener(v -> filterView());
+        binding.removeFilters.setOnClickListener(v -> removeFilter());
+    }
+
+    private void filterView(){
+        Intent intent = FilterSongs.intentFactory(this);
+        startActivity(intent);
     }
 
     /** Sets up the adapter based on the activity we came from
@@ -66,16 +124,12 @@ public class BrowseSongs extends AppCompatActivity implements SongRecyclerViewIn
      * @param recyclerView  RecyclerView view object is passed in so setAdapter can be called
      */
     private void setUpAdapter(RecyclerView recyclerView){
-        //  Retrieve value that tells us which activity we came from
-        viewValue = getIntent().getIntExtra(VIEW_VALUE, mainActivity);
-
         //  Set up default adapter (came from main activity)
-        Song_RecyclerViewAdapter adapter = new Song_RecyclerViewAdapter
+        adapter = new Song_RecyclerViewAdapter
                 (this, songModels);
 
         //  Create activityTitle holder, will change if we came from edit song or delete song
         String activityTitle = "Browse Songs";
-
 
         //  Set up adapter with onclick listener since we came from editSong
         if (viewValue == editSong){
@@ -112,7 +166,27 @@ public class BrowseSongs extends AppCompatActivity implements SongRecyclerViewIn
      */
     private void setUpSongModels(){
         //  Retrieve all songs from database, store them in songList in List<Song> format
-        List<Song> songList = spawtifyRepository.getAllSongs();
+        songList = spawtifyRepository.getAllSongs();
+
+        if (filterValue == artistFilter){
+            String selectedArtist = getIntent().getStringExtra(FILTER_STRING);
+            songList = spawtifyRepository.getSongsByArtist(selectedArtist);
+        }
+        if (filterValue == albumFilter){
+            String selectedAlbum = getIntent().getStringExtra(FILTER_STRING);
+            songList = spawtifyRepository.getSongsByAlbum(selectedAlbum);
+        }
+        if (filterValue == genreFilter){
+            String selectedGenre = getIntent().getStringExtra(FILTER_STRING);
+            songList = spawtifyRepository.getSongsByGenre(selectedGenre);
+        }
+        if (filterValue == explicitFilter){
+            boolean explicit = getIntent().getBooleanExtra(EXPLICIT_BOOLEAN, false);
+            songList = spawtifyRepository.getCleanSongs();
+            if (explicit){
+                songList = spawtifyRepository.getExplicitSongs();
+            }
+        }
         //  Song values that will be used to store information from songs
         int songId;
         String title;
@@ -120,6 +194,12 @@ public class BrowseSongs extends AppCompatActivity implements SongRecyclerViewIn
         String album;
         String genre;
         boolean explicit;
+
+        //  Making sure songModels is empty before repopulating (important for removing filters)
+        if (!songModels.isEmpty()){
+            songModels.clear();
+        }
+
         //  For loop that iterates through songList
         //  Method song values are set using Song POJO getters
         //  New SongModel with current song values is sent into the list named songModels
@@ -135,6 +215,15 @@ public class BrowseSongs extends AppCompatActivity implements SongRecyclerViewIn
             songModels.add(i,new SongModel
                                 (songId, title, artist, album, genre, explicit));
         }
+    }
+
+    private void removeFilter(){
+        //  Setting up these values so we get all songs when setUpSongModels is called
+        filterValue = noFilters;
+        viewValue = mainActivity;
+        setUpSongModels();
+        adapter.notifyDataSetChanged();
+        binding.removeFilters.setVisibility(View.INVISIBLE);
     }
 
     /** For making toast, yum
@@ -166,6 +255,20 @@ public class BrowseSongs extends AppCompatActivity implements SongRecyclerViewIn
     public static Intent intentFactory(Context context, int viewValue){
         Intent intent = new Intent(context, BrowseSongs.class);
         intent.putExtra(VIEW_VALUE, viewValue);
+        return intent;
+    }
+
+    public static Intent intentFactory(Context context, int filterValue, String filterString){
+        Intent intent = new Intent(context, BrowseSongs.class);
+        intent.putExtra(FILTER_VALUE, filterValue);
+        intent.putExtra(FILTER_STRING, filterString);
+        return intent;
+    }
+
+    public static Intent intentFactory(Context context, int filterValue, boolean isExplicit){
+        Intent intent = new Intent(context, BrowseSongs.class);
+        intent.putExtra(FILTER_VALUE, filterValue);
+        intent.putExtra(EXPLICIT_BOOLEAN, isExplicit);
         return intent;
     }
 
