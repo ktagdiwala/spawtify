@@ -2,6 +2,7 @@ package com.example.spawtify.Database;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
+import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
@@ -25,11 +26,14 @@ public interface SongDAO {
     @Update(onConflict = OnConflictStrategy.REPLACE)
     void update(Song song);
 
-    @Query("SELECT * FROM " + SpawtifyDatabase.SONGLIST)
-    LiveData<List<Song>> getAllRecordsLD();
+    @Delete
+    void delete(Song song);
 
-    @Query("SELECT * FROM " + SpawtifyDatabase.SONGLIST)
+    @Query("SELECT * FROM " + SpawtifyDatabase.SONGLIST + " ORDER BY songTitle")
     List<Song> getAllRecords();
+
+    @Query("SELECT * FROM " + SpawtifyDatabase.SONGLIST + " ORDER BY songTitle")
+    LiveData<List<Song>> getAllRecordsLD();
 
     @Query("DELETE FROM " + SpawtifyDatabase.SONGLIST)
     void deleteAll();

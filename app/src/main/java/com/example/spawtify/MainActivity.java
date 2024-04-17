@@ -1,12 +1,10 @@
 package com.example.spawtify;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.room.Room;
 
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -14,7 +12,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 
 import com.example.spawtify.Database.SpawtifyDatabase;
 import com.example.spawtify.Database.SpawtifyRepository;
@@ -22,7 +19,6 @@ import com.example.spawtify.Database.UserDAO;
 import com.example.spawtify.Database.entities.User;
 import com.example.spawtify.databinding.ActivityMainBinding;
 
-import java.util.List;
 import java.util.Objects;
 
 /** MainActivity:
@@ -32,7 +28,6 @@ import java.util.Objects;
  *  2) My Playlists -> takes user to their list of created playlists
  *  3) Change Password -> takes user to screen where they can change their password
  *  4) Logout -> logs out user from application and returns them to login page
- *
  *  **ADMIN ONLY**
  *  5) Secret Admin Stuff -> takes admin to admin perks page
  *
@@ -181,6 +176,18 @@ public class MainActivity extends AppCompatActivity {
     private void wireUpDisplay(){
         //  Display title of current activity
         Objects.requireNonNull(getSupportActionBar()).setTitle("Landing Page");
+
+//        // Sets up Browse Songs button
+//        binding.BrowseSongsButton.setOnClickListener(v -> {
+//            Intent intent = BrowseSongsActivity.intentFactory(getApplicationContext());
+//            startActivity(intent);
+//        });
+
+        // Sets up My Playlists button
+        binding.MyPlaylistsButton.setOnClickListener(v ->{
+            Intent intent = MyPlaylistsActivity.intentFactory(getApplicationContext(), userId);
+            startActivity(intent);
+        });
 
         //  SCREEN/PAGE FIELDS
 

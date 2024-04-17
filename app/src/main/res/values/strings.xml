@@ -40,6 +40,13 @@
     <string name="logged_in">Logged in</string>
     <string name="song_list">Song List</string>
     <string name="filter">Filter</string>
+    <string name="new_playlist">New Playlist</string>
+    <string name="delete_playlist">Delete Playlist</string>
+    <string name="description">Description</string>
+    <string name="click_on_a_playlist_to_view_contained_songs">Click on a playlist to view contained songs</string>
+    <string name="create">Create</string>
+    <string name="playlist_title">Playlist Title</string>
+    <string name="playlist_description">Playlist Description</string>
     <string name="by_artist">By Artist</string>
     <string name="by_album">By Album</string>
     <string name="by_genre">By Genre</string>
