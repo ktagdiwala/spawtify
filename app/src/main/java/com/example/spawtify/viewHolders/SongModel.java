@@ -1,12 +1,12 @@
-package com.example.spawtify;
+package com.example.spawtify.viewHolders;
 
 public class SongModel {
-    int songId;
-    String songTitle;
-    String songArtist;
-    String songAlbum;
-    String songGenre;
-    boolean isExplicit;
+    public int songId;
+    public String songTitle;
+    public String songArtist;
+    public String songAlbum;
+    public String songGenre;
+    public boolean isExplicit;
 
     public SongModel(int songId, String songTitle, String songArtist, String songAlbum,
                      String songGenre, boolean isExplicit) {
