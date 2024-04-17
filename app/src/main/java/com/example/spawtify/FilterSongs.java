@@ -28,6 +28,22 @@ public class FilterSongs extends AppCompatActivity {
         binding.artistFilterButton.setOnClickListener(v -> artistList());
         binding.albumFilterButton.setOnClickListener(v -> albumList());
         binding.genreFilterButton.setOnClickListener(v -> genreList());
+        binding.explicitFilterButton.setOnClickListener(v -> explicitSongs());
+        binding.cleanFilterButton.setOnClickListener(v -> cleanSongs());
+    }
+
+    private void explicitSongs(){
+        boolean explicit = true;
+        int filterValue = 6;
+        Intent intent = BrowseSongs.intentFactory(this, filterValue, explicit);
+        startActivity(intent);
+    }
+
+    private void cleanSongs(){
+        boolean explicit = false;
+        int filterValue = 6;
+        Intent intent = BrowseSongs.intentFactory(this, filterValue, explicit);
+        startActivity(intent);
     }
 
     private void genreList(){
