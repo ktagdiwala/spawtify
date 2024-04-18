@@ -1,5 +1,6 @@
 package com.example.spawtify.Database;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
@@ -9,7 +10,6 @@ import androidx.room.Update;
 
 import com.example.spawtify.Database.entities.User;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /** UserDAO:
@@ -34,6 +34,9 @@ public interface UserDAO {
 
     @Query("SELECT * FROM " + SpawtifyDatabase.USER_TABLE + " ORDER BY username")
     List<User> getAllUsers();
+
+    @Query("SELECT * FROM " + SpawtifyDatabase.USER_TABLE + " ORDER BY username")
+    LiveData<List<User>> getAllUsersLD();
 
     @Query("SELECT * FROM " + SpawtifyDatabase.USER_TABLE + " WHERE username = :username")
     User getUserByUsername(String username);

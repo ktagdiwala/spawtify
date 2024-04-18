@@ -70,6 +70,15 @@ public class SpawtifyRepository {
     }
 
     // User-related methods
+
+     /** getAllUsers:
+      * retrieves the list of Users from the database of users
+      * @return an a LiveData object containing the list of all users in the user database
+      */
+     public LiveData<List<User>> getAllUsersLD(){
+         return userDAO.getAllUsersLD();
+     }
+
     public List<User> getAllUsers(){
         /* States that this will be fulfilled sometime in the future
          * Allows a thread to perform its operation
