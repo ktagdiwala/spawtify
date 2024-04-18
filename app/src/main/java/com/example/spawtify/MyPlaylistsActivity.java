@@ -51,6 +51,9 @@ public class MyPlaylistsActivity extends AppCompatActivity implements PlaylistRe
     // Used to determine whether the view will be in 'view playlist' or 'delete playlist' mode
     boolean deletePlaylistView = false;
 
+    // Adapter for rendering
+    Playlist_RecyclerViewAdapter adapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,7 +80,7 @@ public class MyPlaylistsActivity extends AppCompatActivity implements PlaylistRe
         binding.MyPlaylistsTextview.setText(setTitleString);
 
         setupPlaylistModels();
-        Playlist_RecyclerViewAdapter adapter = new Playlist_RecyclerViewAdapter(this,
+        adapter = new Playlist_RecyclerViewAdapter(this,
                 spawtifyRepository.getAllUserPlaylists(userId), this);
         binding.MyPlaylistsRecyclerView.setAdapter(adapter);
         binding.MyPlaylistsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -144,6 +147,8 @@ public class MyPlaylistsActivity extends AppCompatActivity implements PlaylistRe
                         playlistModels.get(position).getPlaylistTitle(), userId);
                 //  Removes playlist from database
                 spawtifyRepository.deletePlaylist(playlistToDelete);
+                // Refreshes recycler display
+
             });
             alertBuilder.setNegativeButton("No", (dialog, which) -> {
             });
