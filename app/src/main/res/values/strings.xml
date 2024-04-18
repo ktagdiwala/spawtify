@@ -60,6 +60,6 @@
     <string name="make_admin">Make Admin</string>
     <string name="delete_user">Delete User</string>
     <string name="user">User</string>
-    <string name="click_on_a_user_to_delete">Click on a user to delete</string>
-    <string name="click_on_a_user_to_make_admin">Click on a user to make admin</string>
+    <string name="enter_a_username_to_delete">Enter a username to delete</string>
+    <string name="enter_a_username_to_make_admin">Enter a username to make admin</string>
 </resources>
