@@ -23,6 +23,8 @@ public class SongDaoTest {
     private SongDAO songDAO;
     private SpawtifyDatabase db;
 
+
+
     @Before
     public void createDatabase(){
         Context context = ApplicationProvider.getApplicationContext();
@@ -36,13 +38,30 @@ public class SongDaoTest {
     }
 
     @Test
-    public void insertUpdateAndDeleteTest(){
+    public void insertTest(){
         //  Creates song for us to pass into database
-        Song testSong = new Song("From the Start", "Good Kid",
-                                "From the Start", "Rock", false);
+        Song testSong = new Song
+                        ("From the Start", "Good Kid",
+                        "From the Start", "Rock", false);
         //  Inserts our testSong into the database
         songDAO.insert(testSong);
         //  Retrieves all songs in database (there should only be the one we inserted)
+        List<Song> allSongs = songDAO.getAllRecords();
+        //  Verifies this is the only song in the allSongs list
+        assertEquals(allSongs.size(),1);
+        //  Verifies the only song in allSongs is the same as the song we inserted into the database
+        assertEquals(allSongs.get(0).getSongTitle(), testSong.getSongTitle());
+
+    }
+
+    @Test
+    public void updateTest(){
+        //  Creates song for us to pass into database
+        Song testSong = new Song
+                        ("From the Start", "Good Kid",
+                        "From the Start", "Rock", false);
+        songDAO.insert(testSong);
+        //  Retrieves all songs from database (should be only the one we passed in
         List<Song> allSongs = songDAO.getAllRecords();
         //  Verifies this is the only song in the allSongs list
         assertEquals(allSongs.size(),1);
@@ -57,6 +76,29 @@ public class SongDaoTest {
         //  Assert "To the End" is equal to songTitle contained in Song object located in 0th index
         //  of allSongs
         assertEquals("To the End", allSongs.get(0).getSongTitle());
+        //  Deletes song that we sent into the database
+        //  **DELETE SONG BY SENDING IN TESTSONG DOES NOT WORK BECAUSE THE IDS ARE DIFFERENT
+        songDAO.deleteSongById(allSongs.get(0).getSongId());
+        //  Retrieves songs from database
+        //  (there should be none inside since we deleted the only one
+        allSongs = songDAO.getAllRecords();
+        //  Asserts that allSongs size is equal to 0, since we deleted the only song in the database
+        assertEquals(0, allSongs.size());
+    }
+
+    @Test
+    public void deleteTest(){
+        //  Creates song for us to pass into database
+        Song testSong = new Song
+                ("From the Start", "Good Kid",
+                        "From the Start", "Rock", false);
+        songDAO.insert(testSong);
+        //  Retrieves all songs from database (should be only the one we passed in
+        List<Song> allSongs = songDAO.getAllRecords();
+        //  Verifies this is the only song in the allSongs list
+        assertEquals(1,allSongs.size());
+        //  Verifies the only song in allSongs is the same as the song we inserted into the database
+        assertEquals(allSongs.get(0).getSongTitle(), testSong.getSongTitle());
         //  Deletes song that we sent into the database
         //  **DELETE SONG BY SENDING IN TESTSONG DOES NOT WORK BECAUSE THE IDS ARE DIFFERENT
         songDAO.deleteSongById(allSongs.get(0).getSongId());
