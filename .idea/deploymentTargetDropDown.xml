@@ -2,6 +2,12 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
+      <entry key="PlaylistDAOTest">
+        <State />
+      </entry>
+      <entry key="SongDaoTest">
+        <State />
+      </entry>
       <entry key="app">
         <State>
           <targetSelectedWithDropDown>
@@ -17,6 +23,15 @@
           </targetSelectedWithDropDown>
           <timeTargetWasSelectedWithDropDown value="2024-04-11T02:43:23.498767Z" />
         </State>
+      </entry>
+      <entry key="delete()">
+        <State />
+      </entry>
+      <entry key="insert()">
+        <State />
+      </entry>
+      <entry key="update()">
+        <State />
       </entry>
     </value>
   </component>

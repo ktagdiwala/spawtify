@@ -472,6 +472,11 @@ public class SpawtifyRepository {
         });
     }
 
+    public void updatePlaylist(Playlist playlist){
+        SpawtifyDatabase.databaseWriteExecutor.execute(()->{
+            playlistDAO.update(playlist);
+        });
+    }
 
     public void deletePlaylist(Playlist playlist){
         SpawtifyDatabase.databaseWriteExecutor.execute(()->{

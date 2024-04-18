@@ -5,6 +5,7 @@ import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
+import androidx.room.Update;
 
 import com.example.spawtify.Database.entities.Playlist;
 
@@ -24,6 +25,9 @@ public interface PlaylistDAO {
 
     @Delete
     void delete(Playlist playlist);
+
+    @Update(onConflict = OnConflictStrategy.REPLACE)
+    void update(Playlist playlist);
 
     @Query("SELECT * FROM " + SpawtifyDatabase.PLAYLIST_TABLE + " WHERE userId = :currentUserId ORDER BY playlistTitle")
     List<Playlist> getAllUserPlaylists(int currentUserId);
