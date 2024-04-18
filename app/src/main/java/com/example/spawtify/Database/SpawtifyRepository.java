@@ -136,6 +136,12 @@ public class SpawtifyRepository {
         });
     }
 
+    public void updateUser(User user){
+        SpawtifyDatabase.databaseWriteExecutor.execute(()->{
+            userDAO.update(user);
+        });
+    }
+
     public void deleteUser(User user){
         SpawtifyDatabase.databaseWriteExecutor.execute(()->{
             userDAO.delete(user);
