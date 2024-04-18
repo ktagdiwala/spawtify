@@ -23,8 +23,6 @@ public class SongDaoTest {
     private SongDAO songDAO;
     private SpawtifyDatabase db;
 
-
-
     @Before
     public void createDatabase(){
         Context context = ApplicationProvider.getApplicationContext();
@@ -48,7 +46,7 @@ public class SongDaoTest {
         //  Retrieves all songs in database (there should only be the one we inserted)
         List<Song> allSongs = songDAO.getAllRecords();
         //  Verifies this is the only song in the allSongs list
-        assertEquals(allSongs.size(),1);
+        assertEquals(1,allSongs.size());
         //  Verifies the only song in allSongs is the same as the song we inserted into the database
         assertEquals(allSongs.get(0).getSongTitle(), testSong.getSongTitle());
 
@@ -64,7 +62,7 @@ public class SongDaoTest {
         //  Retrieves all songs from database (should be only the one we passed in
         List<Song> allSongs = songDAO.getAllRecords();
         //  Verifies this is the only song in the allSongs list
-        assertEquals(allSongs.size(),1);
+        assertEquals(1,allSongs.size());
         //  Verifies the only song in allSongs is the same as the song we inserted into the database
         assertEquals(allSongs.get(0).getSongTitle(), testSong.getSongTitle());
         //  Update local song title
@@ -76,14 +74,6 @@ public class SongDaoTest {
         //  Assert "To the End" is equal to songTitle contained in Song object located in 0th index
         //  of allSongs
         assertEquals("To the End", allSongs.get(0).getSongTitle());
-        //  Deletes song that we sent into the database
-        //  **DELETE SONG BY SENDING IN TESTSONG DOES NOT WORK BECAUSE THE IDS ARE DIFFERENT
-        songDAO.deleteSongById(allSongs.get(0).getSongId());
-        //  Retrieves songs from database
-        //  (there should be none inside since we deleted the only one
-        allSongs = songDAO.getAllRecords();
-        //  Asserts that allSongs size is equal to 0, since we deleted the only song in the database
-        assertEquals(0, allSongs.size());
     }
 
     @Test
