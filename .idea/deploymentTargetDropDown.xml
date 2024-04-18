@@ -5,9 +5,6 @@
       <entry key="AdminLoginTest">
         <State />
       </entry>
-      <entry key="ExampleInstrumentedTest">
-        <State />
-      </entry>
       <entry key="UserLoginTest">
         <State />
       </entry>
@@ -29,6 +26,9 @@
           </targetSelectedWithDropDown>
           <timeTargetWasSelectedWithDropDown value="2024-04-11T02:43:23.498767Z" />
         </State>
+      </entry>
+      <entry key="insertUpdateAndDeleteTest()">
+        <State />
       </entry>
       <entry key="userCanLogin()">
         <State />
