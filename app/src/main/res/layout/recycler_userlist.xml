@@ -10,12 +10,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/recyclerItemTextView"
-        android:text="SONG"
+        android:text="@string/user"
         android:layout_margin="8dp"
         android:padding="4dp"
-        android:textSize="18sp"
-        android:backgroundTint="@color/cardview_dark_background"
-
+        android:textSize="30sp"
+        android:textColor="@color/black"
         />
 
 </LinearLayout>
