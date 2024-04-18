@@ -2,9 +2,6 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
-      <entry key="SongDaoTest">
-        <State />
-      </entry>
       <entry key="app">
         <State>
           <targetSelectedWithDropDown>
@@ -22,15 +19,6 @@
         </State>
       </entry>
       <entry key="deleteTest()">
-        <State />
-      </entry>
-      <entry key="insertTest()">
-        <State />
-      </entry>
-      <entry key="insertUpdateAndDeleteTest()">
-        <State />
-      </entry>
-      <entry key="updateTest()">
         <State />
       </entry>
     </value>
