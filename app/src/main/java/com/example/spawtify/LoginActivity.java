@@ -7,7 +7,6 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.room.Room;
 
 import com.example.spawtify.Database.SpawtifyDatabase;
 import com.example.spawtify.Database.SpawtifyRepository;
@@ -16,7 +15,6 @@ import com.example.spawtify.Database.entities.User;
 import com.example.spawtify.databinding.ActivityLoginBinding;
 
 public class LoginActivity extends AppCompatActivity {
-    private UserDAO userDAO;
     private User user;
     private String usernameString;
     private String passwordString;
@@ -32,17 +30,8 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         spawtifyRepository = SpawtifyRepository.getRepository(getApplication());
-        getDatabase();
         wireUpDisplay();
 
-    }
-
-    private void getDatabase() {
-        userDAO = Room.databaseBuilder
-                        (this, SpawtifyDatabase.class, SpawtifyDatabase.DB_NAME)
-                .allowMainThreadQueries()
-                .build()
-                .getUserDAO();
     }
 
     private void wireUpDisplay(){
@@ -82,9 +71,9 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private boolean checkForUserInDatabase(){
-        user = userDAO.getUserByUsername(usernameString);
+        user = spawtifyRepository.getUserByUsername(usernameString);
         if (user == null){
-            Toast.makeText(this, "No user found for " + usernameString, Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "No user " + usernameString + " found", Toast.LENGTH_SHORT).show();
             return false;
         }
         return true;
