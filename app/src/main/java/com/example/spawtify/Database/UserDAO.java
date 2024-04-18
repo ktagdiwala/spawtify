@@ -5,6 +5,7 @@ import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
+import androidx.room.Update;
 
 import com.example.spawtify.Database.entities.User;
 
@@ -24,6 +25,9 @@ public interface UserDAO {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     //this method will take 0 or more user objects
     void insert(User... user);
+
+    @Update(onConflict = OnConflictStrategy.REPLACE)
+    void update(User user);
 
     @Delete
     void delete(User user);
