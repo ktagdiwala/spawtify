@@ -54,4 +54,6 @@
     <string name="clean">Clean</string>
     <string name="long_press_a_playlist_to_delete_it">Long-press a playlist to delete it.</string>
     <string name="finish">Finish</string>
+    <string name="add_songs">Add songs</string>
+    <string name="delete_songs">Delete Songs</string>
 </resources>
