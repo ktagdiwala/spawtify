@@ -1,5 +1,6 @@
 package com.example.spawtify.Database;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
@@ -43,4 +44,10 @@ public interface PlaylistDAO {
 
     @Query("SELECT * FROM " + SpawtifyDatabase.PLAYLIST_TABLE + " WHERE userId = :userId AND playlistTitle = :title")
     Playlist getPlaylistByTitle(String title, int userId);
+
+    @Query("SELECT songIdString FROM " + SpawtifyDatabase.PLAYLIST_TABLE + " WHERE userId = :userId AND playlistTitle = :title")
+    String getUserPlaylistSongs(String title, int userId);
+
+    @Query("SELECT songIdString FROM " + SpawtifyDatabase.PLAYLIST_TABLE + " WHERE userId = :userId AND playlistTitle = :title")
+    LiveData<String> getUserPlaylistSongsLD(String title, int userId);
 }
