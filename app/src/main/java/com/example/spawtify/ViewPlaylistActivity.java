@@ -64,6 +64,11 @@ public class ViewPlaylistActivity extends AppCompatActivity implements SongRecyc
         // Initializes playlistTitle to the playlist title of the clicked playlist obj
         playlistTitle = getIntent().getStringExtra(PLAYLIST_TITLE);
         playlist = spawtifyRepository.getPlaylistByTitle(playlistTitle, userId);
+
+        if(playlist.getSongIdString().equals("\n")){
+            toaster("Your playlist CATalog is empty");
+        }
+
         // sets up title and description display
         binding.currPlaylistTitleTextview.setText(playlistTitle);
         binding.currPlaylistDescriptionTextview.setText(playlist.getPlaylistDescription());
