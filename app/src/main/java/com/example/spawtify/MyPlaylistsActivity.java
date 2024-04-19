@@ -87,19 +87,36 @@ public class MyPlaylistsActivity extends AppCompatActivity implements PlaylistRe
 
         binding.MyPlaylistsDescriptionTextview.setText(R.string.click_on_a_playlist_to_view_contained_songs);
 
-        // Sets up New Playlist button
+        // Wires up New Playlist button
+        setupNewPlaylist();
+
+        // Sets up UI for Delete Playlist button
+        setupDeletePlaylist();
+    }
+
+    /** setupNewPlaylist
+     * sets up new playlist button to switch to Create Playlist activity
+     */
+    private void setupNewPlaylist(){
         binding.NewPlaylistButton.setOnClickListener(v -> {
             Intent intent = CreatePlaylistActivity.intentFactory(getApplicationContext(), userId);
             startActivity(intent);
         });
+    }
 
-        // Sets up Delete Playlist button
+    /** setupDeletePlaylist
+     * sets up delete playlist button
+     */
+    private void setupDeletePlaylist(){
         binding.DeletePlaylistButton.setOnClickListener(v-> {
             if(!deletePlaylistView){
                 binding.NewPlaylistButton.setVisibility(View.INVISIBLE);
                 binding.MyPlaylistsDescriptionTextview.setText(R.string.long_press_a_playlist_to_delete_it);
                 binding.DeletePlaylistButton.setText(R.string.finish);
             }else{
+                // Refreshes the display each time playlists have been deleted from the DB
+                Intent intent = MyPlaylistsActivity.intentFactory(getApplicationContext(), userId);
+                startActivity(intent);
                 binding.NewPlaylistButton.setVisibility(View.VISIBLE);
                 binding.MyPlaylistsDescriptionTextview.setText(R.string.click_on_a_playlist_to_view_contained_songs);
                 binding.DeletePlaylistButton.setText(R.string.delete_playlist);
@@ -131,30 +148,44 @@ public class MyPlaylistsActivity extends AppCompatActivity implements PlaylistRe
         return intent;
     }
 
+    /** onItemClick
+     * if the user is not in 'delete playlist' mode, display the songlist from the playlist that was clicked
+     * if the user is in 'delete playlist' mode, delete the playlist that was clicked
+     * @param position is the current position of the item that was clicked
+     */
     @Override
     public void onItemClick(int position) {
 
-        if(deletePlaylistView) {
-            //  Set up dialog to confirm deletion of song
-            AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
-            //  Sets up initial dialog message: "Delete playlistTitle?"
-            alertBuilder.setMessage("Delete \"" + playlistModels.get(position).getPlaylistTitle() + "\" playlist?");
-            //  Sets up positive (yes) button to remove song from database and then
-            //  return to AdminPerks
-            alertBuilder.setPositiveButton("Yes", (dialog, which) -> {
-                // Finds playlist based on title and logged in user's userId
-                Playlist playlistToDelete = spawtifyRepository.getPlaylistByTitle(
-                        playlistModels.get(position).getPlaylistTitle(), userId);
-                //  Removes playlist from database
-                spawtifyRepository.deletePlaylist(playlistToDelete);
-                // Refreshes recycler display
+        // Retrieves the playlist object from the database
+        // based on username and userId (null if playlist not found)
+        Playlist selectedPlaylist = spawtifyRepository.getPlaylistByTitle(
+                playlistModels.get(position).getPlaylistTitle(), userId);
 
-            });
-            alertBuilder.setNegativeButton("No", (dialog, which) -> {
-            });
-            //  Creates and displays alert dialog to screen
-            alertBuilder.create().show();
-            return;
+        if(deletePlaylistView) {
+            // Checks to see if the playlist has already been deleted
+            if(selectedPlaylist == null) {
+                toaster("This playlist has already been deleted, click finish to refresh display.");
+            }else if(selectedPlaylist.getPlaylistTitle().equals("Purrsonal Playlist")){
+                toaster("You cannot delete the default playlist.");
+            }else {
+                //  Set up dialog to confirm deletion of song
+                AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
+                //  Sets up initial dialog message: "Delete playlistTitle?"
+                alertBuilder.setMessage("Delete \"" + playlistModels.get(position).getPlaylistTitle() + "\" playlist?");
+                //  Sets up positive (yes) button to remove song from database and then
+                //  return to AdminPerks
+                alertBuilder.setPositiveButton("Yes", (dialog, which) -> {
+                    //  Removes playlist from database
+                    spawtifyRepository.deletePlaylist(selectedPlaylist);
+                });
+                alertBuilder.setNegativeButton("No", (dialog, which) -> {
+                });
+                //  Creates and displays alert dialog to screen
+                alertBuilder.create().show();
+            }
+        }else{
+            Intent intent = ViewPlaylistActivity.intentFactory(getApplicationContext(), selectedPlaylist.getPlaylistTitle(), selectedPlaylist.getUserId());
+            startActivity(intent);
         }
     }
 
