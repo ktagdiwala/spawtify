@@ -13,9 +13,11 @@
         android:theme="@style/Theme.Spawtify"
         tools:targetApi="31">
         <activity
-            android:name=".ViewPlaylistActivity"
+            android:name=".HoldsFragments"
             android:exported="false" />
-        <!-- <activity -->
+        <activity
+            android:name=".ViewPlaylistActivity"
+            android:exported="false" /> <!-- <activity -->
         <!-- android:name=".BrowseSongsActivity" -->
         <!-- android:exported="false" /> -->
         <activity

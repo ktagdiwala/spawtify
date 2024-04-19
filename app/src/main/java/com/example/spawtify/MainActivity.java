@@ -205,6 +205,13 @@ public class MainActivity extends AppCompatActivity {
         binding.AdminButton.setOnClickListener(v -> adminPerks());
 
         binding.BrowseSongsButton.setOnClickListener(v -> browseSongs());
+
+        binding.navBarButton.setOnClickListener(v -> holdsFragments());
+    }
+
+    private void holdsFragments() {
+        Intent intent = HoldsFragments.intentFactory(this);
+        startActivity(intent);
     }
 
     private void browseSongs(){

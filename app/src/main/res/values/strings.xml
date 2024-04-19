@@ -56,4 +56,9 @@
     <string name="finish">Finish</string>
     <string name="add_songs">Add songs</string>
     <string name="delete_songs">Delete Songs</string>
+    <string name="home">Home</string>
+    <string name="profile">Profile</string>
+    <string name="info">Info</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
