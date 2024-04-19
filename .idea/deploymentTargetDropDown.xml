@@ -2,10 +2,13 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
-      <entry key="PlaylistDAOTest">
+      <entry key="AdminLoginTest">
         <State />
       </entry>
-      <entry key="SongDaoTest">
+      <entry key="IntentTests">
+        <State />
+      </entry>
+      <entry key="UserLoginTest">
         <State />
       </entry>
       <entry key="app">
@@ -24,13 +27,10 @@
           <timeTargetWasSelectedWithDropDown value="2024-04-11T02:43:23.498767Z" />
         </State>
       </entry>
-      <entry key="delete()">
+      <entry key="intentTests()">
         <State />
       </entry>
-      <entry key="insert()">
-        <State />
-      </entry>
-      <entry key="update()">
+      <entry key="testingUserLogin()">
         <State />
       </entry>
     </value>
