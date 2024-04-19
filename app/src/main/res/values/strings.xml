@@ -52,7 +52,6 @@
     <string name="by_genre">By Genre</string>
     <string name="remove_filters">Remove Filters</string>
     <string name="clean">Clean</string>
-    <string name="long_press_a_playlist_to_delete_it">Long-press a playlist to delete it.</string>
     <string name="finish">Finish</string>
     <string name="add_songs">Add songs</string>
     <string name="delete_songs">Delete Songs</string>
@@ -62,4 +61,5 @@
     <string name="user">User</string>
     <string name="enter_a_username_to_delete">Enter a username to delete</string>
     <string name="enter_a_username_to_make_admin">Enter a username to make admin</string>
+    <string name="click_on_a_playlist_to_delete">Click on a playlist to delete</string>
 </resources>

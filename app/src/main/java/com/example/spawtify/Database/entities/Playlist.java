@@ -40,7 +40,7 @@ public class Playlist {
         this.playlistTitle = playlistTitle;
         this.playlistDescription = playlistDescription;
         this.userId = userId;
-        this.songIdString = "";
+        this.songIdString = "\n";
 
 //        this.songArrayList = new ArrayList<>();
     }
