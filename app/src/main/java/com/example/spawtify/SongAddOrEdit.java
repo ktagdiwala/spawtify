@@ -117,8 +117,17 @@ public class SongAddOrEdit extends AppCompatActivity {
             Intent intent = AdminPerks.intentFactory(this);
             //  If we came from pressing "New Song" button, then insert song to database
             if (addOrEdit == addSong){
+                //  Perform duplicate title check
+                if (duplicateTitleCheck(song)){
+                    toaster("Title for this song exists already");
+                    return;
+                }
+                duplicateTitleCheck(song);
                 //  Add song to database
                 spawtifyRepository.insertSong(song);
+
+
+
                 //  Not sure if this still displays, maybe sent to admin perks before this
                 //  has a chance to show up
                 toaster("You've added " + title);
@@ -137,6 +146,12 @@ public class SongAddOrEdit extends AppCompatActivity {
             //  Returns user to Admin Perks Activity
             startActivity(intent);
         });
+    }
+
+    private boolean duplicateTitleCheck(Song song) {
+        String titleToCheck = song.getSongTitle();
+
+        return spawtifyRepository.getSongByTitle(titleToCheck) != null;
     }
 
     /** setUpNewSongView:
@@ -219,6 +234,7 @@ public class SongAddOrEdit extends AppCompatActivity {
                 toaster("One or more of your fields are empty!");
                 return false;
         }
+
         return true;
     }
 

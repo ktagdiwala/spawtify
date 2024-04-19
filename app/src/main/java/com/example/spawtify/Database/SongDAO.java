@@ -67,4 +67,7 @@ public interface SongDAO {
 
     @Query("SELECT * FROM " + SpawtifyDatabase.SONGLIST + " WHERE isExplicit = true")
     List<Song> getExplicitSongs();
+
+    @Query("SELECT * FROM " + SpawtifyDatabase.SONGLIST + " WHERE songTitle =:titleToCheck")
+    Song getSongByTitle(String titleToCheck);
 }
