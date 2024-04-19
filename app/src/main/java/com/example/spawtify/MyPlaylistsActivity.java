@@ -158,13 +158,15 @@ public class MyPlaylistsActivity extends AppCompatActivity implements PlaylistRe
 
         // Retrieves the playlist object from the database
         // based on username and userId (null if playlist not found)
-        Playlist playlistToDelete = spawtifyRepository.getPlaylistByTitle(
+        Playlist selectedPlaylist = spawtifyRepository.getPlaylistByTitle(
                 playlistModels.get(position).getPlaylistTitle(), userId);
 
         if(deletePlaylistView) {
             // Checks to see if the playlist has already been deleted
-            if(playlistToDelete == null) {
+            if(selectedPlaylist == null) {
                 toaster("This playlist has already been deleted, click finish to refresh display.");
+            }else if(selectedPlaylist.getPlaylistTitle().equals("Purrsonal Playlist")){
+                toaster("You cannot delete the default playlist.");
             }else {
                 //  Set up dialog to confirm deletion of song
                 AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
@@ -174,13 +176,16 @@ public class MyPlaylistsActivity extends AppCompatActivity implements PlaylistRe
                 //  return to AdminPerks
                 alertBuilder.setPositiveButton("Yes", (dialog, which) -> {
                     //  Removes playlist from database
-                    spawtifyRepository.deletePlaylist(playlistToDelete);
+                    spawtifyRepository.deletePlaylist(selectedPlaylist);
                 });
                 alertBuilder.setNegativeButton("No", (dialog, which) -> {
                 });
                 //  Creates and displays alert dialog to screen
                 alertBuilder.create().show();
             }
+        }else{
+            Intent intent = ViewPlaylistActivity.intentFactory(getApplicationContext(), selectedPlaylist.getPlaylistTitle(), selectedPlaylist.getUserId());
+            startActivity(intent);
         }
     }
 
