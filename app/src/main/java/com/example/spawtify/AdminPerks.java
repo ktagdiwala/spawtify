@@ -24,6 +24,10 @@ public class AdminPerks extends AppCompatActivity {
         binding.NewSongButton.setOnClickListener(v -> newSong());
         binding.EditSongButton.setOnClickListener(v -> editSong());
         binding.DeleteSongButton.setOnClickListener(v -> deleteSong());
+        binding.ManageUsersButton.setOnClickListener(v -> {
+                Intent intent = ManageUsersActivity.intentFactory(getApplicationContext());
+                startActivity(intent);
+        });
     }
 
     private void deleteSong() {

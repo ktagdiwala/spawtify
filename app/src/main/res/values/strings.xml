@@ -56,4 +56,10 @@
     <string name="finish">Finish</string>
     <string name="add_songs">Add songs</string>
     <string name="delete_songs">Delete Songs</string>
+    <string name="manage_users_instructions">Manage users instructions</string>
+    <string name="make_admin">Make Admin</string>
+    <string name="delete_user">Delete User</string>
+    <string name="user">User</string>
+    <string name="enter_a_username_to_delete">Enter a username to delete</string>
+    <string name="enter_a_username_to_make_admin">Enter a username to make admin</string>
 </resources>
