@@ -23,7 +23,7 @@ import java.util.concurrent.Executors;
  * @since 04-09-2024
  */
 
-@Database(entities = {User.class, Song.class, Playlist.class}, version = 4, exportSchema = false)
+@Database(entities = {User.class, Song.class, Playlist.class}, version = 5, exportSchema = false)
 public abstract class SpawtifyDatabase extends RoomDatabase {
 
     public static final String DB_NAME = "Spawtify_Database";
@@ -171,9 +171,15 @@ public abstract class SpawtifyDatabase extends RoomDatabase {
                  songDAO.insert(new Song ("I'm Gonna Love You", "D.O.",
                         "Empathy", "Kpop", false));
 
-
-
-
+                 // Create default playlists
+                Playlist defaultPlaylistAdmin2 = new Playlist("Purrsonal Playlist",
+                        "Favorite mewsic CATalog", userDAO.getUserByUsername(admin2.getUsername()).getUserId());
+                defaultPlaylistAdmin2.setSongIdString("1\n2\n3\n4");
+                playlistDAO.insert(defaultPlaylistAdmin2);
+                Playlist defaultPlaylistTestuser1 = new Playlist("Purrsonal Playlist",
+                        "Favorite mewsic CATalog", userDAO.getUserByUsername(testuser1.getUsername()).getUserId());
+                defaultPlaylistTestuser1.setSongIdString("1\n2\n3\n4");
+                playlistDAO.insert(defaultPlaylistTestuser1);
 
             });
         }

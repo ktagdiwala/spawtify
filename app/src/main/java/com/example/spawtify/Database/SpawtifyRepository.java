@@ -70,6 +70,15 @@ public class SpawtifyRepository {
     }
 
     // User-related methods
+
+     /** getAllUsers:
+      * retrieves the list of Users from the database of users
+      * @return an a LiveData object containing the list of all users in the user database
+      */
+     public LiveData<List<User>> getAllUsersLD(){
+         return userDAO.getAllUsersLD();
+     }
+
     public List<User> getAllUsers(){
         /* States that this will be fulfilled sometime in the future
          * Allows a thread to perform its operation
@@ -124,6 +133,12 @@ public class SpawtifyRepository {
         SpawtifyDatabase.databaseWriteExecutor.execute(()->
         {
             userDAO.insert(users);
+        });
+    }
+
+    public void updateUser(User user){
+        SpawtifyDatabase.databaseWriteExecutor.execute(()->{
+            userDAO.update(user);
         });
     }
 
@@ -505,4 +520,64 @@ public class SpawtifyRepository {
         }
         return null;
     }
+
+    public Song getSongByTitle(String titleToCheck) {
+        /* States that this will be fulfilled sometime in the future
+         * Allows a thread to perform its operation
+         * When it comes back, we can process it
+         */
+        Future<Song> future = SpawtifyDatabase.databaseWriteExecutor.submit(
+                new Callable<Song>() {
+                    @Override
+                    public Song call() throws Exception {
+                        return songDAO.getSongByTitle(titleToCheck);
+                    }
+                }
+        );
+        try {
+            return future.get();
+        }catch (InterruptedException | ExecutionException e){
+            e.printStackTrace();
+            Log.i(MainActivity.TAG, "Problem when getting all Playlists in the repository");
+        }
+        return null;
+    }
+
+    /** getUserPlaylistSongs:
+     * @return the list of songIds in a playlist from the playlist DB
+     * @param playlistTitle the title of the playlist
+     * @param userId id of the current user
+     */
+    public String getUserPlaylistSongs(String playlistTitle, int userId){
+        /* States that this will be fulfilled sometime in the future
+         * Allows a thread to perform its operation
+         * When it comes back, we can process it
+         */
+        Future<String> future = SpawtifyDatabase.databaseWriteExecutor.submit(
+                new Callable<String>() {
+                    @Override
+                    public String call() throws Exception {
+                        return playlistDAO.getUserPlaylistSongs(playlistTitle, userId);
+                    }
+                }
+        );
+        try {
+            return future.get();
+        }catch (InterruptedException | ExecutionException e){
+            e.printStackTrace();
+            Log.i(MainActivity.TAG, "Problem when retrieving songlist from playlist");
+        }
+        return null;
+    }
+
+     /** getUserPlaylistSongsLD:
+      * @return the livedata list of songIds in a playlist from the playlist DB
+      * @param playlistTitle the title of the playlist
+      * @param userId id of the current user
+      */
+     public LiveData<String> getUserPlaylistSongsLD(String playlistTitle, int userId){
+         return playlistDAO.getUserPlaylistSongsLD(playlistTitle, userId);
+     }
+
+
 }
