@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.spawtify.Database.SpawtifyRepository;
+import com.example.spawtify.Database.entities.Playlist;
 import com.example.spawtify.Database.entities.Song;
 import com.example.spawtify.databinding.ActivityBrowseSongsBinding;
 import com.example.spawtify.viewHolders.SongModel;
@@ -26,10 +27,13 @@ public class BrowseSongs extends AppCompatActivity implements SongRecyclerViewIn
     //  -1 = came from MainActivity
     //  0 = edit song
     //  1 = delete song
+    //  7 = add song to playlist
     private static final String VIEW_VALUE = "com.example.spawtify.VIEW_VALUE";
     private static final String FILTER_STRING = "com.example.spawtify.FILTER_STRING";
     private static final String FILTER_VALUE = "com.example.spawtify.FILTER_VALUE";
     private static final String EXPLICIT_BOOLEAN = "com.example.spawtify.EXPLICIT_BOOLEAN";
+    private static final String PLAYLIST_TITLE = "com.example.spawtify.PLAYLIST_TITLE";
+    private static final String USER_ID_KEY = "com.example.spawtify.USER_ID_KEY";
 
     ActivityBrowseSongsBinding binding;
 
@@ -38,6 +42,7 @@ public class BrowseSongs extends AppCompatActivity implements SongRecyclerViewIn
     private final int editSong = 0;
     private final int deleteSong = 1;
     private final int mainActivity = -1;
+    private final int addSongToPlaylist = 7;
 
     //  These values will be used in if statements to determine what filter will be applied
     private final int noFilters = 2;
@@ -62,6 +67,12 @@ public class BrowseSongs extends AppCompatActivity implements SongRecyclerViewIn
 
     //  filterValues decides which filter to apply to the list of songs
     private int filterValue;
+
+    // string variable to hold playlistTitle
+    private String playlistTitle;
+
+    // int variable to hold current userId
+    private int userId;
 
     RecyclerView recyclerView;
 
@@ -106,6 +117,8 @@ public class BrowseSongs extends AppCompatActivity implements SongRecyclerViewIn
     private void setUpDefaultValues(){
         viewValue = getIntent().getIntExtra(VIEW_VALUE, mainActivity);
         filterValue = getIntent().getIntExtra(FILTER_VALUE, noFilters);
+        playlistTitle = getIntent().getStringExtra(PLAYLIST_TITLE);
+        userId = getIntent().getIntExtra(USER_ID_KEY, -1);
     }
 
     private void wireUpDisplay(){
@@ -144,6 +157,12 @@ public class BrowseSongs extends AppCompatActivity implements SongRecyclerViewIn
                     (this, songModels, this);
             //  Changes activityTitle to "Delete Song"
             activityTitle = "Delete Song";
+        }
+        if (viewValue == addSongToPlaylist){
+            adapter = new Song_RecyclerViewAdapter
+                    (this, songModels, this);
+            //  Changes activityTitle to "Delete Song"
+            activityTitle = "Add Songs to Playlist";
         }
 
         //  Display title of current activity in action bar
@@ -272,6 +291,14 @@ public class BrowseSongs extends AppCompatActivity implements SongRecyclerViewIn
         return intent;
     }
 
+    public static Intent intentFactory(Context context, int viewValue, int userId, String currPlaylistTitle){
+        Intent intent = new Intent(context, BrowseSongs.class);
+        intent.putExtra(VIEW_VALUE, viewValue);
+        intent.putExtra(USER_ID_KEY, userId);
+        intent.putExtra(PLAYLIST_TITLE, currPlaylistTitle);
+        return intent;
+    }
+
 
     //  Method inherited from SongRecyclerViewInterface
     /** onItemClick:
@@ -310,9 +337,21 @@ public class BrowseSongs extends AppCompatActivity implements SongRecyclerViewIn
             //  Creates and displays alert dialog to screen
             alertBuilder.create().show();
             return;
+        }else if(viewValue == addSongToPlaylist){
+            Playlist currPlaylist = spawtifyRepository.getPlaylistByTitle(playlistTitle, userId);
+            if(currPlaylist.getSongIdString().contains("\n" + songId + "\n")){
+                toaster("This song has already been added to " + playlistTitle);
+            }else {
+                currPlaylist.setSongIdString(currPlaylist.getSongIdString() + "\n" + songId + "\n");
+                spawtifyRepository.updatePlaylist(currPlaylist);
+                toaster("Added " + songTitle + " to " + playlistTitle);
+                Intent intent = ViewPlaylistActivity.intentFactory(this, playlistTitle, userId);
+                startActivity(intent);
+            }
+        }else if(viewValue == editSong) {
+            //  Sets up intent to take user to Song Edit Activity
+            Intent intent = SongAddOrEdit.intentFactory(this, editSong, songId);
+            startActivity(intent);
         }
-        //  Sets up intent to take user to Song Edit Activity
-        Intent intent = SongAddOrEdit.intentFactory(this, editSong, songId);
-        startActivity(intent);
     }
 }

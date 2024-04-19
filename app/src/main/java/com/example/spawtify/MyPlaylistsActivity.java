@@ -111,7 +111,7 @@ public class MyPlaylistsActivity extends AppCompatActivity implements PlaylistRe
         binding.DeletePlaylistButton.setOnClickListener(v-> {
             if(!deletePlaylistView){
                 binding.NewPlaylistButton.setVisibility(View.INVISIBLE);
-                binding.MyPlaylistsDescriptionTextview.setText(R.string.long_press_a_playlist_to_delete_it);
+                binding.MyPlaylistsDescriptionTextview.setText(R.string.click_on_a_playlist_to_delete);
                 binding.DeletePlaylistButton.setText(R.string.finish);
             }else{
                 // Refreshes the display each time playlists have been deleted from the DB
@@ -177,6 +177,7 @@ public class MyPlaylistsActivity extends AppCompatActivity implements PlaylistRe
                 alertBuilder.setPositiveButton("Yes", (dialog, which) -> {
                     //  Removes playlist from database
                     spawtifyRepository.deletePlaylist(selectedPlaylist);
+                    toaster(selectedPlaylist.getPlaylistTitle() + " has been deleted.");
                 });
                 alertBuilder.setNegativeButton("No", (dialog, which) -> {
                 });

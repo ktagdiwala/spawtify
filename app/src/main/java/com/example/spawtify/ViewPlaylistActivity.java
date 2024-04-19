@@ -3,6 +3,7 @@ package com.example.spawtify;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -44,6 +45,8 @@ public class ViewPlaylistActivity extends AppCompatActivity implements SongRecyc
     //  Object of SpawtifyRepository so we can interact with the database
     SpawtifyRepository spawtifyRepository;
 
+    private boolean deleteSongMode = false;
+
     RecyclerView recyclerView;
     Song_RecyclerViewAdapter adapter;
 
@@ -69,10 +72,48 @@ public class ViewPlaylistActivity extends AppCompatActivity implements SongRecyc
         setupSongModels(playlistTitle, userId);
 
         // attaches the songAdapter adapter to this view
-        adapter = new Song_RecyclerViewAdapter(this, songModels);
+        adapter = new Song_RecyclerViewAdapter(this, songModels, this);
         binding.playlistSongsRecyclerView.setAdapter(adapter);
         binding.playlistSongsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
+        wireUpDisplay();
+
+    }
+
+    private void wireUpDisplay() {
+        binding.addSongsPlaylistButton.setOnClickListener(v -> addSongs());
+        binding.deleteSongsPlaylistButton.setOnClickListener(v -> deleteSongs());
+    }
+
+    private void addSongs() {
+        if(playlistTitle.equals("Purrsonal Playlist")){
+            toaster("You cannot modify a default playlist");
+        }else {
+            Intent intent = BrowseSongs.intentFactory(getApplicationContext(), 7, userId, playlistTitle);
+            startActivity(intent);
+        }
+    }
+
+    private void deleteSongs() {
+        if (playlistTitle.equals("Purrsonal Playlist")){
+            toaster("You cannot modify a default playlist");
+        }else {
+            if (!deleteSongMode) {
+                if(playlist.getSongIdString().equals("\n")){
+                    toaster("There are no songs to delete.");
+                }else {
+                    binding.addSongsPlaylistButton.setVisibility(View.INVISIBLE);
+                    binding.deleteSongsPlaylistButton.setText(R.string.finish);
+                    deleteSongMode = true;
+                }
+            } else {
+                binding.addSongsPlaylistButton.setVisibility(View.VISIBLE);
+                binding.deleteSongsPlaylistButton.setText(R.string.delete_songs);
+                deleteSongMode = false;
+                Intent intent = ViewPlaylistActivity.intentFactory(getApplicationContext(), playlistTitle, userId);
+                startActivity(intent);
+            }
+        }
     }
 
     /** setupSongModels:
@@ -96,8 +137,6 @@ public class ViewPlaylistActivity extends AppCompatActivity implements SongRecyc
                     if(!songId.trim().isEmpty()){
                         int songIdInt = Integer.parseInt(songId);
                         songList.add(spawtifyRepository.getSongById(songIdInt));
-                    }else {
-                        toaster("Empty line ignored");
                     }
                 }
 
@@ -140,7 +179,16 @@ public class ViewPlaylistActivity extends AppCompatActivity implements SongRecyc
 
     @Override
     public void onItemClick(int position) {
-
+        int songId = songModels.get(position).songId;
+        if(deleteSongMode){
+            if (playlist.getSongIdString().contains("\n" + songId + "\n")) {
+                playlist.setSongIdString(playlist.getSongIdString().replace("\n" + songId + "\n", ""));
+                spawtifyRepository.updatePlaylist(playlist);
+                toaster(songModels.get(position).songTitle + " has been removed from " + playlistTitle);
+            }else{
+                toaster("This song has already been removed, click finish to refresh");
+            }
+        }
     }
 
     public static Intent intentFactory(Context context, String playlistTitle, int userId) {
