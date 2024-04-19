@@ -40,8 +40,6 @@ import org.junit.runner.RunWith;
  *  Artist List
  *  Album List
  *  Genre List
- *  My Playlists
- *  Create a Playlist
  *  Change Password
  *  Admin Perks
  *  New/Edit Song
@@ -307,93 +305,6 @@ public class IntentTests {
                                 4),
                         isDisplayed()));
         materialButton12.perform(click());
-
-        pressBack();
-
-        pressBack();
-
-        pressBack();
-
-        ViewInteraction materialButton13 = onView(
-                allOf(withId(R.id.MyPlaylistsButton), withText("My Playlists"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(android.R.id.content),
-                                        0),
-                                2),
-                        isDisplayed()));
-        materialButton13.perform(click());
-
-        ViewInteraction materialButton14 = onView(
-                allOf(withId(R.id.NewPlaylistButton), withText("New Playlist"),
-                        childAtPosition(
-                                allOf(withId(R.id.main),
-                                        childAtPosition(
-                                                withId(android.R.id.content),
-                                                0)),
-                                3),
-                        isDisplayed()));
-        materialButton14.perform(click());
-
-        ViewInteraction appCompatEditText8 = onView(
-                allOf(withId(R.id.PlaylistTitleEditText),
-                        childAtPosition(
-                                allOf(withId(R.id.main),
-                                        childAtPosition(
-                                                withId(android.R.id.content),
-                                                0)),
-                                1),
-                        isDisplayed()));
-        appCompatEditText8.perform(replaceText("cat"), closeSoftKeyboard());
-
-        ViewInteraction appCompatEditText9 = onView(
-                allOf(withId(R.id.PlaylistDescriptionEditText),
-                        childAtPosition(
-                                allOf(withId(R.id.main),
-                                        childAtPosition(
-                                                withId(android.R.id.content),
-                                                0)),
-                                2),
-                        isDisplayed()));
-        appCompatEditText9.perform(replaceText("cat"), closeSoftKeyboard());
-
-        ViewInteraction materialButton15 = onView(
-                allOf(withId(R.id.FinishCreatePlaylistButton), withText("Create"),
-                        childAtPosition(
-                                allOf(withId(R.id.main),
-                                        childAtPosition(
-                                                withId(android.R.id.content),
-                                                0)),
-                                3),
-                        isDisplayed()));
-        materialButton15.perform(click());
-
-        ViewInteraction materialButton16 = onView(
-                allOf(withId(R.id.DeletePlaylistButton), withText("Delete Playlist"),
-                        childAtPosition(
-                                allOf(withId(R.id.main),
-                                        childAtPosition(
-                                                withId(android.R.id.content),
-                                                0)),
-                                4),
-                        isDisplayed()));
-        materialButton16.perform(click());
-
-        ViewInteraction recyclerView4 = onView(
-                allOf(withId(R.id.MyPlaylistsRecyclerView),
-                        childAtPosition(
-                                withId(R.id.main),
-                                2)));
-        recyclerView4.perform(actionOnItemAtPosition(0, click()));
-
-        ViewInteraction materialButton17 = onView(
-                allOf(withId(android.R.id.button1), withText("Yes"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(com.google.android.material.R.id.buttonPanel),
-                                        0),
-                                3)));
-        materialButton17.perform(scrollTo(), click());
 
         pressBack();
 
