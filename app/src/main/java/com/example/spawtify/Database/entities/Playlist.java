@@ -1,12 +1,10 @@
 package com.example.spawtify.Database.entities;
 
 import androidx.room.Entity;
-import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 import com.example.spawtify.Database.SpawtifyDatabase;
 
-import java.util.ArrayList;
 import java.util.Objects;
 
 /** Playlist
@@ -26,15 +24,11 @@ public class Playlist {
 
     private String playlistTitle;
     private String playlistDescription;
-    // The list of songs in the playlist, stored as a string
-    private String songlistString;
+    // The list of songIds in the playlist, stored as a string
+    private String songIdString;
 
     // the ID of the user currently logged in
     private int userId;
-
-    @Ignore
-    private ArrayList<Song> songArrayList;
-    // TODO: Figure out how to create an arraylist without DB complaining
 
     /** Playlist constructor
      * Overrides default constructor to take in parameters
@@ -46,7 +40,7 @@ public class Playlist {
         this.playlistTitle = playlistTitle;
         this.playlistDescription = playlistDescription;
         this.userId = userId;
-        this.songlistString = "Empty";
+        this.songIdString = "";
 
 //        this.songArrayList = new ArrayList<>();
     }
@@ -56,12 +50,12 @@ public class Playlist {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Playlist playlist = (Playlist) o;
-        return id == playlist.id && userId == playlist.userId && Objects.equals(playlistTitle, playlist.playlistTitle) && Objects.equals(playlistDescription, playlist.playlistDescription) && Objects.equals(songlistString, playlist.songlistString) && Objects.equals(songArrayList, playlist.songArrayList);
+        return id == playlist.id && userId == playlist.userId && Objects.equals(playlistTitle, playlist.playlistTitle) && Objects.equals(playlistDescription, playlist.playlistDescription) && Objects.equals(songIdString, playlist.songIdString);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, playlistTitle, playlistDescription, songlistString, userId, songArrayList);
+        return Objects.hash(id, playlistTitle, playlistDescription, songIdString, userId);
     }
 
     public int getId() {
@@ -88,31 +82,19 @@ public class Playlist {
         this.playlistDescription = playlistDescription;
     }
 
-    public ArrayList<Song> getSongArrayList() {
-        return songArrayList;
-    }
-
-    public void setSongArrayList(ArrayList<Song> songArrayList) {
-        this.songArrayList = songArrayList;
-    }
-
-    public String getSonglistString() {
-        return songlistString;
-    }
-
-    public void setSonglistString(String songlistString) {
-        this.songlistString = songlistString;
-    }
-
-    public void setSonglistString(ArrayList<Song> songlistArray){
-        this.songlistString = songlistArray.toString();
-    }
-
     public int getUserId() {
         return userId;
     }
 
     public void setUserId(int userId) {
         this.userId = userId;
+    }
+
+    public String getSongIdString() {
+        return songIdString;
+    }
+
+    public void setSongIdString(String songIdString) {
+        this.songIdString = songIdString;
     }
 }
