@@ -31,6 +31,22 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+/** Tests the following activities:
+ *  Login
+ *  Main
+ *  Sign Up
+ *  Browse Songs
+ *  Filter
+ *  Artist List
+ *  Album List
+ *  Genre List
+ *  My Playlists
+ *  Create a Playlist
+ *  Change Password
+ *  Admin Perks
+ *  New/Edit Song
+ */
+
 @LargeTest
 @RunWith(AndroidJUnit4.class)
 public class IntentTests {
