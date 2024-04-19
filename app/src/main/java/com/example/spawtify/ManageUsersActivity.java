@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -118,10 +119,6 @@ public class ManageUsersActivity extends AppCompatActivity {
         }
     }
 
-    public int getCurrentMode() {
-        return currentMode;
-    }
-
     public static Intent intentFactory(Context context){
         Intent intent = new Intent(context, ManageUsersActivity.class);
         return intent;
@@ -158,9 +155,22 @@ public class ManageUsersActivity extends AppCompatActivity {
         }else{
             // Retrieves the user object from the database by username
             User deleteUser = repository.getUserByUsername(username);
-            // Deletes the user from the DB
-            repository.deleteUser(deleteUser);
-            toaster(username + " has been deleted from Spawtify.");
+
+            //  Set up dialog to confirm deletion of song
+            AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
+            //  Sets up initial dialog message: "Delete username?"
+            alertBuilder.setMessage("Delete " + username + "?");
+            //  Sets up positive (yes) button to remove user from database and then
+            //  return to ManageUsers
+            alertBuilder.setPositiveButton("Yes", (dialog, which) -> {
+                // Deletes the user from the DB
+                repository.deleteUser(deleteUser);
+                toaster(username + " has been deleted from Spawtify.");
+            });
+            alertBuilder.setNegativeButton("No", (dialog, which) -> {
+            });
+            //  Creates and displays alert dialog to screen
+            alertBuilder.create().show();
         }
     }
 
