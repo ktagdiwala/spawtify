@@ -12,6 +12,7 @@ import androidx.room.Room;
 import com.example.spawtify.Database.SpawtifyDatabase;
 import com.example.spawtify.Database.SpawtifyRepository;
 import com.example.spawtify.Database.UserDAO;
+import com.example.spawtify.Database.entities.Playlist;
 import com.example.spawtify.Database.entities.User;
 import com.example.spawtify.databinding.ActivitySignUpBinding;
 
@@ -68,6 +69,13 @@ public class SignUpActivity extends AppCompatActivity {
 
                 //  UserDAO inserts newUser into database
                 userDAO.insert(newUser);
+
+                // creates default playlist for new user
+                User currUser = userDAO.getUserByUsername(usernameString);
+                Playlist defaultPlaylist = new Playlist("Purrsonal Playlist",
+                        "Favorite mewsic CATalog", currUser.getUserId());
+                defaultPlaylist.setSongIdString("1\n2\n3\n4");
+                spawtifyRepository.insertPlaylist(defaultPlaylist);
 
                 //  Returns user to login activity
                 Intent intent = LoginActivity.intentFactory(getApplicationContext());
