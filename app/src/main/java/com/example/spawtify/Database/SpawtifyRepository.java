@@ -466,6 +466,9 @@ public class SpawtifyRepository {
         return null;
     }
 
+
+
+
     public void insertPlaylist(Playlist playlist){
         SpawtifyDatabase.databaseWriteExecutor.execute(()->{
             playlistDAO.insert(playlist);
@@ -505,4 +508,42 @@ public class SpawtifyRepository {
         }
         return null;
     }
+
+    /** getUserPlaylistSongs:
+     * @return the list of songIds in a playlist from the playlist DB
+     * @param playlistTitle the title of the playlist
+     * @param userId id of the current user
+     */
+    public String getUserPlaylistSongs(String playlistTitle, int userId){
+        /* States that this will be fulfilled sometime in the future
+         * Allows a thread to perform its operation
+         * When it comes back, we can process it
+         */
+        Future<String> future = SpawtifyDatabase.databaseWriteExecutor.submit(
+                new Callable<String>() {
+                    @Override
+                    public String call() throws Exception {
+                        return playlistDAO.getUserPlaylistSongs(playlistTitle, userId);
+                    }
+                }
+        );
+        try {
+            return future.get();
+        }catch (InterruptedException | ExecutionException e){
+            e.printStackTrace();
+            Log.i(MainActivity.TAG, "Problem when retrieving songlist from playlist");
+        }
+        return null;
+    }
+
+     /** getUserPlaylistSongsLD:
+      * @return the livedata list of songIds in a playlist from the playlist DB
+      * @param playlistTitle the title of the playlist
+      * @param userId id of the current user
+      */
+     public LiveData<String> getUserPlaylistSongsLD(String playlistTitle, int userId){
+         return playlistDAO.getUserPlaylistSongsLD(playlistTitle, userId);
+     }
+
+
 }
