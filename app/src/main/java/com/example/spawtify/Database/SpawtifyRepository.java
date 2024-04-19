@@ -505,4 +505,26 @@ public class SpawtifyRepository {
         }
         return null;
     }
+
+    public Song getSongByTitle(String titleToCheck) {
+        /* States that this will be fulfilled sometime in the future
+         * Allows a thread to perform its operation
+         * When it comes back, we can process it
+         */
+        Future<Song> future = SpawtifyDatabase.databaseWriteExecutor.submit(
+                new Callable<Song>() {
+                    @Override
+                    public Song call() throws Exception {
+                        return songDAO.getSongByTitle(titleToCheck);
+                    }
+                }
+        );
+        try {
+            return future.get();
+        }catch (InterruptedException | ExecutionException e){
+            e.printStackTrace();
+            Log.i(MainActivity.TAG, "Problem when getting all Playlists in the repository");
+        }
+        return null;
+    }
 }
