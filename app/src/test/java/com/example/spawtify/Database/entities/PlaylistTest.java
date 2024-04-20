@@ -5,6 +5,12 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
+/** PlaylistTest
+ * Runs unit tests for Playlist entity object
+ * @author James Mondragon
+ * @since 04-17-2024
+ */
+
 public class PlaylistTest {
     Playlist playlist;
 
@@ -12,7 +18,6 @@ public class PlaylistTest {
     public void setUp(){
         playlist = new Playlist
                 ("Music CATalog", "For cool cats only", 1);
-
     }
 
     @Test
@@ -66,15 +71,15 @@ public class PlaylistTest {
     }
 
     @Test
-    public void getSonglistString() {
-        String songList = playlist.getSonglistString();
+    public void getSongIdString() {
+        String songList = playlist.getSongIdString();
         assertEquals("Empty", songList);
     }
 
     @Test
-    public void setSonglistString() {
-        playlist.setSonglistString("Funny Thing");
-        assertEquals("Funny Thing", playlist.getSonglistString());
+    public void setSongIdString() {
+        playlist.setSongIdString("\n1\n");
+        assertEquals("1", playlist.getSongIdString());
     }
 
     @Test
