@@ -12,6 +12,8 @@ import com.example.spawtify.Database.entities.Playlist;
 import com.example.spawtify.Database.entities.User;
 import com.example.spawtify.databinding.ActivityCreatePlaylistBinding;
 
+import java.util.Objects;
+
 
 public class CreatePlaylistActivity extends AppCompatActivity {
 
@@ -39,6 +41,8 @@ public class CreatePlaylistActivity extends AppCompatActivity {
 
         // Converts extra (String) to int and assigns it to userId
         userId = getIntent().getIntExtra(USER_ID_KEY, -1);
+
+        Objects.requireNonNull(getSupportActionBar()).setTitle("Create a Playlist");
 
         // Checks to ensure that a valid user exists for the given userId
         if(spawtifyRepository.getUserById(userId) == null){

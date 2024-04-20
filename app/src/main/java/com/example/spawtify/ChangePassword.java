@@ -13,6 +13,8 @@ import com.example.spawtify.Database.UserDAO;
 import com.example.spawtify.Database.entities.User;
 import com.example.spawtify.databinding.ActivityChangePasswordBinding;
 
+import java.util.Objects;
+
 /** ChangePassword:
  * Change password page allows user to change their password
  *
@@ -99,6 +101,7 @@ public class ChangePassword extends AppCompatActivity {
      * successfully updated.
      */
     private void wireUpDisplay(){
+        Objects.requireNonNull(getSupportActionBar()).setTitle("Change Password");
         //  Set text for username on display
         binding.username.setText(username);
 

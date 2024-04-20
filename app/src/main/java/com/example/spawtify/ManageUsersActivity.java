@@ -18,6 +18,8 @@ import com.example.spawtify.databinding.ActivityManageUsersBinding;
 import com.example.spawtify.viewHolders.UserAdapter;
 import com.example.spawtify.viewHolders.UserViewModel;
 
+import java.util.Objects;
+
 /** ManageUsersActivity:
  * Display for admin to view the current user list (non-admins)
  * Admin can delete users or upgrade a user to admin
@@ -58,6 +60,8 @@ public class ManageUsersActivity extends AppCompatActivity {
     }
 
     private void wireUpDisplay() {
+        Objects.requireNonNull(getSupportActionBar()).setTitle("Manage Users");
+
         binding.MakeAdminButton.setOnClickListener(v -> makeAdmin());
         binding.DeleteUserButton.setOnClickListener(v -> deleteUser());
         binding.FinishManageUsersButton.setOnClickListener(v -> finishManaging());

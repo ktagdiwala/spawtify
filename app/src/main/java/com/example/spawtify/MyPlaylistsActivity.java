@@ -19,6 +19,7 @@ import com.example.spawtify.viewHolders.PlaylistRecyclerViewInterface;
 import com.example.spawtify.viewHolders.Playlist_RecyclerViewAdapter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /** MyPlaylistActivity
  * Displays the playlists created by a user
@@ -78,6 +79,7 @@ public class MyPlaylistsActivity extends AppCompatActivity implements PlaylistRe
         // Customizes MyPlaylist title based on username
         String setTitleString =  user.getUsername() + "'s Playlists";
         binding.MyPlaylistsTextview.setText(setTitleString);
+        Objects.requireNonNull(getSupportActionBar()).setTitle("My Playlists");
 
         setupPlaylistModels();
         adapter = new Playlist_RecyclerViewAdapter(this,

@@ -16,6 +16,8 @@ import com.example.spawtify.Database.entities.Playlist;
 import com.example.spawtify.Database.entities.User;
 import com.example.spawtify.databinding.ActivitySignUpBinding;
 
+import java.util.Objects;
+
 public class SignUpActivity extends AppCompatActivity {
 
     //  Initialized in: getUserDatabase
@@ -55,6 +57,8 @@ public class SignUpActivity extends AppCompatActivity {
      * login activity if username and password meet requirements
      */
     private void wireUpDisplay(){
+        Objects.requireNonNull(getSupportActionBar()).setTitle("Sign Up");
+
         Button signUpButton = binding.buttonConfirmSignUp;
 
         signUpButton.setOnClickListener(v -> {
