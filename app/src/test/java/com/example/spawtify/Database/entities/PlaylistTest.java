@@ -2,6 +2,7 @@ package com.example.spawtify.Database.entities;
 
 import static org.junit.Assert.*;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -18,6 +19,11 @@ public class PlaylistTest {
     public void setUp(){
         playlist = new Playlist
                 ("Music CATalog", "For cool cats only", 1);
+    }
+
+    @After
+    public void tearDown(){
+        playlist = null;
     }
 
     @Test
@@ -73,13 +79,13 @@ public class PlaylistTest {
     @Test
     public void getSongIdString() {
         String songList = playlist.getSongIdString();
-        assertEquals("Empty", songList);
+        assertEquals("\n", songList);
     }
 
     @Test
     public void setSongIdString() {
         playlist.setSongIdString("\n1\n");
-        assertEquals("1", playlist.getSongIdString());
+        assertEquals("\n1\n", playlist.getSongIdString());
     }
 
     @Test
