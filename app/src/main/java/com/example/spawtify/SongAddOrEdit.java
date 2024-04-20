@@ -10,6 +10,8 @@ import com.example.spawtify.Database.SpawtifyRepository;
 import com.example.spawtify.Database.entities.Song;
 import com.example.spawtify.databinding.ActivitySongAddOrEditBinding;
 
+import java.util.Objects;
+
 /** SongAddOrEdit:
  *  View that changes displayed text based on where the user came from
  *  1) New Song View, add song to song list
@@ -160,6 +162,7 @@ public class SongAddOrEdit extends AppCompatActivity {
      *  Button: Add Song
      */
     private void setUpNewSongView(){
+        Objects.requireNonNull(getSupportActionBar()).setTitle("New Song");
         //  Set text for new song view title
         binding.NewSongOrEditSongTitle.setText(R.string.new_song);
         //  Set text for new song view button
@@ -174,6 +177,7 @@ public class SongAddOrEdit extends AppCompatActivity {
      *  Auto-populates song fields with selected song fields
      */
     private void setUpEditSongView(){
+        Objects.requireNonNull(getSupportActionBar()).setTitle("Edit Song");
         //  Set text for edit song view title
         binding.NewSongOrEditSongTitle.setText(R.string.edit_song);
         //  Set text for edit song view button

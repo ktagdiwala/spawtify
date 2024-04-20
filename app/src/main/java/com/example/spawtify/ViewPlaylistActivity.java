@@ -20,6 +20,7 @@ import com.example.spawtify.viewHolders.Song_RecyclerViewAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class ViewPlaylistActivity extends AppCompatActivity implements SongRecyclerViewInterface {
 
@@ -86,6 +87,7 @@ public class ViewPlaylistActivity extends AppCompatActivity implements SongRecyc
     }
 
     private void wireUpDisplay() {
+        Objects.requireNonNull(getSupportActionBar()).setTitle("View Playlist");
         binding.addSongsPlaylistButton.setOnClickListener(v -> addSongs());
         binding.deleteSongsPlaylistButton.setOnClickListener(v -> deleteSongs());
     }

@@ -7,6 +7,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.spawtify.databinding.ActivityAdminPerksBinding;
 
+import java.util.Objects;
+
 public class AdminPerks extends AppCompatActivity {
 
     ActivityAdminPerksBinding binding;
@@ -21,6 +23,9 @@ public class AdminPerks extends AppCompatActivity {
     }
 
     private void wireUpDisplay(){
+        //  Display title of current activity
+        Objects.requireNonNull(getSupportActionBar()).setTitle("Admin Perks");
+
         binding.NewSongButton.setOnClickListener(v -> newSong());
         binding.EditSongButton.setOnClickListener(v -> editSong());
         binding.DeleteSongButton.setOnClickListener(v -> deleteSong());

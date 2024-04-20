@@ -8,11 +8,11 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.spawtify.Database.SpawtifyDatabase;
 import com.example.spawtify.Database.SpawtifyRepository;
-import com.example.spawtify.Database.UserDAO;
 import com.example.spawtify.Database.entities.User;
 import com.example.spawtify.databinding.ActivityLoginBinding;
+
+import java.util.Objects;
 
 public class LoginActivity extends AppCompatActivity {
     private User user;
@@ -35,6 +35,8 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void wireUpDisplay(){
+        Objects.requireNonNull(getSupportActionBar()).setTitle("Login");
+
         Button loginButton = binding.buttonLogin;
         Button signUpButton = binding.buttonSignUp;
 
